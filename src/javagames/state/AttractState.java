@@ -13,7 +13,7 @@ import javagames.util.Sprite;
 /*State that cycles to another State */
 public abstract class AttractState extends State 
 {
-	private List<GameObject> gameObjects;
+	protected List<GameObject> gameObjects;
 	protected float waitTime = 5.0f;
 	private float time;
 	private Sprite background;

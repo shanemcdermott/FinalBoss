@@ -59,13 +59,10 @@ public class TitleMenuState extends AttractState
 				bShouldLoopPlay = true;
 			}
 		} 
-		else 
+		else if (bShouldLoopPlay) 
 		{
-			if (bShouldLoopPlay) 
-			{
-				thruster.done();
-				bShouldLoopPlay = false;
-			}
+			thruster.done();
+			bShouldLoopPlay = false;
 		}
 	}
 	

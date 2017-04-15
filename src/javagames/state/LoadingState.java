@@ -54,15 +54,19 @@ public class LoadingState extends State
 		soundCues = Collections.synchronizedMap(new HashMap<String, String>());
 		soundCues.put("explosion", "EXPLOSION_large_01.wav");
 		soundCues.put("fire-clip", "WEAPON_scifi_fire_02.wav");
+		soundCues.put("cue-gui-confirm", "WEAPON_scifi_fire_02.wav");
+		soundCues.put("cue-gui-cancel", "EXPLOSION_large_01.wav");
 		
 		//Add any looping sounds here
 		soundLoops = Collections.synchronizedMap(new HashMap<String, String>());
 		soundLoops.put("thruster", "DRONE9RE.WAV");
+		soundLoops.put("loop-gameOver", "DRONE9RE.WAV");
 	}
 	
 	@Override
 	public void enter()
 	{
+		controller.setAttribute("loading-state", this);
 		threadPool = Executors.newCachedThreadPool();
 		loadTasks = new ArrayList<Callable<Boolean>>();
 		
@@ -207,7 +211,7 @@ public class LoadingState extends State
 		{
 			LoopEvent loop = (LoopEvent) controller.getAttribute("ambience");
 			loop.fire();
-			getController().setState(new TitleMenuState());
+			getController().setState(new GameOverState());
 		}
 	}
 	
