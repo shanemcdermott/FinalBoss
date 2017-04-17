@@ -15,12 +15,12 @@ public abstract class RoamingState extends GameState
 	
 	/*Return the next State to switch to*/
 	@Override
-	protected abstract AttractState getState();
+	protected abstract State getNextState();
 
 	/*Return the Dungeon State of this level */
 	protected abstract DungeonState getDungeonState();
 
-	
+	@Override
 	protected abstract boolean shouldChangeState(); 
 	
 }

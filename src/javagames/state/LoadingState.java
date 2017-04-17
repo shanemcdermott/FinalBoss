@@ -32,14 +32,14 @@ import javagames.util.XMLUtility;
 
 
 //TODO: XML/ GameObject Loading
-public class LoadingState extends State 
+public abstract class LoadingState extends State 
 {
-	private String backgroundFileName = "space_background_600x600.png";
-	private String ambienceFileName = "AMBIENCE_alien.wav";
+	protected String backgroundFileName = "space_background_600x600.png";
+	protected String ambienceFileName = "AMBIENCE_alien.wav";
 	
 	//AttributeName, FileName
-	private Map<String, String> soundCues;
-	private Map<String, String> soundLoops;
+	protected Map<String, String> soundCues;
+	protected Map<String, String> soundLoops;
 	
 	private ExecutorService threadPool;
 	private List<Callable<Boolean>> loadTasks;
@@ -52,16 +52,16 @@ public class LoadingState extends State
 	{
 		//Add any Sound Cues here
 		soundCues = Collections.synchronizedMap(new HashMap<String, String>());
-		soundCues.put("explosion", "EXPLOSION_large_01.wav");
-		soundCues.put("fire-clip", "WEAPON_scifi_fire_02.wav");
-		soundCues.put("cue-gui-confirm", "WEAPON_scifi_fire_02.wav");
-		soundCues.put("cue-gui-cancel", "EXPLOSION_large_01.wav");
+		addSoundCues();
 		
 		//Add any looping sounds here
 		soundLoops = Collections.synchronizedMap(new HashMap<String, String>());
-		soundLoops.put("thruster", "DRONE9RE.WAV");
-		soundLoops.put("loop-gameOver", "DRONE9RE.WAV");
+		addSoundLoops();
 	}
+	
+	public abstract void addSoundCues();
+	public abstract void addSoundLoops();
+	protected abstract void enterNextState();
 	
 	@Override
 	public void enter()
@@ -209,9 +209,7 @@ public class LoadingState extends State
 		//Finished Loading
 		if(wait > 1.0f && threadPool.isShutdown())
 		{
-			LoopEvent loop = (LoopEvent) controller.getAttribute("ambience");
-			loop.fire();
-			getController().setState(new GameOverState());
+			enterNextState();
 		}
 	}
 	

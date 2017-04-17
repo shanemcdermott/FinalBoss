@@ -1,20 +1,39 @@
 package javagames.state;
 
-public class DungeonState extends GameState 
+public abstract class DungeonState extends GameState 
 {
 
-	/*Return the next state to move to*/
-	@Override
-	protected  State getState() 
+	
+	public boolean isBossDead()
 	{
-		return new LoadingState();
+		return false;
 	}
+	
+
+	
+	/*Return the next State to switch to*/
+	@Override
+	protected State getNextState()
+	{
+		if(isBossDead())
+		{
+			return getLoadingState();
+		}
+		else if(isAvatarDead())
+		{
+			return new GameOverState();
+		}
+		
+		return new TitleMenuState();
+	}
+
+	/*Return the Loading State of the next level */
+	protected abstract LoadingState getLoadingState();
 
 	@Override
-	protected LoadingState getNextLoadingState() {
-		// TODO Auto-generated method stub
-		return null;
+	protected boolean shouldChangeState()
+	{
+		return isBossDead() || isAvatarDead();
 	}
-
 	
 }

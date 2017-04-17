@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import javagames.state.LoadingState;
 import javagames.state.StateController;
+import javagames.state.TitleLoadingState;
 
 public class StateFramework extends WindowFramework 
 {
@@ -34,7 +35,7 @@ public class StateFramework extends WindowFramework
 		controller.setAttribute("app", this);
 		controller.setAttribute("keys", keyboard);
 		controller.setAttribute("viewport", getViewportTransform());
-		controller.setState(new LoadingState());
+		controller.setState(new TitleLoadingState());
 	}
 	
 	public void shutDownGame()

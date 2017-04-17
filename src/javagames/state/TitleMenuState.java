@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
+import javagames.sound.LoopEvent;
 import javagames.sound.SoundCue;
 import javagames.sound.SoundLooper;
 import javagames.util.GameConstants;
@@ -16,6 +17,8 @@ public class TitleMenuState extends AttractState
 {
 	protected Color fontColor = Color.GREEN;
 	
+	
+	protected LoopEvent ambience;
 	protected SoundCue laser;
 	
 	protected SoundLooper thruster;
@@ -27,6 +30,14 @@ public class TitleMenuState extends AttractState
 		super.enter();
 		laser = (SoundCue) controller.getAttribute("fire-clip");
 		thruster = (SoundLooper) controller.getAttribute("thruster");
+		ambience = (LoopEvent) controller.getAttribute("ambience");
+		ambience.fire();
+	}
+	
+	@Override
+	public void exit()
+	{
+		ambience.done();
 	}
 	
 	@Override
