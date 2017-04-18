@@ -1,11 +1,14 @@
 package javagames.state;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Vector;
 
 import javagames.game.GameObject;
 import javagames.sound.LoopEvent;
 import javagames.util.KeyboardInput;
+import javagames.util.Matrix3x3f;
 import javagames.util.Sprite;
 
 public abstract class GameState extends State 
@@ -15,6 +18,7 @@ public abstract class GameState extends State
 	protected KeyboardInput keys;
 	protected Sprite background;
 	
+	
 	@Override
 	public void enter() 
 	{
@@ -23,11 +27,16 @@ public abstract class GameState extends State
 		if(gameObjects == null)
 		{
 			gameObjects = new Vector<GameObject>();
-			//gameObjects.add(...);
+			addObjects();
 		}
 		
 	}
 
+	/*
+	 * Add any necessary game objects from the controller
+	 */
+	public abstract void addObjects();
+	
 	@Override
 	public void updateObjects(float delta) 
 	{
@@ -40,6 +49,16 @@ public abstract class GameState extends State
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
+		}
+	}
+	
+	@Override
+	public void render(Graphics2D g, Matrix3x3f view)
+	{
+		background.render(g,view);
+		for(GameObject go : gameObjects)
+		{
+			go.draw(g,view);
 		}
 	}
 	

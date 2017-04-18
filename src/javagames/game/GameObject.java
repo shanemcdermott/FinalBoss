@@ -49,6 +49,7 @@ public class GameObject
 	
 	public void draw(Graphics2D g, Matrix3x3f view)
 	{
+		sprite.render(g, view, position, rotation);
 		for (Vector2f pos : positionList) 
 		{
 			sprite.render(g, view, pos, rotation);
