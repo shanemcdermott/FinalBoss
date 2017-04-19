@@ -10,6 +10,8 @@ import javagames.util.Vector2f;
 
 public class GameObject 
 {
+	
+	private String name;
 	private Sprite sprite;
 	
 	private ArrayList<Vector2f[]> collisionList;

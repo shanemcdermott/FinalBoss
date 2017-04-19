@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Vector;
 
+import javagames.game.Avatar;
 import javagames.game.GameObject;
 import javagames.sound.LoopEvent;
 import javagames.util.KeyboardInput;
@@ -17,13 +18,14 @@ public abstract class GameState extends State
 	protected List<GameObject> gameObjects;
 	protected KeyboardInput keys;
 	protected Sprite background;
-	
+	protected Avatar avatar;
 	
 	@Override
 	public void enter() 
 	{
 		keys = (KeyboardInput) controller.getAttribute("keys");
 		background = (Sprite) controller.getAttribute("background");
+		avatar = (Avatar)controller.getAttribute("avatar");
 		if(gameObjects == null)
 		{
 			gameObjects = new Vector<GameObject>();
@@ -46,10 +48,14 @@ public abstract class GameState extends State
 			getController().setState(getNextState());
 			return;
 		}
+		
+		avatar.update(delta);
+		
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
 		}
+		
 	}
 	
 	@Override
@@ -60,6 +66,8 @@ public abstract class GameState extends State
 		{
 			go.draw(g,view);
 		}
+		
+		avatar.draw(g, view);
 	}
 	
 	protected boolean shouldChangeState()
