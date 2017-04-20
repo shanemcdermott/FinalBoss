@@ -41,8 +41,9 @@ public abstract class LoadingState extends State
 	protected Map<String, String> soundCues;
 	protected Map<String, String> soundLoops;
 	
+	
 	private ExecutorService threadPool;
-	private List<Callable<Boolean>> loadTasks;
+	protected List<Callable<Boolean>> loadTasks;
 	private List<Future<Boolean>> loadResults;
 	private int numberOfTasks;
 	private float percent;
@@ -61,6 +62,9 @@ public abstract class LoadingState extends State
 	
 	public abstract void addSoundCues();
 	public abstract void addSoundLoops();
+
+	public abstract void loadGameObjects();
+	
 	protected abstract void enterNextState();
 	
 	@Override
@@ -160,6 +164,8 @@ public abstract class LoadingState extends State
 				}
 			});
 		}
+		
+		loadGameObjects();
 		
 		loadResults = new ArrayList<Future<Boolean>>();
 		for(Callable<Boolean> task : loadTasks)

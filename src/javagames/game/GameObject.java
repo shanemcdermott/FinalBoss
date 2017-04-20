@@ -7,25 +7,31 @@ import java.util.ArrayList;
 import javagames.util.Matrix3x3f;
 import javagames.util.Sprite;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingCircle;
+import javagames.util.geom.BoundingShape;
 
-public class GameObject 
+public abstract class GameObject 
 {
 	
-	private String name;
-	private Sprite sprite;
+	protected String name;
+	protected Sprite sprite;
 	
-	private ArrayList<Vector2f[]> collisionList;
-	private ArrayList<Vector2f> positionList;
+	protected BoundingShape bounds;
 	
-	private float rotation;
-	private float rotationDelta;
-	private Vector2f position;
-	private Vector2f velocity;
-
-	public GameObject()
+	protected Matrix3x3f transform;
+	protected Vector2f scale;
+	protected float rotation;
+	protected Vector2f position;
+	
+	public GameObject(String name, Sprite sprite)
 	{
-		collisionList = new ArrayList<Vector2f[]>();
-		positionList = new ArrayList<Vector2f>();
+		this.name = name;
+		this.sprite = sprite;
+		bounds = new BoundingCircle(1.f);
+		transform = Matrix3x3f.identity();
+		scale = new Vector2f(1.f,1.f);
+		rotation = 0.f;
+		position = new Vector2f();
 	}
 	
 	public void setSprite(Sprite sprite) 
@@ -40,21 +46,26 @@ public class GameObject
 	
 	public void update(float deltaTime)
 	{
-		position = position.add(velocity.mul(deltaTime));
-		rotation += rotationDelta * deltaTime;
-		//collisionList.clear();
-		//Vector2f[] world = transformPolygon();
-		//collisionList.add(world);
-		positionList.clear();
-		positionList.add(position);
+		updateTransform();
+		bounds.setPosition(transform.mul(position));
+	}
+	
+	
+	public Matrix3x3f getWorldTransform()
+	{
+		Matrix3x3f wTransform = Matrix3x3f.scale(scale);
+		wTransform = wTransform.mul(Matrix3x3f.rotate(rotation));
+		wTransform = wTransform.mul(Matrix3x3f.translate(position));
+		return wTransform;
+	}
+	
+	private void updateTransform()
+	{
+		transform = getWorldTransform();
 	}
 	
 	public void draw(Graphics2D g, Matrix3x3f view)
 	{
 		sprite.render(g, view, position, rotation);
-		for (Vector2f pos : positionList) 
-		{
-			sprite.render(g, view, pos, rotation);
-		}
 	}
 }

@@ -39,6 +39,12 @@ public abstract class GameState extends State
 	 */
 	public abstract void addObjects();
 	
+	public void processInput(float delta) 
+	{
+		avatar.processInput(keys, delta);
+	}
+
+	
 	@Override
 	public void updateObjects(float delta) 
 	{
@@ -50,7 +56,6 @@ public abstract class GameState extends State
 		}
 		
 		avatar.update(delta);
-		
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
@@ -61,13 +66,16 @@ public abstract class GameState extends State
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
+	
 		background.render(g,view);
+		avatar.draw(g, view);
+		
 		for(GameObject go : gameObjects)
 		{
 			go.draw(g,view);
 		}
 		
-		avatar.draw(g, view);
+		
 	}
 	
 	protected boolean shouldChangeState()

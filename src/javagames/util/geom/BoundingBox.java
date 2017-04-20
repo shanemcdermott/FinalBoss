@@ -3,11 +3,15 @@ package javagames.util.geom;
 
 import javagames.util.Vector2f;
 
-public class BoundingBox implements BoundingShape 
+public class BoundingBox extends BoundingShape 
 {
-
-	public Vector2f min;
-	public Vector2f max;
+	
+	protected Vector2f min;
+	protected Vector2f max;
+	
+	public Vector2f minCpy;
+	public Vector2f maxCpy;
+	
 	
 	public BoundingBox()
 	{
@@ -16,8 +20,19 @@ public class BoundingBox implements BoundingShape
 	
 	public BoundingBox(Vector2f min, Vector2f max)
 	{
-		this.min = min;
-		this.max = max;
+		position = new Vector2f();
+		this.min = new Vector2f(min);
+		this.max = new Vector2f(max);
+		this.minCpy = new Vector2f(min);
+		this.maxCpy = new Vector2f(max);
+	}
+	
+	@Override
+	public void setPosition(Vector2f position)
+	{
+		this.position = position;
+		this.minCpy = min.add(position);
+		this.maxCpy = max.add(position);
 	}
 	
 	@Override
@@ -39,7 +54,7 @@ public class BoundingBox implements BoundingShape
 	 */
 	public boolean intersectAABB(BoundingBox otherBox)
 	{	
-		return intersectAABB(otherBox.min, otherBox.max);
+		return intersectAABB(otherBox.minCpy, otherBox.maxCpy);
 	}
 	
 	
@@ -52,9 +67,9 @@ public class BoundingBox implements BoundingShape
 	public boolean intersectAABB(Vector2f minB, Vector2f maxB)
 	{
 		//Horizontal Check
-		if(min.x > maxB.x || minB.x > max.x) return false;
+		if(minCpy.x > maxB.x || minB.x > maxCpy.x) return false;
 		//Vertical Check
-		if(min.y > maxB.y || minB.y > max.y) return false;
+		if(minCpy.y > maxB.y || minB.y > maxCpy.y) return false;
 		
 		return true;
 	}
@@ -66,7 +81,7 @@ public class BoundingBox implements BoundingShape
 	 */
 	public boolean intersectsCircle(BoundingCircle circle)
 	{
-		return intersectsCircle(circle.center, circle.radius);
+		return intersectsCircle(circle.position, circle.radius);
 	}
 	
 	/**
@@ -78,10 +93,10 @@ public class BoundingBox implements BoundingShape
 	public boolean intersectsCircle(Vector2f center, float radius)
 	{
 		float d = 0.f;
-		if(center.x < min.x) d+= (center.x - min.x) * (center.x - min.x);
-		if(center.x > max.x) d+= (center.x - max.x) *(center.x - max.x);
-		if(center.y < min.y) d+= (center.y - min.y) * (center.y - min.y);
-		if(center.y > max.y) d+= (center.y - max.y) * (center.y - max.y);
+		if(center.x < minCpy.x) d+= (center.x - minCpy.x) * (center.x - minCpy.x);
+		if(center.x > maxCpy.x) d+= (center.x - maxCpy.x) *(center.x - maxCpy.x);
+		if(center.y < minCpy.y) d+= (center.y - minCpy.y) * (center.y - minCpy.y);
+		if(center.y > maxCpy.y) d+= (center.y - maxCpy.y) * (center.y - maxCpy.y);
 		
 		return d < radius*radius;
 	}
@@ -89,7 +104,7 @@ public class BoundingBox implements BoundingShape
 	@Override
 	public boolean contains(Vector2f point) 
 	{
-		return point.x > min.x && point.x < max.x && point.y > min.y && point.y < max.y;
+		return point.x > minCpy.x && point.x < maxCpy.x && point.y > minCpy.y && point.y < maxCpy.y;
 	}
 
 	/**
@@ -98,8 +113,8 @@ public class BoundingBox implements BoundingShape
 	 */
 	public void minCopy(Vector2f outMin)
 	{
-		outMin.x = min.x;
-		outMin.y = min.y;
+		outMin.x = minCpy.x;
+		outMin.y = minCpy.y;
 	}
 
 	/**
@@ -108,8 +123,8 @@ public class BoundingBox implements BoundingShape
 	 */
 	public void maxCopy(Vector2f outMax)
 	{	
-		outMax.x = max.x;
-		outMax.y = max.y;
+		outMax.x = maxCpy.x;
+		outMax.y = maxCpy.y;
 	}
 	
 	/**
@@ -126,6 +141,6 @@ public class BoundingBox implements BoundingShape
 	@Override
 	public String toString()
 	{
-		return String.format("Min: %s Max: %s", min, max);
+		return String.format("Min: %s Max: %s", minCpy, maxCpy);
 	}
 }

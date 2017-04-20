@@ -101,6 +101,29 @@ public class Vector2f {
 				* (float) Math.sin(angle));
 	}
 
+	public static Vector2f up()
+	{
+		return new Vector2f(0.f,1.f);
+	}
+	
+	public static Vector2f down()
+	{
+		return new Vector2f(0.f,-1.f);
+	}
+	
+	public static Vector2f left()
+	{
+		return new Vector2f(-1.f,0.f);
+	}
+	
+	public static Vector2f right()
+	{
+		return new Vector2f(1.f,0.f);
+	}
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return String.format("(%s,%s)", x, y);

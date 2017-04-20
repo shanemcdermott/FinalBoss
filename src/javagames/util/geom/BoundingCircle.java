@@ -3,10 +3,8 @@ package javagames.util.geom;
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
 
-public class BoundingCircle implements BoundingShape
+public class BoundingCircle extends BoundingShape
 {
-
-	public Vector2f center;
 	public float radius;
 	
 	public BoundingCircle(float radius)
@@ -14,9 +12,9 @@ public class BoundingCircle implements BoundingShape
 		this(new Vector2f(), radius);
 	}
 	
-	public BoundingCircle(Vector2f center, float radius)
+	public BoundingCircle(Vector2f position, float radius)
 	{
-		this.center = center;
+		this.position = position;
 		this.radius = radius;
 	}
 	
@@ -37,18 +35,18 @@ public class BoundingCircle implements BoundingShape
 
 	public boolean intersectsCircle(BoundingCircle otherCircle)
 	{
-		return intersectsCircle(otherCircle.center, otherCircle.radius);
+		return intersectsCircle(otherCircle.position, otherCircle.radius);
 	}
 	
 	/**
 	 * Intersection test with another circle
-	 * @param center	Other circle's Center
+	 * @param position	Other circle's position
 	 * @param radius	Other circle's Radius
 	 * @return	true if the circles intersect
 	 */
-	public boolean intersectsCircle(Vector2f center, float radius)
+	public boolean intersectsCircle(Vector2f position, float radius)
 	{
-		Vector2f c = this.center.sub(center);
+		Vector2f c = this.position.sub(position);
 		float r = this.radius + radius;
 		return c.lenSqr() < r * r;
 	}
@@ -56,7 +54,7 @@ public class BoundingCircle implements BoundingShape
 	@Override
 	public boolean contains(Vector2f point) 
 	{
-		Vector2f dist = point.sub(center);
+		Vector2f dist = point.sub(position);
 		return dist.lenSqr() < radius*radius;
 	}
 	

@@ -45,12 +45,13 @@ public class ResourceLoader {
 		Document document = XMLUtility.parseDocument(model);
 		return document.getDocumentElement();
 	}
-
+	
 	public static BufferedImage loadImage(Class<?> clazz, String fileName) throws Exception
 	{
 		InputStream stream = ResourceLoader.load(clazz, "/images/" + fileName);
 		return ImageIO.read( stream );
 	}
+	
 	
 	public static byte[] loadSound(Class<?> clazz, String fileName)
 	{

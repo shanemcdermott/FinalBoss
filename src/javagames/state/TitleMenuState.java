@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
+import javagames.game.Avatar;
 import javagames.sound.LoopEvent;
 import javagames.sound.SoundCue;
 import javagames.sound.SoundLooper;
@@ -17,7 +18,7 @@ public class TitleMenuState extends AttractState
 {
 	protected Color fontColor = Color.GREEN;
 	
-	
+	protected Avatar	avatar;
 	protected LoopEvent ambience;
 	protected SoundCue laser;
 	
@@ -28,6 +29,7 @@ public class TitleMenuState extends AttractState
 	public void enter()
 	{
 		super.enter();
+		avatar = (Avatar)controller.getAttribute("avatar");
 		laser = (SoundCue) controller.getAttribute("fire-clip");
 		thruster = (SoundLooper) controller.getAttribute("thruster");
 		ambience = (LoopEvent) controller.getAttribute("ambience");
@@ -55,7 +57,8 @@ public class TitleMenuState extends AttractState
 	public void processInput(float deltaTime)
 	{
 		super.processInput(deltaTime);
-		
+		avatar.processInput(keys, deltaTime);
+		avatar.update(deltaTime);
 		//Sound Cue Example
 		if(keys.keyDownOnce(KeyEvent.VK_SPACE))
 		{
@@ -97,5 +100,7 @@ public class TitleMenuState extends AttractState
 			"P R E S S  E S C  T O  E X I T" 
 		};
 		Utility.drawCenteredString(g, width, height / 3, msg);
+		
+		avatar.draw(g, view);
 	}
 }
