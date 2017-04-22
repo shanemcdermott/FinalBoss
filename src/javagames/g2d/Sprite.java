@@ -9,8 +9,8 @@ import javagames.util.Vector2f;
 
 public class Sprite {
 	
-	private BufferedImage image;
-	private BufferedImage scaled;
+	protected BufferedImage image;
+	protected BufferedImage scaled;
 	private Vector2f topLeft;
 	private Vector2f bottomRight;
 

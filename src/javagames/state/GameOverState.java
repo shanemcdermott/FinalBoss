@@ -13,7 +13,7 @@ import javagames.sound.SoundLooper;
 import javagames.util.GameConstants;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 import javagames.util.Utility;
 
 public class GameOverState extends State 

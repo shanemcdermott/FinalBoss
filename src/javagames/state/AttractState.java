@@ -8,7 +8,7 @@ import java.util.Vector;
 import javagames.game.GameObject;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 
 /*State that cycles to another State */
 public abstract class AttractState extends State 

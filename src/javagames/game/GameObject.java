@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import javagames.util.Matrix3x3f;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingCircle;
 import javagames.util.geom.BoundingShape;

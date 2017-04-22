@@ -1,6 +1,6 @@
 package javagames.game;
 
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 
 public class PhysicsObject extends GameObject

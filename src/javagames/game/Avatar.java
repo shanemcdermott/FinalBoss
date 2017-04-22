@@ -3,7 +3,8 @@ package javagames.game;
 import com.sun.glass.events.KeyEvent;
 
 import javagames.util.KeyboardInput;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
+import javagames.g2d.SpriteSheet;
 import javagames.util.Vector2f;
 
 public class Avatar extends Pawn 
@@ -17,7 +18,7 @@ public class Avatar extends Pawn
 	protected float manaBonus;
 	protected float manaCurrent;
 	
-	public Avatar(String name, Sprite sprite)
+	public Avatar(String name, SpriteSheet sprite)
 	{
 		super(name,sprite);
 		
@@ -25,6 +26,7 @@ public class Avatar extends Pawn
 		manaBase = 100.f;
 		manaScale = 1.f;
 		manaBonus = 0.f;
+		
 	}
 	
 	/*Apply appropriate level modifiers here */
@@ -55,7 +57,6 @@ public class Avatar extends Pawn
 	{
 		if(keyboard.keyDown(KeyEvent.VK_W) || keyboard.keyDown(KeyEvent.VK_UP))
 			move(Vector2f.up());
-		
 		else if(keyboard.keyDown(KeyEvent.VK_S) || keyboard.keyDown(KeyEvent.VK_DOWN))
 			move(Vector2f.down());
 		

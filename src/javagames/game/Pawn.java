@@ -1,6 +1,7 @@
 package javagames.game;
 
-import javagames.util.Sprite;
+import javagames.g2d.SpriteSheet;
+import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 
 public abstract class Pawn extends PhysicsObject 
@@ -12,13 +13,14 @@ public abstract class Pawn extends PhysicsObject
 	
 	protected float speedScale;
 
-	public Pawn(String name, Sprite sprite) 
+	public Pawn(String name, SpriteSheet sprite) 
 	{
 		super(name, sprite);
 		healthBase = 10.f;
 		healthScale = 1.f;
 		healthBonus = 0.f;
 		speedScale = 1.f;
+		((SpriteSheet)sprite).startAnimation("WalkLeft");
 	}
 
 
@@ -60,5 +62,10 @@ public abstract class Pawn extends PhysicsObject
 		velocity = direction.mul(speedScale);
 	}
 	
+	public void update(float deltaTime)
+	{
+		super.update(deltaTime);
+		((SpriteSheet)sprite).update(deltaTime);
+	}
 	
 }

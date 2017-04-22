@@ -10,7 +10,7 @@ import javagames.game.GameObject;
 import javagames.sound.LoopEvent;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 
 public abstract class GameState extends State 
 {

@@ -25,7 +25,7 @@ import javagames.sound.LoopEvent;
 import javagames.util.GameConstants;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
-import javagames.util.Sprite;
+import javagames.g2d.Sprite;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
