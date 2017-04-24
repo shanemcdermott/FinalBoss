@@ -29,6 +29,7 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
+		//view = view.mul(Matrix3x3f.translate(avatar.getPosition()));
 		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
 		avatar.draw(g, view);
 		

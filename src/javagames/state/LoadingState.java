@@ -87,14 +87,14 @@ public abstract class LoadingState extends State
 			
 				Vector2f worldTopLeft = new Vector2f
 				(
-					-GameConstants.WORLD_WIDTH * 2.0f,
-					GameConstants.WORLD_HEIGHT * 2.0f 
+					-GameConstants.WORLD_WIDTH / 2.0f,
+					GameConstants.WORLD_HEIGHT / 2.0f 
 				);
 				
 				Vector2f worldBottomRight = new Vector2f
 				(
-					GameConstants.WORLD_WIDTH * 2.0f,
-					-GameConstants.WORLD_HEIGHT * 2.0f 
+					GameConstants.WORLD_WIDTH / 2.0f,
+					-GameConstants.WORLD_HEIGHT / 2.0f 
 				);
 				
 				Sprite sprite =	new Sprite( image, worldTopLeft, worldBottomRight );

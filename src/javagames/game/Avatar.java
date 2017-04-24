@@ -61,6 +61,7 @@ public class Avatar extends GreaterPawn
 		if(keyboard.keysDownOnce(KeyEvent.VK_W, KeyEvent.VK_UP))
 		{
 			move(Vector2f.up());
+			((SpriteSheet)sprite).startAnimation("WalkUp");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_S, KeyEvent.VK_DOWN))
 		{
@@ -71,7 +72,7 @@ public class Avatar extends GreaterPawn
 		else if(keyboard.keysDownOnce(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
 		{
 			move(Vector2f.right());
-				((SpriteSheet)sprite).startAnimation("WalkLeft");
+			((SpriteSheet)sprite).startAnimation("WalkRight");
 		}
 		
 		else if(keyboard.keysDownOnce(KeyEvent.VK_A,KeyEvent.VK_LEFT))
@@ -91,7 +92,7 @@ public class Avatar extends GreaterPawn
 		else if(!keyboard.keysDown(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT))
 		{
 			stopMoving();
-			
+			((SpriteSheet)sprite).startAnimation("StandDown");
 		}
 	}
 	
