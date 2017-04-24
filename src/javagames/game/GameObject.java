@@ -50,6 +50,10 @@ public abstract class GameObject
 		bounds.setPosition(transform.mul(position));
 	}
 	
+	public Vector2f getPosition()
+	{
+		return position;
+	}
 	
 	public Matrix3x3f getWorldTransform()
 	{

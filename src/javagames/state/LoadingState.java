@@ -34,6 +34,8 @@ import javagames.util.XMLUtility;
 //TODO: XML/ GameObject Loading
 public abstract class LoadingState extends State 
 {
+	protected String displayString = GameConstants.APP_TITLE;
+	
 	protected String backgroundFileName = "space_background_600x600.png";
 	protected String ambienceFileName = "AMBIENCE_alien.wav";
 	
@@ -85,14 +87,14 @@ public abstract class LoadingState extends State
 			
 				Vector2f worldTopLeft = new Vector2f
 				(
-					-GameConstants.WORLD_WIDTH / 2.0f,
-					GameConstants.WORLD_HEIGHT / 2.0f 
+					-GameConstants.WORLD_WIDTH * 2.0f,
+					GameConstants.WORLD_HEIGHT * 2.0f 
 				);
 				
 				Vector2f worldBottomRight = new Vector2f
 				(
-					GameConstants.WORLD_WIDTH / 2.0f,
-					-GameConstants.WORLD_HEIGHT / 2.0f 
+					GameConstants.WORLD_WIDTH * 2.0f,
+					-GameConstants.WORLD_HEIGHT * 2.0f 
 				);
 				
 				Sprite sprite =	new Sprite( image, worldTopLeft, worldBottomRight );
@@ -228,7 +230,7 @@ public abstract class LoadingState extends State
 		g.setFont(new Font("Arial", Font.PLAIN, 20));
 		g.setColor(Color.GREEN);
 		Utility.drawCenteredString(g, app.getScreenWidth(),
-				app.getScreenHeight() / 3, GameConstants.APP_TITLE);
+				app.getScreenHeight() / 3, displayString);
 		int vw = (int) (app.getScreenWidth() * .9f);
 		int vh = (int) (app.getScreenWidth() * .05f);
 		int vx = (app.getScreenWidth() - vw) / 2;

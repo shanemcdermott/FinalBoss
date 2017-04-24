@@ -26,6 +26,7 @@ public abstract class GameState extends State
 		keys = (KeyboardInput) controller.getAttribute("keys");
 		background = (Sprite) controller.getAttribute("background");
 		avatar = (Avatar)controller.getAttribute("avatar");
+		avatar.reset();
 		if(gameObjects == null)
 		{
 			gameObjects = new Vector<GameObject>();
@@ -80,12 +81,7 @@ public abstract class GameState extends State
 	
 	protected boolean shouldChangeState()
 	{
-		return isAvatarDead();
-	}
-	
-	public boolean isAvatarDead()
-	{
-		return false;
+		return avatar.isDead();
 	}
 	
 	protected abstract State getNextState();

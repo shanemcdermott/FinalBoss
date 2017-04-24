@@ -57,11 +57,22 @@ public abstract class Pawn extends PhysicsObject
 			die(source);
 	}
 
+	public boolean isDead()
+	{
+		return getCurrentHealth() <= 0.f;
+	}
+	
+	protected void stopMoving()
+	{
+		velocity = new Vector2f();
+	}
+	
 	protected void move(Vector2f direction)
 	{
 		velocity = direction.mul(speedScale);
 	}
 	
+	@Override
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);

@@ -16,6 +16,7 @@ public class PhysicsObject extends GameObject
 		velocity = new Vector2f();
 	}
 	
+	@Override
 	public void update(float deltaTime)
 	{
 		position = position.add(velocity.mul(deltaTime));

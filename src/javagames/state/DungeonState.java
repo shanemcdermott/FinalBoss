@@ -19,7 +19,7 @@ public abstract class DungeonState extends GameState
 		{
 			return getLoadingState();
 		}
-		else if(isAvatarDead())
+		else if(avatar.isDead())
 		{
 			return new GameOverState();
 		}
@@ -33,7 +33,7 @@ public abstract class DungeonState extends GameState
 	@Override
 	protected boolean shouldChangeState()
 	{
-		return isBossDead() || isAvatarDead();
+		return isBossDead() || avatar.isDead();
 	}
 	
 }

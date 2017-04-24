@@ -13,12 +13,13 @@ public class SpriteSheet extends Sprite
 {
 	
 	private Map<String, Animation> 	animations;
-	private Animation				currentAnimation;
+	private String					currentAnimation;
 
 	public SpriteSheet(BufferedImage image, Vector2f topLeft, Vector2f bottomRight, Map<String, Animation> animations) 
 	{
 		super(image, topLeft, bottomRight);
 		this.animations = Collections.synchronizedMap(new HashMap<String, Animation>(animations));
+		currentAnimation = "None";
 	}
 
 	public void addAnimation(String name, Animation anim)
@@ -28,15 +29,20 @@ public class SpriteSheet extends Sprite
 	
 	public void startAnimation(String name)
 	{
-		currentAnimation = animations.get(name);
-		currentAnimation.start();
+		currentAnimation = name;
+		animations.get(name).start();
+	}
+	
+	public String getCurrentAnimation()
+	{
+		return currentAnimation;
 	}
 	
 	public void update(float deltaTime)
 	{
-		currentAnimation.update(deltaTime);
-		image = currentAnimation.getCurrentImage();
-		scaled = currentAnimation.getCurrentImage();
+		animations.get(currentAnimation).update(deltaTime);
+		image = animations.get(currentAnimation).getCurrentImage();
+		scaled = animations.get(currentAnimation).getCurrentImage();
 	}
 
 }

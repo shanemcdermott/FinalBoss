@@ -21,6 +21,29 @@ public class KeyboardInput implements KeyListener {
       return polled[ keyCode ] == 1;
    }
    
+   public boolean keysDown(int... keyCodes)
+   {
+	   for(int i = 0; i < keyCodes.length; i++)
+	   {
+		   if(polled[keyCodes[i]] > 0)
+			   return true;
+	   }
+	   
+	   return false;
+   }
+   
+   public boolean keysDownOnce(int... keyCodes)
+   {
+	   for(int i = 0; i < keyCodes.length; i++)
+	   {
+		   if(polled[keyCodes[i]] == 1)
+			   return true;
+	   }
+	   
+	   return false;
+   }
+   
+   
    public synchronized void poll() {
       for( int i = 0; i < keys.length; ++i ) {
          if( keys[i] ) {

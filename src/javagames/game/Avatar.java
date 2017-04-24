@@ -1,13 +1,16 @@
 package javagames.game;
 
+import java.awt.Graphics2D;
+
 import com.sun.glass.events.KeyEvent;
 
 import javagames.util.KeyboardInput;
+import javagames.util.Matrix3x3f;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.util.Vector2f;
 
-public class Avatar extends Pawn 
+public class Avatar extends GreaterPawn 
 {
 	
 	protected int	experienceTotal;
@@ -55,18 +58,41 @@ public class Avatar extends Pawn
 	
 	public void processInput(KeyboardInput keyboard, float deltaTime)
 	{
-		if(keyboard.keyDown(KeyEvent.VK_W) || keyboard.keyDown(KeyEvent.VK_UP))
+		if(keyboard.keysDownOnce(KeyEvent.VK_W, KeyEvent.VK_UP))
+		{
 			move(Vector2f.up());
-		else if(keyboard.keyDown(KeyEvent.VK_S) || keyboard.keyDown(KeyEvent.VK_DOWN))
+		}
+		else if(keyboard.keysDownOnce(KeyEvent.VK_S, KeyEvent.VK_DOWN))
+		{
 			move(Vector2f.down());
+			((SpriteSheet)sprite).startAnimation("WalkDown");
+		}
 		
-		else if(keyboard.keyDown(KeyEvent.VK_D) || keyboard.keyDown(KeyEvent.VK_RIGHT))
+		else if(keyboard.keysDownOnce(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
+		{
 			move(Vector2f.right());
+				((SpriteSheet)sprite).startAnimation("WalkLeft");
+		}
 		
-		else if(keyboard.keyDown(KeyEvent.VK_A) || keyboard.keyDown(KeyEvent.VK_LEFT))
+		else if(keyboard.keysDownOnce(KeyEvent.VK_A,KeyEvent.VK_LEFT))
+		{
 			move(Vector2f.left());
-		else
-			move(new Vector2f());
+			((SpriteSheet)sprite).startAnimation("WalkLeft");
+
+		}
+		else if(keyboard.keysDownOnce(KeyEvent.VK_1,KeyEvent.VK_NUMPAD1))
+			fastAction();
+		else if(keyboard.keysDownOnce(KeyEvent.VK_2,KeyEvent.VK_NUMPAD2))
+			powerAction();	
+		else if(keyboard.keysDownOnce(KeyEvent.VK_3,KeyEvent.VK_NUMPAD3))
+			specialAction();
+		else if(keyboard.keysDownOnce(KeyEvent.VK_4, KeyEvent.VK_NUMPAD4))
+			powerAction();	
+		else if(!keyboard.keysDown(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT))
+		{
+			stopMoving();
+			
+		}
 	}
 	
 	@Override
@@ -94,4 +120,16 @@ public class Avatar extends Pawn
 		
 	}
 
+	@Override
+	protected void ultimateAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void draw(Graphics2D g, Matrix3x3f view)
+	{
+		sprite.render(g, view, new Vector2f(), rotation);
+	}
+	
 }

@@ -140,6 +140,10 @@ public class GameObjectFactory
 		animations.put("WalkLeft", anim);
 		anim = new Animation(image, 1, 0.5f, 0, 0, 23, 36);
 		animations.put("StandLeft", anim);
+		anim = new Animation(image, 4, 0.4f, 0, 36, 23, 36);
+		animations.put("WalkDown", anim);
+		anim = new Animation(image, 1, 0.5f, 0, 36, 23, 36);
+		animations.put("StandDown", anim);
 		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );

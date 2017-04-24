@@ -7,6 +7,8 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
 import javagames.game.Avatar;
+import javagames.kanto.KantoLoadingState;
+import javagames.kanto.KantoRoamingState;
 import javagames.sound.LoopEvent;
 import javagames.sound.SoundCue;
 import javagames.sound.SoundLooper;
@@ -77,6 +79,11 @@ public class TitleMenuState extends AttractState
 		{
 			thruster.done();
 			bShouldLoopPlay = false;
+		}
+		else if(keys.keyDownOnce(KeyEvent.VK_ENTER))
+		{
+			getController().setState(new KantoLoadingState());
+			return;
 		}
 	}
 	
