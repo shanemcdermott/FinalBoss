@@ -15,6 +15,7 @@ public class GameObject
 	
 	protected String name;
 	protected Sprite sprite;
+	protected ArrayList<String> tags;
 	
 	protected BoundingShape bounds;
 	
@@ -32,6 +33,19 @@ public class GameObject
 		scale = new Vector2f(1.f,1.f);
 		rotation = 0.f;
 		position = new Vector2f();
+	}
+	
+	public void addTag(String...cTags)
+	{
+		for(String s : cTags)
+		{
+			this.tags.add(s);
+		}
+	}
+	
+	public ArrayList<String> getTags()
+	{
+		return new ArrayList<String>(tags);
 	}
 	
 	public void setSprite(Sprite sprite) 
