@@ -1,10 +1,14 @@
 package javagames.kanto;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
+import javagames.g2d.Animation;
 import javagames.g2d.Sprite;
+import javagames.g2d.SpriteSheet;
 import javagames.game.Avatar;
+import javagames.game.GameObject;
 import javagames.game.GameObjectFactory;
 import javagames.state.LoadingState;
 import javagames.state.TitleMenuState;
@@ -63,14 +67,14 @@ public class KantoLoadingState extends LoadingState
 					
 						Vector2f worldTopLeft = new Vector2f
 						(
-							-GameConstants.WORLD_WIDTH * 2.0f,
-							GameConstants.WORLD_HEIGHT * 2.0f 
+							-GameConstants.WORLD_WIDTH / 2.0f,
+							GameConstants.WORLD_HEIGHT / 2.0f 
 						);
 						
 						Vector2f worldBottomRight = new Vector2f
 						(
-							GameConstants.WORLD_WIDTH * 2.0f,
-							-GameConstants.WORLD_HEIGHT * 2.0f 
+							GameConstants.WORLD_WIDTH / 2.0f,
+							-GameConstants.WORLD_HEIGHT / 2.0f 
 						);
 						
 						Sprite sprite =	new Sprite( image, worldTopLeft, worldBottomRight );
@@ -84,6 +88,36 @@ public class KantoLoadingState extends LoadingState
 						return Boolean.TRUE;
 					}
 				});
+
+		//Load Tree
+		loadTasks.add( new Callable<Boolean>() 
+		{
+			@Override
+			public Boolean call() throws Exception 
+			{
+				
+				BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "ship.png");
+				//image = image.getSubimage(0,0,100,100);
+				Vector2f topLeft = new Vector2f
+				(
+					-0.5f,
+					0.5f 
+				);
+				
+				Vector2f bottomRight = new Vector2f
+				(
+					0.5f,
+					-0.5f 
+				);
+				
+				Sprite sprite =	new Sprite( image, topLeft, bottomRight);
+			
+				GameObject tree = new GameObject("tree", sprite);
+				controller.setAttribute( "tree", tree);
+				
+				return Boolean.TRUE;
+			}
+		});
 		
 		
 		

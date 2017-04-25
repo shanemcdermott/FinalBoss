@@ -7,6 +7,7 @@ import javagames.game.GameObject;
 import javagames.sound.SoundCue;
 import javagames.sound.SoundLooper;
 import javagames.util.Matrix3x3f;
+import javagames.util.Utility;
 
 /*Roaming State is the "Open-World, Mayhem-causing portion of each level */
 
@@ -29,15 +30,14 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
-		//view = view.mul(Matrix3x3f.translate(avatar.getPosition()));
+	
 		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
-		avatar.draw(g, view);
+		avatar.draw(g, view, avatar.getPosition());
 		
 		for(GameObject go : gameObjects)
 		{
-			go.draw(g,view);
+			go.draw(g,view, avatar.getPosition());
 		}
-		
 		
 	}
 	

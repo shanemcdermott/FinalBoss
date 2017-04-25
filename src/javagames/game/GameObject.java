@@ -10,7 +10,7 @@ import javagames.util.Vector2f;
 import javagames.util.geom.BoundingCircle;
 import javagames.util.geom.BoundingShape;
 
-public abstract class GameObject 
+public class GameObject 
 {
 	
 	protected String name;
@@ -49,6 +49,11 @@ public abstract class GameObject
 		updateTransform();
 		bounds.setPosition(transform.mul(position));
 	}
+
+	public void setPosition(Vector2f position)
+	{
+		this.position = new Vector2f(position);
+	}
 	
 	public Vector2f getPosition()
 	{
@@ -70,6 +75,11 @@ public abstract class GameObject
 	
 	public void draw(Graphics2D g, Matrix3x3f view)
 	{
-		sprite.render(g, view, position, rotation);
+		sprite.render(g, view,position,rotation);
+	}
+	
+	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{
+		sprite.render(g, view, position.sub(posOffset), rotation);
 	}
 }

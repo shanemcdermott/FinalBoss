@@ -20,8 +20,8 @@ public class StateFramework extends WindowFramework
 		appHeight = GameConstants.APP_HEIGHT;
 		appSleep = GameConstants.APP_SLEEP;
 		appTitle = GameConstants.APP_TITLE;
-		appWorldWidth = GameConstants.WORLD_WIDTH;
-		appWorldHeight = GameConstants.WORLD_HEIGHT;
+		appWorldWidth = GameConstants.VIEW_WIDTH;
+		appWorldHeight = GameConstants.VIEW_HEIGHT;
 		appBorderScale = GameConstants.BORDER_SCALE;
 		appDisableCursor = GameConstants.DISABLE_CURSOR;
 		appMaintainRatio = GameConstants.MAINTAIN_RATIO;

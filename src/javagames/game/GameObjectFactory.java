@@ -12,7 +12,6 @@ import javagames.util.Vector2f;
 public class GameObjectFactory 
 {
 	
-	
 	public static Avatar createAvatar(String name) throws Exception
 	{
 		switch(name)

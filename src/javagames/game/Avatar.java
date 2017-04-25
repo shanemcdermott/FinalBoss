@@ -127,10 +127,11 @@ public class Avatar extends GreaterPawn
 		
 	}
 	
+	
 	@Override
-	public void draw(Graphics2D g, Matrix3x3f view)
+	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
-		sprite.render(g, view, new Vector2f(), rotation);
+		sprite.render(g, view, position.sub(posOffset), rotation);
 	}
 	
 }

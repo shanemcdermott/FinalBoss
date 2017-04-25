@@ -1,11 +1,13 @@
 package javagames.kanto;
 
+import javagames.game.GameObject;
 import javagames.state.AttractState;
 import javagames.state.DungeonState;
 import javagames.state.GameOverState;
 import javagames.state.RoamingState;
 import javagames.state.State;
 import javagames.state.TitleMenuState;
+import javagames.util.Vector2f;
 
 public class KantoRoamingState extends RoamingState 
 {
@@ -36,7 +38,9 @@ public class KantoRoamingState extends RoamingState
 	@Override
 	public void addObjects() 
 	{
-		// TODO Auto-generated method stub
+		GameObject tree =(GameObject)controller.getAttribute("tree");
+		tree.setPosition(new Vector2f(2.0f, 0.f));
+		gameObjects.add(tree);
 
 	}
 
