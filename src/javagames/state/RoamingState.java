@@ -32,6 +32,7 @@ public abstract class RoamingState extends GameState
 	{
 	
 		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
+		
 		avatar.draw(g, view, avatar.getPosition());
 		
 		for(GameObject go : gameObjects)

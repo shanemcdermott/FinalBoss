@@ -9,6 +9,8 @@ import javagames.util.Matrix3x3f;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingShape;
 
 public class Avatar extends GreaterPawn 
 {
@@ -24,12 +26,15 @@ public class Avatar extends GreaterPawn
 	public Avatar(String name, SpriteSheet sprite)
 	{
 		super(name,sprite);
-		
+	}
+	
+	public Avatar(String name, SpriteSheet sprite, BoundingShape bounds)
+	{
+		super(name,sprite,bounds);
 		healthBase = 100.f;
 		manaBase = 100.f;
 		manaScale = 1.f;
 		manaBonus = 0.f;
-		
 	}
 	
 	/*Apply appropriate level modifiers here */

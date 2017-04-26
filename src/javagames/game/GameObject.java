@@ -1,5 +1,6 @@
 package javagames.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -7,17 +8,19 @@ import java.util.ArrayList;
 import javagames.util.Matrix3x3f;
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingCircle;
 import javagames.util.geom.BoundingShape;
 
-public class GameObject 
+public class GameObject
 {
 	
 	protected String name;
 	protected Sprite sprite;
 	protected ArrayList<String> tags;
-	
+		
 	protected BoundingShape bounds;
+	
 	
 	protected Matrix3x3f transform;
 	protected Vector2f scale;
@@ -26,9 +29,15 @@ public class GameObject
 	
 	public GameObject(String name, Sprite sprite)
 	{
+		this(name,sprite, new BoundingBox(new Vector2f(-1.f, -1.f), new Vector2f(1.f,1.f)));
+	}
+	
+	public GameObject(String name, Sprite sprite, BoundingShape bounds)
+	{
 		this.name = name;
 		this.sprite = sprite;
-		bounds = new BoundingCircle(1.f);
+		this.bounds = bounds;
+		tags = new ArrayList<String>();
 		transform = Matrix3x3f.identity();
 		scale = new Vector2f(1.f,1.f);
 		rotation = 0.f;
@@ -48,6 +57,11 @@ public class GameObject
 		return new ArrayList<String>(tags);
 	}
 	
+	public boolean hasTag(String tag)
+	{
+		return tags.contains(tag);
+	}
+	
 	public void setSprite(Sprite sprite) 
 	{
 		this.sprite = sprite;
@@ -63,10 +77,15 @@ public class GameObject
 		updateTransform();
 		bounds.setPosition(transform.mul(position));
 	}
-
+	
 	public void setPosition(Vector2f position)
 	{
 		this.position = new Vector2f(position);
+	}
+	
+	public Vector2f getWorldPosition()
+	{
+		return Matrix3x3f.scale(scale).mul(position);
 	}
 	
 	public Vector2f getPosition()
@@ -95,5 +114,22 @@ public class GameObject
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
 		sprite.render(g, view, position.sub(posOffset), rotation);
+
+	}
+
+	public BoundingShape getBounds()
+	{
+		return bounds;
+	}
+	
+	public boolean intersects(BoundingShape otherShape) 
+	{
+		return bounds.intersects(otherShape);
+	}
+
+	
+	public boolean contains(Vector2f point) 
+	{
+		return bounds.contains(point);
 	}
 }

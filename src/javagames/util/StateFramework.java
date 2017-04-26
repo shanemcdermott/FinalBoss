@@ -12,7 +12,8 @@ public class StateFramework extends WindowFramework
 {
 
 	private StateController controller;
-
+	protected boolean bDrawDebug = false;
+	
 	public StateFramework()
 	{
 		appBorder = GameConstants.APP_BORDER;
@@ -60,6 +61,8 @@ public class StateFramework extends WindowFramework
 	protected void render(Graphics g)
 	{
 		controller.render((Graphics2D) g, getViewportTransform());
+		if(bDrawDebug)
+			super.render(g);
 	}
 	
 	public static void main(String[] args)

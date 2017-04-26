@@ -3,6 +3,7 @@ package javagames.game;
 import javagames.g2d.SpriteSheet;
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingShape;
 
 public abstract class Pawn extends PhysicsObject 
 {
@@ -13,9 +14,20 @@ public abstract class Pawn extends PhysicsObject
 	
 	protected float speedScale;
 
-	public Pawn(String name, SpriteSheet sprite) 
+	public Pawn(String name, SpriteSheet sprite)
 	{
-		super(name, sprite);
+		super(name,sprite);
+		healthBase = 10.f;
+		healthScale = 1.f;
+		healthBonus = 0.f;
+		speedScale = 1.f;
+		((SpriteSheet)sprite).startAnimation("WalkLeft");
+		
+	}
+	
+	public Pawn(String name, SpriteSheet sprite, BoundingShape bounds) 
+	{
+		super(name, sprite, bounds);
 		healthBase = 10.f;
 		healthScale = 1.f;
 		healthBonus = 0.f;

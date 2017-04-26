@@ -25,7 +25,10 @@ public class KantoLoadingState extends LoadingState
 
 	public KantoLoadingState()
 	{
+		super();
 		displayString = "Kanto";
+		gameFactory.setWorld(displayString);
+		
 		backgroundFileName = "map.png";
 		ambienceFileName = "AMBIENCE_alien.wav";
 	}
@@ -96,24 +99,8 @@ public class KantoLoadingState extends LoadingState
 			public Boolean call() throws Exception 
 			{
 				
-				BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "ship.png");
-				//image = image.getSubimage(0,0,100,100);
-				Vector2f topLeft = new Vector2f
-				(
-					-0.5f,
-					0.5f 
-				);
-				
-				Vector2f bottomRight = new Vector2f
-				(
-					0.5f,
-					-0.5f 
-				);
-				
-				Sprite sprite =	new Sprite( image, topLeft, bottomRight);
-			
-				GameObject tree = new GameObject("tree", sprite);
-				controller.setAttribute( "tree", tree);
+				GameObject tree = gameFactory.createBarrier("Tree");
+				controller.setAttribute( "Tree", tree);
 				
 				return Boolean.TRUE;
 			}
@@ -128,7 +115,7 @@ public class KantoLoadingState extends LoadingState
 			public Boolean call() throws Exception 
 			{
 			
-				Avatar avatar = GameObjectFactory.createAvatar("Nihil");
+				Avatar avatar = gameFactory.createAvatar("Nihil");
 				controller.setAttribute( "avatar", avatar);
 				
 				return Boolean.TRUE;

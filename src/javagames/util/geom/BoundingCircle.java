@@ -1,5 +1,7 @@
 package javagames.util.geom;
 
+import java.awt.Graphics;
+
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
 

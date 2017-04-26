@@ -4,15 +4,35 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import javagames.g2d.Animation;
+import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.state.LoadingState;
 import javagames.util.ResourceLoader;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingBox;
 
 public class GameObjectFactory 
 {
 	
-	public static Avatar createAvatar(String name) throws Exception
+	private String world;
+	
+	public void setWorld(String world)
+	{
+		this.world = world;
+	}
+	
+	public GameObject createBarrier(String name) throws Exception
+	{
+		switch(name)
+		{
+			case "Tree":
+				return createTree();
+		}
+		
+		return null;
+	}
+	
+	public Avatar createAvatar(String name) throws Exception
 	{
 		switch(name)
 		{
@@ -29,8 +49,7 @@ public class GameObjectFactory
 		return null;
 	}
 	
-	
-	private static Avatar createDraaknar() throws Exception
+	private Avatar createDraaknar() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
@@ -54,12 +73,11 @@ public class GameObjectFactory
 		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
-		//sprite.scaleImage( viewport );
-					
+		//sprite.scaleImage( viewport );	
 		return new Avatar("Draaknar, the Malevolent", sprite);
 	}
 	
-	private static Avatar createQueenZeal() throws Exception
+	private Avatar createQueenZeal() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
@@ -88,7 +106,7 @@ public class GameObjectFactory
 		return new Avatar("Queen Zeal", sprite);
 	}
 
-	private static Avatar createGoonthoro() throws Exception
+	private Avatar createGoonthoro() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
@@ -117,8 +135,7 @@ public class GameObjectFactory
 		return new Avatar("Goonthoro, the Undead", sprite);
 	}
 
-
-	private static Avatar createNihil() throws Exception
+	private Avatar createNihil() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "nihil.png");
 		//image = image.getSubimage(0,0,100,100);
@@ -160,5 +177,29 @@ public class GameObjectFactory
 					
 		return new Avatar("Nihil, the Dead Priest", sprite);
 	}
+
+	private GameObject createTree() throws Exception
+	{
+	
+		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, world + "Tree.png");
+		//image = image.getSubimage(0,0,100,100);
+		Vector2f topLeft = new Vector2f
+		(
+			-0.5f,
+			0.5f 
+		);
+		
+		Vector2f bottomRight = new Vector2f
+		(
+			0.5f,
+			-0.5f 
+		);
+		
+		Sprite sprite =	new Sprite( image, topLeft, bottomRight);
+		GameObject tree = new GameObject("Tree", sprite);
+		tree.addTag("Solid");
+		return tree;
+	}
+	
 	
 }

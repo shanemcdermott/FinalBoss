@@ -26,6 +26,7 @@ import javagames.util.GameConstants;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
 import javagames.g2d.Sprite;
+import javagames.game.GameObjectFactory;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
@@ -35,6 +36,7 @@ import javagames.util.XMLUtility;
 public abstract class LoadingState extends State 
 {
 	protected String displayString = GameConstants.APP_TITLE;
+	protected GameObjectFactory gameFactory;
 	
 	protected String backgroundFileName = "space_background_600x600.png";
 	protected String ambienceFileName = "AMBIENCE_alien.wav";
@@ -53,6 +55,7 @@ public abstract class LoadingState extends State
 	
 	public LoadingState()
 	{
+		gameFactory = new GameObjectFactory();
 		//Add any Sound Cues here
 		soundCues = Collections.synchronizedMap(new HashMap<String, String>());
 		addSoundCues();

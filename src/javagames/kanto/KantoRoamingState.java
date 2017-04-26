@@ -38,10 +38,17 @@ public class KantoRoamingState extends RoamingState
 	@Override
 	public void addObjects() 
 	{
-		GameObject tree =(GameObject)controller.getAttribute("tree");
+		GameObject tree =(GameObject)controller.getAttribute("Tree");
 		tree.setPosition(new Vector2f(2.0f, 0.f));
 		gameObjects.add(tree);
 
+	}
+
+	@Override
+	public void addPhysicsObjects() 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 

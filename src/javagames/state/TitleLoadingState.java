@@ -55,7 +55,7 @@ public class TitleLoadingState extends LoadingState
 			public Boolean call() throws Exception 
 			{
 			
-				Avatar avatar = GameObjectFactory.createAvatar("Nihil");
+				Avatar avatar = gameFactory.createAvatar("Nihil");
 				controller.setAttribute( "avatar", avatar);
 				
 				return Boolean.TRUE;

@@ -1,11 +1,14 @@
 package javagames.util.geom;
 
+import java.awt.Graphics;
+
+import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
 
 public abstract class BoundingShape
 {
 	protected Vector2f position;
-	
+		
 	public void setPosition(Vector2f position)
 	{
 		this.position = new Vector2f(position);
