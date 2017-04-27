@@ -48,4 +48,25 @@ public class XMLUtility {
 		return elements;
 	}
 	
+	public static Element getElement(Element root, String tagName)
+	{
+		NodeList children = root.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node node = children.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				String nodeName = node.getNodeName();
+				if (nodeName != null && nodeName.equals(tagName)) {
+					return(Element) node;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static Vector2f getVector2f(Element element)
+	{
+		float x = Float.parseFloat(element.getAttribute("x"));
+		float y = Float.parseFloat(element.getAttribute("y"));
+		return new Vector2f(x,y);
+	}
 }

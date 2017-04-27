@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <models>
-	<model bounds="0.5859375" size="Large" sprite="large0.png">
+	<model bounds="0.5859375" size="Large" name="Nihil" sprite="nihil.png">
 		<coord x="-0.029733956" y="0.283255100" />
 		<coord x="-0.183098610" y="0.111111104" />
 		<coord x="-0.230046930" y="-0.057902932" />

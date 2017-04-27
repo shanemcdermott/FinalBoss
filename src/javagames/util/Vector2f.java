@@ -120,8 +120,26 @@ public class Vector2f {
 	{
 		return new Vector2f(1.f,0.f);
 	}
+
+	public static Vector2f topLeft(float scale)
+	{
+		return new Vector2f(-scale,scale);
+	}
 	
+	public static Vector2f bottomRight(float scale)
+	{
+		return new Vector2f(scale, -scale);
+	}
 	
+	public static Vector2f topLeft()
+	{
+		return new Vector2f(-1.f,1.f);
+	}
+	
+	public static Vector2f bottomRight()
+	{
+		return new Vector2f(1.f, -1.f);
+	}
 	
 	
 	@Override

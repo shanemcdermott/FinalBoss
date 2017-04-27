@@ -4,10 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+
 
 import javagames.util.Matrix3x3f;
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
+import javagames.util.XMLUtility;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingCircle;
 import javagames.util.geom.BoundingShape;

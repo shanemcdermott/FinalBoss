@@ -2,6 +2,11 @@ package javagames.game;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.io.*;
+import java.util.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 import javagames.g2d.Animation;
 import javagames.g2d.Sprite;
@@ -13,26 +18,7 @@ import javagames.util.geom.BoundingBox;
 
 public class GameObjectFactory 
 {
-	
-	private String world;
-	
-	public void setWorld(String world)
-	{
-		this.world = world;
-	}
-	
-	public GameObject createBarrier(String name) throws Exception
-	{
-		switch(name)
-		{
-			case "Tree":
-				return createTree();
-		}
-		
-		return null;
-	}
-	
-	public Avatar createAvatar(String name) throws Exception
+	public static Avatar createAvatar(String name) throws Exception
 	{
 		switch(name)
 		{
@@ -49,56 +35,34 @@ public class GameObjectFactory
 		return null;
 	}
 	
-	private Avatar createDraaknar() throws Exception
+	private static Avatar createDraaknar() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
-		Vector2f topLeft = new Vector2f
-		(
-			-0.5f,
-			0.5f 
-		);
-		
-		Vector2f bottomRight = new Vector2f
-		(
-			0.5f,
-			-0.5f 
-		);
-		
+			
 		HashMap<String,Animation> animations = new HashMap<String, Animation>();
 		Animation anim = new Animation(image, 2, 0.5f, 75, 0, 75, 63);
 		animations.put("WalkDown", anim);
 		anim = new Animation(image, 1, 0.5f, 0, 0, 75, 63);
 		animations.put("StandDown", anim);
-		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
+		SpriteSheet sprite = new SpriteSheet( image, Vector2f.topLeft(0.5f), Vector2f.bottomRight(0.5f), animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
 		//sprite.scaleImage( viewport );	
 		return new Avatar("Draaknar, the Malevolent", sprite);
 	}
 	
-	private Avatar createQueenZeal() throws Exception
+	private static Avatar createQueenZeal() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
-		Vector2f topLeft = new Vector2f
-		(
-			-0.5f,
-			0.5f 
-		);
-		
-		Vector2f bottomRight = new Vector2f
-		(
-			0.5f,
-			-0.5f 
-		);
 		
 		HashMap<String,Animation> animations = new HashMap<String, Animation>();
 		Animation anim = new Animation(image, 2, 0.5f, 75, 0, 75, 63);
 		animations.put("WalkDown", anim);
 		anim = new Animation(image, 1, 0.5f, 0, 0, 75, 63);
 		animations.put("StandDown", anim);
-		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
+		SpriteSheet sprite = new SpriteSheet( image, Vector2f.topLeft(0.5f), Vector2f.bottomRight(0.5f), animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
 		//sprite.scaleImage( viewport );
@@ -106,28 +70,17 @@ public class GameObjectFactory
 		return new Avatar("Queen Zeal", sprite);
 	}
 
-	private Avatar createGoonthoro() throws Exception
+	private static Avatar createGoonthoro() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "DragonDown.png");
 		//image = image.getSubimage(0,0,100,100);
-		Vector2f topLeft = new Vector2f
-		(
-			-0.5f,
-			0.5f 
-		);
-		
-		Vector2f bottomRight = new Vector2f
-		(
-			0.5f,
-			-0.5f 
-		);
 		
 		HashMap<String,Animation> animations = new HashMap<String, Animation>();
 		Animation anim = new Animation(image, 2, 0.5f, 75, 0, 75, 63);
 		animations.put("WalkDown", anim);
 		anim = new Animation(image, 1, 0.5f, 0, 0, 75, 63);
 		animations.put("StandDown", anim);
-		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
+		SpriteSheet sprite = new SpriteSheet( image, Vector2f.topLeft(0.5f), Vector2f.bottomRight(0.5f), animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
 		//sprite.scaleImage( viewport );
@@ -135,22 +88,11 @@ public class GameObjectFactory
 		return new Avatar("Goonthoro, the Undead", sprite);
 	}
 
-	private Avatar createNihil() throws Exception
+	private static Avatar createNihil() throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, "nihil.png");
 		//image = image.getSubimage(0,0,100,100);
-		Vector2f topLeft = new Vector2f
-		(
-			-0.5f,
-			0.5f 
-		);
-		
-		Vector2f bottomRight = new Vector2f
-		(
-			0.5f,
-			-0.5f 
-		);
-		
+				
 		HashMap<String,Animation> animations = new HashMap<String, Animation>();
 		Animation anim = new Animation(image, 4, 0.4f, 0, 0, 23, 36);
 		animations.put("WalkLeft", anim);
@@ -170,36 +112,12 @@ public class GameObjectFactory
 		anim = new Animation(image, 1, 0.5f, 0, 108, 23, 36);
 		animations.put("StandUp", anim);
 		
-		SpriteSheet sprite =	new SpriteSheet( image, topLeft, bottomRight, animations);
+		SpriteSheet sprite = new SpriteSheet( image, Vector2f.topLeft(0.5f), Vector2f.bottomRight(0.5f), animations);
 		
 		//Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
 		//sprite.scaleImage( viewport );
 					
 		return new Avatar("Nihil, the Dead Priest", sprite);
 	}
-
-	private GameObject createTree() throws Exception
-	{
-	
-		BufferedImage image = ResourceLoader.loadImage(GameObjectFactory.class, world + "Tree.png");
-		//image = image.getSubimage(0,0,100,100);
-		Vector2f topLeft = new Vector2f
-		(
-			-0.5f,
-			0.5f 
-		);
-		
-		Vector2f bottomRight = new Vector2f
-		(
-			0.5f,
-			-0.5f 
-		);
-		
-		Sprite sprite =	new Sprite( image, topLeft, bottomRight);
-		GameObject tree = new GameObject("Tree", sprite);
-		tree.addTag("Solid");
-		return tree;
-	}
-	
 	
 }

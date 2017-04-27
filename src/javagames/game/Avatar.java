@@ -14,7 +14,6 @@ import javagames.util.geom.BoundingShape;
 
 public class Avatar extends GreaterPawn 
 {
-	
 	protected int	experienceTotal;
 	protected int	currentLevel;
 	
@@ -22,7 +21,7 @@ public class Avatar extends GreaterPawn
 	protected float manaScale;
 	protected float manaBonus;
 	protected float manaCurrent;
-	
+
 	public Avatar(String name, SpriteSheet sprite)
 	{
 		super(name,sprite);

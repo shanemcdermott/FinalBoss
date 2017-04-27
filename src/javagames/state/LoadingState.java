@@ -26,6 +26,7 @@ import javagames.util.GameConstants;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
 import javagames.g2d.Sprite;
+import javagames.game.GameObject;
 import javagames.game.GameObjectFactory;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
@@ -36,15 +37,7 @@ import javagames.util.XMLUtility;
 public abstract class LoadingState extends State 
 {
 	protected String displayString = GameConstants.APP_TITLE;
-	protected GameObjectFactory gameFactory;
-	
-	protected String backgroundFileName = "space_background_600x600.png";
-	protected String ambienceFileName = "AMBIENCE_alien.wav";
-	
-	//AttributeName, FileName
-	protected Map<String, String> soundCues;
-	protected Map<String, String> soundLoops;
-	
+	protected Element xml;
 	
 	private ExecutorService threadPool;
 	protected List<Callable<Boolean>> loadTasks;
@@ -52,23 +45,9 @@ public abstract class LoadingState extends State
 	private int numberOfTasks;
 	private float percent;
 	private float wait;
-	
-	public LoadingState()
-	{
-		gameFactory = new GameObjectFactory();
-		//Add any Sound Cues here
-		soundCues = Collections.synchronizedMap(new HashMap<String, String>());
-		addSoundCues();
-		
-		//Add any looping sounds here
-		soundLoops = Collections.synchronizedMap(new HashMap<String, String>());
-		addSoundLoops();
-	}
-	
-	public abstract void addSoundCues();
-	public abstract void addSoundLoops();
 
-	public abstract void loadGameObjects();
+
+
 	
 	protected abstract void enterNextState();
 	
@@ -78,6 +57,19 @@ public abstract class LoadingState extends State
 		controller.setAttribute("loading-state", this);
 		threadPool = Executors.newCachedThreadPool();
 		loadTasks = new ArrayList<Callable<Boolean>>();
+		try
+		{
+			xml = ResourceLoader.loadXML(this.getClass(), displayString+".xml");
+		}
+		catch(Exception e)
+		{
+			System.err.println(e);
+			System.exit(-1);
+		}
+
+		Element soundXML = XMLUtility.getElement(xml, "sounds");
+		Element imageXML = XMLUtility.getElement(xml, "images");
+		
 		
 		//Load Background Image
 		loadTasks.add( new Callable<Boolean>() 
@@ -85,91 +77,73 @@ public abstract class LoadingState extends State
 			@Override
 			public Boolean call() throws Exception 
 			{
-			
-				BufferedImage image = ResourceLoader.loadImage(LoadingState.class, backgroundFileName);
-			
-				Vector2f worldTopLeft = new Vector2f
-				(
-					-GameConstants.WORLD_WIDTH / 2.0f,
-					GameConstants.WORLD_HEIGHT / 2.0f 
-				);
-				
-				Vector2f worldBottomRight = new Vector2f
-				(
-					GameConstants.WORLD_WIDTH / 2.0f,
-					-GameConstants.WORLD_HEIGHT / 2.0f 
-				);
-				
-				Sprite sprite =	new Sprite( image, worldTopLeft, worldBottomRight );
-				
+				Sprite sprite = ResourceLoader.loadSprite(this.getClass(), XMLUtility.getElement(imageXML, "background"));
 				Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
-				
 				sprite.scaleImage( viewport );
-				
 				controller.setAttribute( "background", sprite );
-				
+					
 				return Boolean.TRUE;
 			}
 		});
-		
-		//Load Ambience
-		loadTasks.add( new Callable<Boolean>() 
-		{
-			@Override
-			public Boolean call() throws Exception {
-				byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), ambienceFileName);
-				// Java 7.0
-				LoopEvent loopEvent = new LoopEvent(
-					new BlockingClip( soundBytes ) );
-				// Java 6.0
-				// LoopEvent loopEvent = new LoopEvent(
-				// new BlockingDataLine(
-				// soundBytes ) );
-				loopEvent.initialize();
-				controller.setAttribute( "ambience", loopEvent );
-				return Boolean.TRUE;
-			} 
-		});
-		
+			
 		//Load Sound FX
-		for (Map.Entry<String, String> entry : soundCues.entrySet())
+		for (Element sound : XMLUtility.getElements(soundXML, "sound"))
 		{
-			loadTasks.add(new Callable<Boolean>() 
+			if(sound.getAttribute("type").equals("cue"))
 			{
-				@Override
-				public Boolean call() throws Exception 
+				loadTasks.add(new Callable<Boolean>() 		
 				{
-					byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), entry.getValue());
-					SoundCue restartClip =
-						new SoundCue( new BlockingDataLine(soundBytes));
-					restartClip.initialize();
-					restartClip.open();
-					controller.setAttribute( entry.getKey(), restartClip );
-					return Boolean.TRUE;
-				}
-				
-			});
-		}
-		
-		//Load Sound FX
-		for (Map.Entry<String, String> entry : soundLoops.entrySet())
-		{
-			loadTasks.add(new Callable<Boolean>() 
-			{
-				@Override
-				public Boolean call() throws Exception 
-				{
-					byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), entry.getValue());
-					SoundLooper clip =
-							new SoundLooper( new BlockingDataLine( soundBytes ) );
-						clip.initialize();
-						clip.open();
-						controller.setAttribute(entry.getKey(), clip );
+					@Override
+					public Boolean call() throws Exception 
+					{
+						byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), sound.getAttribute("file"));
+						SoundCue restartClip =
+								new SoundCue( new BlockingDataLine(soundBytes));
+						restartClip.initialize();
+						restartClip.open();
+						controller.setAttribute( sound.getAttribute("name"), restartClip );
 						return Boolean.TRUE;
-				}
-			});
+					}
+				
+				});
+			}
+			else if(sound.getAttribute("type").equals("loop"))
+			{
+				loadTasks.add(new Callable<Boolean>() 
+				{
+					@Override
+					public Boolean call() throws Exception 
+					{
+						byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), sound.getAttribute("file"));
+						SoundLooper clip =
+								new SoundLooper( new BlockingDataLine( soundBytes ) );
+							clip.initialize();
+							clip.open();
+							controller.setAttribute(sound.getAttribute("name"), clip );
+							return Boolean.TRUE;
+					}
+				});
+			}
+			else if(sound.getAttribute("type").equals("ambience"))
+			{
+				//Load Ambience
+				loadTasks.add( new Callable<Boolean>() 
+				{
+					@Override
+					public Boolean call() throws Exception {
+						byte[] soundBytes = ResourceLoader.loadSound(this.getClass(), sound.getAttribute("file"));
+						// Java 7.0
+						LoopEvent loopEvent = new LoopEvent(
+							new BlockingClip( soundBytes ) );
+						loopEvent.initialize();
+						controller.setAttribute( "ambience", loopEvent );
+						return Boolean.TRUE;
+					} 
+				});
+			}
 		}
 		
+	
 		loadGameObjects();
 		
 		loadResults = new ArrayList<Future<Boolean>>();
@@ -185,6 +159,36 @@ public abstract class LoadingState extends State
 		}
 	}
 
+	public void loadGameObjects()
+	{
+		Element objectXML = XMLUtility.getElement(xml, "objects");
+		if(objectXML == null) return;
+		//Load Sound FX
+		for (Element barrier : XMLUtility.getElements(objectXML, "barrier"))
+		{
+			
+			loadTasks.add( new Callable<Boolean>() 
+			{
+				@Override
+				public Boolean call() throws Exception 
+				{
+					Sprite sprite = ResourceLoader.loadSprite(this.getClass(), XMLUtility.getElement(barrier, "sprite"));
+					
+					GameObject gameObject = new GameObject(barrier.getAttribute("name"),sprite);
+					gameObject.setPosition(XMLUtility.getVector2f(XMLUtility.getElement(barrier, "coord")));
+					for(Element tag : XMLUtility.getElements(barrier, "tag"))
+					{
+						gameObject.addTag(tag.getAttribute("name"));
+					}
+					
+					controller.setAttribute(barrier.getAttribute("name"), sprite );
+						
+					return Boolean.TRUE;
+				}
+			});
+		}
+	}
+	
 
 	@Override
 	public void updateObjects(float delta)
