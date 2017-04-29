@@ -17,10 +17,36 @@
 	<objects>
 		<barrier name="tree">
 			<sprite file="KantoTree.png" width="1" height="1"></sprite>
-			<tag name="solid" />
-			<coord x="0" y="3" />
-			<coord x="3" y="0" />
+			<position x="0" y="2"></position>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
+		</barrier>
+		<barrier name="House" type="Building" width="64" height="28">
+			<sprite file="KantoBuildings.png" width="4" height="4" startX="0" startY="0" imgW="64" imgH="80"></sprite>
+			<position x="4" y="4"></position>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-2" y="-2"></min>
+					<max x="2" y="2"></max>
+				</box>
+			</bounds>
+		</barrier>
+		<barrier name="PokemonCenter" type="Building" width="80" height="32">
+			<sprite file="KantoBuildings.png" width="4" height="4" startX="64" startY="0" imgW="80" imgH="80"></sprite>
+			<position x="-4" y="-10.f" />
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-2" y="-2"></min>
+					<max x="2" y="2"></max>
+				</box>
+			</bounds>
 		</barrier>
 	</objects>
-
 </models>

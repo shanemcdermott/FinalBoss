@@ -1,6 +1,8 @@
 package javagames.util.geom;
 
 import java.awt.Graphics;
+import java.util.Collections;
+import java.util.HashMap;
 
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
@@ -16,6 +18,15 @@ public class BoundingCircle extends BoundingShape
 	
 	public BoundingCircle(Vector2f position, float radius)
 	{
+		this(position,radius,"DEFAULT");
+	}
+
+	public BoundingCircle(Vector2f position, float radius, String collisionChannel)
+	{
+		collisionResponse =  Collections.synchronizedMap(new HashMap<String, String>());
+		collisionResponse.put("DEFAULT", "BLOCK");
+		this.collisionChannel = collisionChannel;
+		
 		this.position = position;
 		this.radius = radius;
 	}
@@ -58,6 +69,13 @@ public class BoundingCircle extends BoundingShape
 	{
 		Vector2f dist = point.sub(position);
 		return dist.lenSqr() < radius*radius;
+	}
+
+	@Override
+	public void render(Graphics g, Matrix3x3f view)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -1,11 +1,13 @@
 package javagames.game;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.sun.glass.events.KeyEvent;
 
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
+import javagames.util.Utility;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.util.Vector2f;
@@ -136,6 +138,11 @@ public class Avatar extends GreaterPawn
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
 		sprite.render(g, view, position.sub(posOffset), rotation);
+		Vector2f pos = view.mul(position.sub(posOffset));
+		g.setColor(Color.GREEN);
+		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
+		bounds.setPosition(position.sub(posOffset));
+		bounds.render(g, view);
 	}
 	
 }

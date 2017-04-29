@@ -73,6 +73,15 @@ public class ResourceLoader {
 		List<Element> anims = XMLUtility.getElements(node, "animation");
 		if(anims.isEmpty())
 		{
+			if(node.hasAttribute("startX"))
+			{
+				int startX = Integer.parseInt(node.getAttribute("startX"));
+				int startY = Integer.parseInt(node.getAttribute("startY"));
+				int imgW = Integer.parseInt(node.getAttribute("imgW"));
+				int imgH = Integer.parseInt(node.getAttribute("imgH"));
+				image = image.getSubimage(startX, startY, imgW, imgH);
+			}
+			
 			return new Sprite(image, topLeft, bottomRight);
 		}
 		
@@ -94,7 +103,7 @@ public class ResourceLoader {
 		int width = Integer.parseInt(node.getAttribute("width"));
 		int height = Integer.parseInt(node.getAttribute("height"));
 		return new Animation(image,frames,frameTime,x,y,width,height);
-	}
+	}	
 	
 	public static Avatar loadAvatar(Class<?> clazz, String name) throws Exception
 	{

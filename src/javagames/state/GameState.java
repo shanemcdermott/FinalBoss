@@ -26,6 +26,12 @@ public abstract class GameState extends State
 	protected Sprite background;
 	protected Avatar avatar;
 	
+	public GameState()
+	{
+		gameObjects = new Vector<GameObject>();
+		physicsObjects = new Vector<PhysicsObject>();
+	}
+	
 	@Override
 	public void enter() 
 	{
@@ -33,22 +39,26 @@ public abstract class GameState extends State
 		background = (Sprite) controller.getAttribute("background");
 		avatar = (Avatar)controller.getAttribute("avatar");
 		avatar.reset();
-		if(gameObjects == null)
-		{
-			gameObjects = new Vector<GameObject>();
-			addObjects();
-		}
-		if(physicsObjects == null)
-		{
-			physicsObjects = new Vector<PhysicsObject>();
-			addPhysicsObjects();
-		}
 	}
 
 	/*
 	 * Add any stationary game objects from the controller
 	 */
-	public abstract void addObjects();
+	public void addObjects(List<String> objectNames)
+	{
+		for(String s : objectNames)
+		{
+			GameObject g = (GameObject)controller.getAttribute(s);
+			if(g instanceof PhysicsObject)
+			{
+				physicsObjects.add((PhysicsObject)g);
+			}
+			else
+			{
+				gameObjects.add(g);
+			}
+		}
+	}
 
 	/*
 	 * Add any moving objects from the controller
@@ -96,7 +106,7 @@ public abstract class GameState extends State
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
-			if(g.hasTag("Solid"))
+			if(g.getCollisionResponseTo("DEFAULT").equals("BLOCK"))
 			{
 				BoundingShape b = g.getBounds();
 				int i = 0;

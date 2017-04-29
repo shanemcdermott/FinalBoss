@@ -38,6 +38,7 @@ public abstract class LoadingState extends State
 {
 	protected String displayString = GameConstants.APP_TITLE;
 	protected Element xml;
+	protected ArrayList<String> loaded;
 	
 	private ExecutorService threadPool;
 	protected List<Callable<Boolean>> loadTasks;
@@ -56,6 +57,7 @@ public abstract class LoadingState extends State
 	{
 		controller.setAttribute("loading-state", this);
 		threadPool = Executors.newCachedThreadPool();
+		loaded = new ArrayList<String>();
 		loadTasks = new ArrayList<Callable<Boolean>>();
 		try
 		{
@@ -172,16 +174,11 @@ public abstract class LoadingState extends State
 				@Override
 				public Boolean call() throws Exception 
 				{
-					Sprite sprite = ResourceLoader.loadSprite(this.getClass(), XMLUtility.getElement(barrier, "sprite"));
 					
-					GameObject gameObject = new GameObject(barrier.getAttribute("name"),sprite);
-					gameObject.setPosition(XMLUtility.getVector2f(XMLUtility.getElement(barrier, "coord")));
-					for(Element tag : XMLUtility.getElements(barrier, "tag"))
-					{
-						gameObject.addTag(tag.getAttribute("name"));
-					}
+					GameObject gameObject = XMLUtility.loadGameObject(this.getClass(), barrier);
 					
-					controller.setAttribute(barrier.getAttribute("name"), sprite );
+					loaded.add(barrier.getAttribute("name"));			
+					controller.setAttribute(barrier.getAttribute("name"), gameObject);
 						
 					return Boolean.TRUE;
 				}

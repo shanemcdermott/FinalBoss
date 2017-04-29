@@ -6,6 +6,12 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+import javagames.g2d.Sprite;
+import javagames.game.GameObject;
+import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingCircle;
+import javagames.util.geom.BoundingShape;
+
 public class XMLUtility {
 	
 	public static Document parseDocument(InputStream inputStream)
@@ -68,5 +74,61 @@ public class XMLUtility {
 		float x = Float.parseFloat(element.getAttribute("x"));
 		float y = Float.parseFloat(element.getAttribute("y"));
 		return new Vector2f(x,y);
+	}
+	
+	public static Vector2f getNestedVector2f(Element element, String tagName)
+	{
+		return XMLUtility.getVector2f(XMLUtility.getElement(element, tagName));
+	}
+	
+	public static BoundingShape getBoundingShape(Element element)
+	{
+		BoundingShape shape = null;
+		
+		Element type = XMLUtility.getElement(element, "box");
+		if(type == null)
+		{
+			type = XMLUtility.getElement(element,"circle");
+			shape = new BoundingCircle(XMLUtility.getNestedVector2f(type, "center"), Float.parseFloat(type.getAttribute("radius")));
+		}
+		else
+		{
+			shape = new BoundingBox(XMLUtility.getNestedVector2f(type, "min"), XMLUtility.getNestedVector2f(type, "max"));
+		}
+		
+		return shape;
+	}
+	
+	public static GameObject loadGameObject(Class<?> clazz, Element element)
+	{
+		GameObject gameObject = null;
+		try
+		{
+			Sprite sprite = ResourceLoader.loadSprite(clazz, XMLUtility.getElement(element, "sprite"));
+			Element boundsXML = XMLUtility.getElement(element, "bounds");
+			if(boundsXML != null)
+			{
+				BoundingShape bounds = XMLUtility.getBoundingShape(boundsXML);
+				gameObject = new GameObject(element.getAttribute("name"),sprite, bounds);
+			}
+			else
+			{
+				gameObject = new GameObject(element.getAttribute("name"),sprite);
+			}
+			gameObject.setPosition(XMLUtility.getVector2f(XMLUtility.getElement(element, "position")));
+			
+			for(Element tag : XMLUtility.getElements(element, "tag"))
+			{
+				gameObject.addTag(tag.getAttribute("name"));
+			}
+			return gameObject;
+		}
+		catch(Exception e)
+		{
+			System.err.println(e.getStackTrace());
+			System.err.println(e);
+		}
+		
+		return gameObject;
 	}
 }

@@ -35,15 +35,11 @@ public class KantoRoamingState extends RoamingState
 		return avatar.isDead();
 	}
 
-	@Override
-	public void addObjects() 
+	public void addObject(GameObject object)
 	{
-		//GameObject tree =(GameObject)controller.getAttribute("Tree");
-		//tree.setPosition(new Vector2f(2.0f, 0.f));
-		//gameObjects.add(tree);
-
+		gameObjects.add(object);
 	}
-
+	
 	@Override
 	public void addPhysicsObjects() 
 	{

@@ -2,6 +2,8 @@ package javagames.util.geom;
 
 
 import java.awt.Graphics;
+import java.util.Collections;
+import java.util.HashMap;
 
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
@@ -23,6 +25,14 @@ public class BoundingBox extends BoundingShape
 	
 	public BoundingBox(Vector2f min, Vector2f max)
 	{
+		this(min,max, "DEFAULT");
+	}
+	
+	public BoundingBox(Vector2f min, Vector2f max, String collisionChannel)
+	{
+		collisionResponse =  Collections.synchronizedMap(new HashMap<String, String>());
+		collisionResponse.put("DEFAULT", "BLOCK");
+		
 		position = new Vector2f();
 		this.min = new Vector2f(min);
 		this.max = new Vector2f(max);
@@ -145,6 +155,19 @@ public class BoundingBox extends BoundingShape
 	public String toString()
 	{
 		return String.format("Min: %s Max: %s", minCpy, maxCpy);
+	}
+
+	@Override
+	public void render(Graphics g, Matrix3x3f view) 
+	{
+		Vector2f m1 = view.mul(minCpy);
+		Vector2f m2 = view.mul(maxCpy);
+		int x = (int)m1.x;
+		int y = (int)m2.y;
+		int width = (int)(m2.x-m1.x);
+		int height = (int)(m2.y-m1.y);
+		g.drawRect(x, y, width, height);	
+		g.drawLine((int)m1.x, (int)m1.y, (int)m2.x, (int)m2.y);
 	}
 
 

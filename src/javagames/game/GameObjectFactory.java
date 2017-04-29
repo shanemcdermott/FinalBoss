@@ -14,10 +14,13 @@ import javagames.g2d.SpriteSheet;
 import javagames.state.LoadingState;
 import javagames.util.ResourceLoader;
 import javagames.util.Vector2f;
+import javagames.util.XMLUtility;
 import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingShape;
 
 public class GameObjectFactory 
 {
+	
 	public static Avatar createAvatar(String name) throws Exception
 	{
 		switch(name)
@@ -119,5 +122,4 @@ public class GameObjectFactory
 					
 		return new Avatar("Nihil, the Dead Priest", sprite);
 	}
-	
 }

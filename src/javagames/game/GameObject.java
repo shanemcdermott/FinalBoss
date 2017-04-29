@@ -12,6 +12,7 @@ import org.xml.sax.*;
 
 
 import javagames.util.Matrix3x3f;
+import javagames.util.Utility;
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
@@ -36,7 +37,7 @@ public class GameObject
 	
 	public GameObject(String name, Sprite sprite)
 	{
-		this(name,sprite, new BoundingBox(new Vector2f(-1.f, -1.f), new Vector2f(1.f,1.f)));
+		this(name,sprite, new BoundingBox(new Vector2f(-0.5f, -0.5f), new Vector2f(0.5f,0.5f)));
 	}
 	
 	public GameObject(String name, Sprite sprite, BoundingShape bounds)
@@ -82,7 +83,7 @@ public class GameObject
 	public void update(float deltaTime)
 	{
 		updateTransform();
-		bounds.setPosition(transform.mul(position));
+		bounds.setPosition(position);
 	}
 	
 	public void setPosition(Vector2f position)
@@ -121,9 +122,23 @@ public class GameObject
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
 		sprite.render(g, view, position.sub(posOffset), rotation);
-
+		Vector2f pos = view.mul(position.sub(posOffset));
+		g.setColor(Color.GREEN);
+		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
+		bounds.setPosition(position.sub(posOffset));
+		bounds.render(g, view);
 	}
 
+	public String getCollisionResponseTo(String channel)
+	{
+		return bounds.getCollisionResponseTo(channel);
+	}
+	
+	public String getCollisionChannel()
+	{
+		return bounds.getCollisionChannel();
+	}
+	
 	public BoundingShape getBounds()
 	{
 		return bounds;
@@ -139,4 +154,5 @@ public class GameObject
 	{
 		return bounds.contains(point);
 	}
+	
 }

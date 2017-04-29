@@ -9,5 +9,12 @@
 		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="108" width="23" height="36" />
 		<animation name="StandUp" frames="0" frameTime="1000" x="0" y="108" width="23" height="36" />
 	</sprite>
-	
+	<position x="0" y="0"></position>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
 </model>

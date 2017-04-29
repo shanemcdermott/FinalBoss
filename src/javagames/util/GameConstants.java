@@ -11,8 +11,6 @@ public class GameConstants
 	public static final String APP_TITLE = "Final Boss";
 	public static final float VIEW_WIDTH = 16.0f;
 	public static final float VIEW_HEIGHT = 9.0f;
-	public static final float WORLD_WIDTH = 50.0f;
-	public static final float WORLD_HEIGHT = 100.0f;
 	public static final float BORDER_SCALE = 0.95f;
 	public static final boolean DISABLE_CURSOR = true;
 	public static final boolean MAINTAIN_RATIO = true;
