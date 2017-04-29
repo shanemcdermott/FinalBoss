@@ -14,7 +14,7 @@ import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
 
-public class Avatar extends GreaterPawn 
+public class Avatar extends Pawn 
 {
 	protected int	experienceTotal;
 	protected int	currentLevel;
@@ -65,40 +65,55 @@ public class Avatar extends GreaterPawn
 	public void processInput(KeyboardInput keyboard, float deltaTime)
 	{
 		if(keyboard.keysDownOnce(KeyEvent.VK_W, KeyEvent.VK_UP))
-		{
-			move(Vector2f.up());
-			((SpriteSheet)sprite).startAnimation("WalkUp");
+		{	
+			move("WalkUp");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_S, KeyEvent.VK_DOWN))
 		{
-			move(Vector2f.down());
-			((SpriteSheet)sprite).startAnimation("WalkDown");
+			move("WalkDown");
 		}
 		
 		else if(keyboard.keysDownOnce(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
 		{
-			move(Vector2f.right());
-			((SpriteSheet)sprite).startAnimation("WalkRight");
+			move("WalkRight");
 		}
 		
 		else if(keyboard.keysDownOnce(KeyEvent.VK_A,KeyEvent.VK_LEFT))
 		{
-			move(Vector2f.left());
-			((SpriteSheet)sprite).startAnimation("WalkLeft");
-
+			move("WalkLeft");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_1,KeyEvent.VK_NUMPAD1))
-			fastAction();
+			startAction(ActionType.FAST);
 		else if(keyboard.keysDownOnce(KeyEvent.VK_2,KeyEvent.VK_NUMPAD2))
-			powerAction();	
+			startAction(ActionType.POWER);
 		else if(keyboard.keysDownOnce(KeyEvent.VK_3,KeyEvent.VK_NUMPAD3))
-			specialAction();
+			startAction(ActionType.SPECIAL);
 		else if(keyboard.keysDownOnce(KeyEvent.VK_4, KeyEvent.VK_NUMPAD4))
-			powerAction();	
-		else if(!keyboard.keysDown(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT))
+			startAction(ActionType.ULTIMATE);
+		else if(keyboard.keysReleased(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D))
 		{
-			stopMoving();
-			((SpriteSheet)sprite).startAnimation("StandDown");
+			if(keyboard.keysDown(KeyEvent.VK_W, KeyEvent.VK_UP))
+			{	
+				move("WalkUp");
+			}
+			else if(keyboard.keysDown(KeyEvent.VK_S, KeyEvent.VK_DOWN))
+			{
+				move("WalkDown");
+			}
+			
+			else if(keyboard.keysDown(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
+			{
+				move("WalkRight");
+			}
+			
+			else if(keyboard.keysDown(KeyEvent.VK_A,KeyEvent.VK_LEFT))
+			{
+				move("WalkLeft");
+			}
+			else
+			{
+				stopMoving();
+			}
 		}
 	}
 	
@@ -109,30 +124,6 @@ public class Avatar extends GreaterPawn
 
 	}
 
-	@Override
-	protected void fastAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void powerAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void specialAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void ultimateAction() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 	@Override
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)

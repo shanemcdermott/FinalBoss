@@ -1,11 +1,16 @@
 package javagames.game;
 
 import javagames.g2d.SpriteSheet;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingShape;
 
-public abstract class Pawn extends PhysicsObject 
+public class Pawn extends PhysicsObject 
 {
 	protected float healthBase;
 	protected float healthScale;
@@ -14,6 +19,9 @@ public abstract class Pawn extends PhysicsObject
 	
 	protected float speedScale;
 
+	Map<ActionType,GameAction>  actions;
+	protected ActionType		currentAction;
+	
 	public Pawn(String name, SpriteSheet sprite)
 	{
 		super(name,sprite);
@@ -21,8 +29,10 @@ public abstract class Pawn extends PhysicsObject
 		healthScale = 1.f;
 		healthBonus = 0.f;
 		speedScale = 1.f;
-		((SpriteSheet)sprite).startAnimation("WalkLeft");
+		((SpriteSheet)sprite).startAnimation("StandDown");
 		
+		actions = Collections.synchronizedMap(new HashMap<ActionType, GameAction>());
+		currentAction = ActionType.IDLE;
 	}
 	
 	public Pawn(String name, SpriteSheet sprite, BoundingShape bounds) 
@@ -32,14 +42,35 @@ public abstract class Pawn extends PhysicsObject
 		healthScale = 1.f;
 		healthBonus = 0.f;
 		speedScale = 1.f;
-		((SpriteSheet)sprite).startAnimation("WalkLeft");
+		((SpriteSheet)sprite).startAnimation("StandDown");
+		
+		actions = Collections.synchronizedMap(new HashMap<ActionType, GameAction>());
+		currentAction = ActionType.IDLE;
 	}
 
+	public void startAnimation(String animName)
+	{
+		((SpriteSheet)sprite).startAnimation(animName);
+	}
+	
+	protected void startAction(ActionType action)
+	{
+		if(actions.get(action).canStart())
+		{
+			actions.get(currentAction).stop();
+			currentAction = action;
+		}
+	}
+	
+	protected void stopAction(ActionType action)
+	{
+		currentAction = ActionType.IDLE;
+	}
 
-	protected abstract void fastAction();
-	protected abstract void powerAction();
-	protected abstract void specialAction();
-	protected abstract void die(Object source);
+	protected void die(Object source)
+	{
+		
+	}
 	
 	public void reset()
 	{
@@ -76,18 +107,50 @@ public abstract class Pawn extends PhysicsObject
 	
 	protected void stopMoving()
 	{
+		if(currentAction==ActionType.IDLE)
+		{
+			String oldAnim = ((SpriteSheet)sprite).getCurrentAnimation();
+			((SpriteSheet)sprite).startAnimation(oldAnim.replaceAll("Walk", "Stand"));
+		}
+		
 		velocity = new Vector2f();
 	}
 	
-	protected void move(Vector2f direction)
+	protected void move(String direction)
 	{
-		velocity = direction.mul(speedScale);
+		if(currentAction==ActionType.IDLE)
+		{
+			((SpriteSheet)sprite).startAnimation(direction);
+		}
+		
+		Vector2f dir = new Vector2f();
+		switch(direction)
+		{
+		case "WalkUp":
+			dir = Vector2f.up();
+			break;
+		case "WalkDown":
+			dir = Vector2f.down();
+			break;
+		case "WalkLeft":
+			dir = Vector2f.left();
+			break;
+		case "WalkRight":
+			dir = Vector2f.right();
+			break;
+		}
+		velocity = dir.mul(speedScale);
 	}
 	
 	@Override
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
+		if(currentAction!=ActionType.IDLE)
+		{
+			
+		}
+			
 		((SpriteSheet)sprite).update(deltaTime);
 	}
 	
