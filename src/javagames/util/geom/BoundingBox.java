@@ -23,6 +23,11 @@ public class BoundingBox extends BoundingShape
 		this(new Vector2f(), new Vector2f());
 	}
 	
+	public BoundingBox(float width, float height)
+	{
+		this(new Vector2f(width * -0.5f, height * -0.5f), new Vector2f(width * 0.5f, height * 0.5f));
+	}
+	
 	public BoundingBox(Vector2f min, Vector2f max)
 	{
 		this(min,max, "DEFAULT");
@@ -55,6 +60,8 @@ public class BoundingBox extends BoundingShape
 			return intersectAABB((BoundingBox) otherShape);
 		else if(otherShape instanceof BoundingCircle)
 			return intersectsCircle((BoundingCircle) otherShape);
+		else if(otherShape instanceof BoundingGroup)
+			return otherShape.intersects(this);
 			
 		System.err.println("otherShape is not recognized!");
 		return false;

@@ -128,16 +128,15 @@ public class XMLUtility {
 	public static GameObject loadStationaryObject(Class<?> clazz, Element element) throws Exception
 	{
 		GameObject gameObject = null;
-		Sprite sprite = ResourceLoader.loadSprite(clazz, XMLUtility.getElement(element, "sprite"));
 		Element boundsXML = XMLUtility.getElement(element, "bounds");
 		if(boundsXML != null)
 		{
 			BoundingShape bounds = XMLUtility.getBoundingShape(boundsXML);
-			gameObject = new GameObject(element.getAttribute("name"),sprite, bounds);
+			gameObject = new GameObject(element.getAttribute("name"), bounds);
 		}
 		else
 		{
-			gameObject = new GameObject(element.getAttribute("name"),sprite);
+			gameObject = new GameObject(element.getAttribute("name"));
 		}
 		gameObject.setPosition(XMLUtility.getVector2f(XMLUtility.getElement(element, "position")));
 		

@@ -24,6 +24,7 @@ public abstract class GameState extends State
 	protected List<PhysicsObject> physicsObjects;
 	protected KeyboardInput keys;
 	protected Sprite background;
+	protected Sprite foreground;
 	protected Avatar avatar;
 	
 	public GameState()
@@ -37,8 +38,15 @@ public abstract class GameState extends State
 	{
 		keys = (KeyboardInput) controller.getAttribute("keys");
 		background = (Sprite) controller.getAttribute("background");
+		foreground = (Sprite) controller.getAttribute("foreground");
+		ambience = (LoopEvent) controller.getAttribute("ambience");
+		ambience.fire();
+		
 		avatar = (Avatar)controller.getAttribute("avatar");
 		avatar.reset();
+		
+		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");
+		avatar.setPosition(spawn);
 	}
 
 	/*
@@ -136,6 +144,10 @@ public abstract class GameState extends State
 			go.draw(g,view);
 		}
 		
+		if(foreground != null)
+		{
+			foreground.render(g, view);
+		}
 		
 	}
 	

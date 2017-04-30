@@ -16,20 +16,23 @@ public class Pawn extends PhysicsObject
 	protected float healthScale;
 	protected float healthBonus;
 	protected float healthCurrent;
-	
+
 	protected float speedScale;
 
+	protected SpriteSheet sprite;
+	
 	Map<ActionType,GameAction>  actions;
 	protected ActionType		currentAction;
 	
 	public Pawn(String name, SpriteSheet sprite)
 	{
-		super(name,sprite);
+		super(name);
 		healthBase = 10.f;
 		healthScale = 1.f;
 		healthBonus = 0.f;
 		speedScale = 1.f;
-		((SpriteSheet)sprite).startAnimation("StandDown");
+		this.sprite = sprite;
+		this.sprite.startAnimation("StandDown");
 		
 		actions = Collections.synchronizedMap(new HashMap<ActionType, GameAction>());
 		currentAction = ActionType.IDLE;
@@ -37,12 +40,14 @@ public class Pawn extends PhysicsObject
 	
 	public Pawn(String name, SpriteSheet sprite, BoundingShape bounds) 
 	{
-		super(name, sprite, bounds);
+		super(name, bounds);
 		healthBase = 10.f;
 		healthScale = 1.f;
 		healthBonus = 0.f;
 		speedScale = 1.f;
-		((SpriteSheet)sprite).startAnimation("StandDown");
+		
+		this.sprite = sprite;
+		this.sprite.startAnimation("StandDown");
 		
 		actions = Collections.synchronizedMap(new HashMap<ActionType, GameAction>());
 		currentAction = ActionType.IDLE;

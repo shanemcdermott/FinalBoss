@@ -61,6 +61,15 @@ public class ResourceLoader {
 		return ImageIO.read( stream );
 	}
 	
+	public static Sprite loadSprite(Class<?> clazz, Element node, String tag) throws Exception
+	{
+		Element child = XMLUtility.getElement(node, tag);
+		if(child == null)
+			return null;
+		
+		return ResourceLoader.loadSprite(clazz, child);		
+	}
+	
 	public static Sprite loadSprite(Class<?> clazz, Element node) throws Exception
 	{
 		BufferedImage image = ResourceLoader.loadImage(clazz, node.getAttribute("file"));

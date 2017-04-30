@@ -24,7 +24,6 @@ public class GameObject
 {
 	
 	protected String name;
-	protected Sprite sprite;
 	protected ArrayList<String> tags;
 		
 	protected BoundingShape bounds;
@@ -35,21 +34,25 @@ public class GameObject
 	protected float rotation;
 	protected Vector2f position;
 	
-	public GameObject(String name, Sprite sprite)
+	public GameObject(String name)
 	{
-		this(name,sprite, new BoundingBox(new Vector2f(-0.5f, -0.5f), new Vector2f(0.5f,0.5f)));
+		this(name, new BoundingBox(new Vector2f(-0.5f, -0.5f), new Vector2f(0.5f,0.5f)));
 	}
 	
-	public GameObject(String name, Sprite sprite, BoundingShape bounds)
+	public GameObject(String name, BoundingShape bounds)
 	{
 		this.name = name;
-		this.sprite = sprite;
 		this.bounds = bounds;
 		tags = new ArrayList<String>();
 		transform = Matrix3x3f.identity();
 		scale = new Vector2f(1.f,1.f);
 		rotation = 0.f;
 		position = new Vector2f();
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	public void addTag(String...cTags)
@@ -70,20 +73,15 @@ public class GameObject
 		return tags.contains(tag);
 	}
 	
-	public void setSprite(Sprite sprite) 
-	{
-		this.sprite = sprite;
-	}
-
-	public Sprite getSprite() 
-	{
-		return sprite;
-	}
-	
 	public void update(float deltaTime)
 	{
 		updateTransform();
 		bounds.setPosition(position);
+	}
+	
+	public void setRotation(float rotation)
+	{
+		this.rotation = rotation;
 	}
 	
 	public void setPosition(Vector2f position)
@@ -116,12 +114,14 @@ public class GameObject
 	
 	public void draw(Graphics2D g, Matrix3x3f view)
 	{
-		sprite.render(g, view,position,rotation);
+		g.setColor(Color.GREEN);
+		Vector2f pos = view.mul(position);
+		Utility.drawString(g, (int)pos.x,(int)pos.y, name);
+		bounds.render(g, view);
 	}
 	
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
-		sprite.render(g, view, position.sub(posOffset), rotation);
 		Vector2f pos = view.mul(position.sub(posOffset));
 		g.setColor(Color.GREEN);
 		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
@@ -155,4 +155,9 @@ public class GameObject
 		return bounds.contains(point);
 	}
 	
+	@Override
+	public String toString()
+	{
+		return name;
+	}
 }

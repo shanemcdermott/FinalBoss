@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 
 <models>
+	<spawnpoint x="0" y="3"></spawnpoint>
+
+
 	<images>
-		<background name="background" file="map.png" width="50" height="100"></background>
+		<background name="background" file="Kanto/PalletTown.png" width="24" height="20"></background>
+		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="24" height="20"></foreground>
 	</images>
 	
 	<sounds>
@@ -12,11 +16,14 @@
 		<sound name="cue-gui-cancel" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
 		<sound name="thruster" type="loop" file="DRONE9RE.WAV"></sound>
 		<sound name="loop-gameOver" type="loop" file="DRONE9RE.WAV"></sound>		
-		<sound name="alien_ambience" type="ambience" file="AMBIENCE_alien.wav"></sound>
+		<sound name="pallet_town" type="ambience" file="Kanto/pallet_town.wav"></sound>
 	</sounds>
+	<blockinggroup>
+		<object name="OakLab" x="3.5" y="-1.25" width="7" height="4.75"/>
+		<object name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
+	</blockinggroup>
 	<objects>
 		<barrier name="tree">
-			<sprite file="KantoTree.png" width="1" height="1"></sprite>
 			<position x="0" y="2"></position>
 			<bounds>
 				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
@@ -26,27 +33,7 @@
 				</box>
 			</bounds>
 		</barrier>
-		<barrier name="House" type="Building" width="64" height="28">
-			<sprite file="KantoBuildings.png" width="4" height="4" startX="0" startY="0" imgW="64" imgH="80"></sprite>
-			<position x="4" y="4"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-2" y="-2"></min>
-					<max x="2" y="2"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="PokemonCenter" type="Building" width="80" height="32">
-			<sprite file="KantoBuildings.png" width="4" height="4" startX="64" startY="0" imgW="80" imgH="80"></sprite>
-			<position x="-4" y="-10.f" />
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-2" y="-2"></min>
-					<max x="2" y="2"></max>
-				</box>
-			</bounds>
-		</barrier>
+		
 	</objects>
+
 </models>

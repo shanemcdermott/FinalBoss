@@ -117,12 +117,11 @@ public class TitleMenuState extends AttractState
 		g.setColor(fontColor);
 		String[] msg = { 
 			GameConstants.APP_TITLE,
-			"", 
-			"", 
+			"",  
+			"P R E S S  ENTER  T O",
 			"",
-			"P R E S S  S P A C E  T O  P L A Y  S O U N D",
+			"S E L E C T  A  C H A R A C T E R",
 			"",
-			"H O L D  'W'  T O P L A Y  L O O P I N G  S O U N D",
 			"",
 			"P R E S S  E S C  T O  E X I T" 
 		};

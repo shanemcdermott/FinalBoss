@@ -3,6 +3,7 @@
 <models>
 	<images>
 		<background name="background" file="space_background_600x600.png" width="16" height="9"></background>
+		<foreground name="background" file="space_background_600x600.png" width="16" height="9"></foreground>
 	</images>
 	
 	<sounds>

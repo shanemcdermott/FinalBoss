@@ -74,6 +74,16 @@ public class Matrix3x3f {
 		this.m = m;
 	}
 
+	public Vector2f getTranslation()
+	{
+		return new Vector2f(m[2][0], m[2][1]);
+	}
+	
+	public Vector2f getScale()
+	{
+		return new Vector2f(m[0][0], m[1][1]);
+	}
+	
 	public static Matrix3x3f zero() {
 		return new Matrix3x3f(new float[][] { 
 			{ 0.0f, 0.0f, 0.0f },
@@ -101,7 +111,7 @@ public class Matrix3x3f {
 			{ x, y, 1.0f } 
 		});
 	}
-
+	
 	public static Matrix3x3f scale(Vector2f v) {
 		return scale(v.x, v.y);
 	}

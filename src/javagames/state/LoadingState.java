@@ -31,6 +31,8 @@ import javagames.game.GameObjectFactory;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
+import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingGroup;
 
 
 //TODO: XML/ GameObject Loading
@@ -87,7 +89,25 @@ public abstract class LoadingState extends State
 				return Boolean.TRUE;
 			}
 		});
-			
+		
+		//Load Foreground Image
+		loadTasks.add( new Callable<Boolean>() 
+		{
+			@Override
+			public Boolean call() throws Exception 
+			{
+				Sprite sprite = ResourceLoader.loadSprite(this.getClass(), imageXML, "foreground");
+				if(sprite == null)
+					return Boolean.TRUE;
+				
+				Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
+				sprite.scaleImage( viewport );
+				controller.setAttribute( "foreground", sprite );
+							
+				return Boolean.TRUE;
+			}
+		});
+		
 		//Load Sound FX
 		for (Element sound : XMLUtility.getElements(soundXML, "sound"))
 		{
@@ -163,6 +183,13 @@ public abstract class LoadingState extends State
 
 	public void loadGameObjects()
 	{
+		Element spawnElement = XMLUtility.getElement(xml, "spawnpoint");
+		if(spawnElement != null)
+		{	
+			Vector2f spawn = XMLUtility.getVector2f(spawnElement);
+			controller.setAttribute("spawnPoint", spawn);
+		}
+		
 		Element objectXML = XMLUtility.getElement(xml, "objects");
 		if(objectXML == null) return;
 		//Load Sound FX
@@ -184,8 +211,39 @@ public abstract class LoadingState extends State
 				}
 			});
 		}
+		
+		loadBarriers();
 	}
 	
+
+	public void loadBarriers()
+	{
+		Element objectXML = XMLUtility.getElement(xml, "blockinggroup");
+		
+		if(objectXML == null)
+		{
+			System.out.println("No blocking group found. Skipping");
+			return;
+		}
+	
+		BoundingGroup bounds = new BoundingGroup();
+		for (Element barrier : XMLUtility.getElements(objectXML, "object"))
+		{
+
+			float halfWidth = 0.5f * Float.parseFloat(barrier.getAttribute("width"));
+			float halfHeight = 0.5f * Float.parseFloat(barrier.getAttribute("height"));
+			
+			Vector2f min = new Vector2f(-halfWidth, -halfHeight);
+			Vector2f max = new Vector2f(halfWidth, halfHeight);
+			BoundingBox bound = new BoundingBox(min,max);
+			Vector2f position = XMLUtility.getVector2f(barrier);
+			bound.setPosition(position);
+			bounds.addShape(bound);
+		}
+		GameObject go = new GameObject("Bounds", bounds);
+		loaded.add("Bounds");			
+		controller.setAttribute("Bounds", go);
+	}
 
 	@Override
 	public void updateObjects(float delta)

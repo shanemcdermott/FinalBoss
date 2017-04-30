@@ -40,6 +40,11 @@ public abstract class RoamingState extends GameState
 			go.draw(g,view, avatar.getPosition());
 		}
 		
+		if(foreground != null)
+		{
+			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
+		}
+		
 	}
 	
 }

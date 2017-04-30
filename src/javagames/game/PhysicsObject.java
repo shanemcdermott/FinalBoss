@@ -6,22 +6,21 @@ import javagames.util.geom.BoundingShape;
 
 public class PhysicsObject extends GameObject
 {
-
 	protected float rotationRate;
 	protected Vector2f acceleration;
 	protected Vector2f velocity;
 
-	public PhysicsObject(String name, Sprite sprite) 
+	public PhysicsObject(String name) 
 	{
-		super(name, sprite);
+		super(name);
 		rotationRate = 0.f;
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
 	}
 	
-	public PhysicsObject(String name, Sprite sprite, BoundingShape bounds) 
+	public PhysicsObject(String name, BoundingShape bounds) 
 	{
-		super(name, sprite, bounds);
+		super(name,bounds);
 		rotationRate = 0.f;
 		velocity = new Vector2f();
 		acceleration = new Vector2f();
