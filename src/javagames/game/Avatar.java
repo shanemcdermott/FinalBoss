@@ -83,13 +83,13 @@ public class Avatar extends Pawn
 			move("WalkLeft");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_1,KeyEvent.VK_NUMPAD1))
-			startAction(ActionType.FAST);
+			setState(new CombatState());
 		else if(keyboard.keysDownOnce(KeyEvent.VK_2,KeyEvent.VK_NUMPAD2))
-			startAction(ActionType.POWER);
+			setState(new CombatState());
 		else if(keyboard.keysDownOnce(KeyEvent.VK_3,KeyEvent.VK_NUMPAD3))
-			startAction(ActionType.SPECIAL);
+			setState(new CombatState());
 		else if(keyboard.keysDownOnce(KeyEvent.VK_4, KeyEvent.VK_NUMPAD4))
-			startAction(ActionType.ULTIMATE);
+			setState(new CombatState());
 		else if(keyboard.keysReleased(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D))
 		{
 			if(keyboard.keysDown(KeyEvent.VK_W, KeyEvent.VK_UP))
@@ -118,22 +118,11 @@ public class Avatar extends Pawn
 	}
 	
 	@Override
-	protected void die(Object source) 
+	public void die(Object source) 
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	
-	@Override
-	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
-	{
-		sprite.render(g, view, position.sub(posOffset), rotation);
-		Vector2f pos = view.mul(position.sub(posOffset));
-		g.setColor(Color.GREEN);
-		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
-		bounds.setPosition(position.sub(posOffset));
-		bounds.render(g, view);
-	}
 	
 }

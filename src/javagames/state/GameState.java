@@ -2,11 +2,13 @@ package javagames.state;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javagames.game.Avatar;
+import javagames.game.Damageable;
 import javagames.game.GameObject;
 import javagames.game.Pawn;
 import javagames.game.PhysicsObject;
@@ -14,6 +16,7 @@ import javagames.sound.LoopEvent;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
+import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
 import javagames.g2d.Sprite;
 
@@ -26,6 +29,7 @@ public abstract class GameState extends State
 	protected Sprite background;
 	protected Sprite foreground;
 	protected Avatar avatar;
+	public BoundingBox activeRegion;
 	
 	public GameState()
 	{
@@ -57,6 +61,7 @@ public abstract class GameState extends State
 		for(String s : objectNames)
 		{
 			GameObject g = (GameObject)controller.getAttribute(s);
+			g.reset();
 			if(g instanceof PhysicsObject)
 			{
 				physicsObjects.add((PhysicsObject)g);
@@ -75,6 +80,10 @@ public abstract class GameState extends State
 		
 	public void processInput(float delta) 
 	{
+		if(keys.keyDownOnce(KeyEvent.VK_ESCAPE))
+		{
+			System.exit(0);
+		}
 		avatar.processInput(keys, delta);
 	}
 
@@ -106,7 +115,7 @@ public abstract class GameState extends State
 			if(p.isMoving())
 			{
 				movingObjects.add(p);
-				oldPositions.add(p.getWorldPosition());
+				oldPositions.add(p.getPosition());
 			}
 			p.update(delta);
 		}
@@ -120,16 +129,34 @@ public abstract class GameState extends State
 				int i = 0;
 				for(PhysicsObject p : movingObjects)
 				{
-					if(p.intersects(b))
+					if(p.getCollisionChannel().equals("DEFAULT"))
 					{
-						p.stopMotion();
-						p.setPosition(oldPositions.get(i));
+						if(p.intersects(b))
+						{
+							p.stopMotion();
+							p.setPosition(oldPositions.get(i));
+						}
+						i++;
 					}
-					i++;
 				}
 			}
 		}
-			
+		
+		int i = 0;
+		for(PhysicsObject m : movingObjects)
+		{
+			BoundingShape b = m.getBounds();
+			for(PhysicsObject p : physicsObjects)
+			{
+				if(m.equals(p)) continue;
+				if(p.intersects(b))
+				{
+					m.stopMotion();
+					m.setPosition(oldPositions.get(i));
+				}
+			}
+			i++;
+		}
 	}
 	
 	@Override
@@ -142,6 +169,11 @@ public abstract class GameState extends State
 		for(GameObject go : gameObjects)
 		{
 			go.draw(g,view);
+		}
+		
+		for(PhysicsObject po : physicsObjects)
+		{
+			po.draw(g,view);
 		}
 		
 		if(foreground != null)

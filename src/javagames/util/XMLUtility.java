@@ -9,7 +9,11 @@ import org.xml.sax.*;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.game.Avatar;
+import javagames.game.CombatState;
 import javagames.game.GameObject;
+import javagames.game.LivingObject;
+import javagames.game.MultiStateObject;
+import javagames.game.ObjectState;
 import javagames.game.Pawn;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingCircle;
@@ -105,15 +109,16 @@ public class XMLUtility {
 	
 	public static GameObject loadGameObject(Class<?> clazz, Element element)
 	{
-		GameObject gameObject = null;
 		try
 		{
 			switch(element.getAttribute("type"))
 			{
-				case "PAWN":
-		
+				case "pawn":
+					return loadPawn(clazz,element);
+				case "living":
+					return loadLivingObject(clazz, element);
 				default:
-					gameObject = loadStationaryObject(clazz, element);
+					return loadStationaryObject(clazz, element);
 			}
 		}
 		catch(Exception e)
@@ -122,7 +127,44 @@ public class XMLUtility {
 			System.err.println(e);
 		}
 		
-		return gameObject;
+		return null;
+	}
+	
+	public static LivingObject loadLivingObject(Class<?> clazz, Element element) throws Exception
+	{
+		LivingObject object = null;
+		Element boundsXML = XMLUtility.getElement(element, "bounds");
+		SpriteSheet spr = ResourceLoader.loadSpriteSheet(clazz,XMLUtility.getElement(element, "sprite"));
+		if(boundsXML != null)
+		{
+			BoundingShape bounds = XMLUtility.getBoundingShape(boundsXML);
+			object = new LivingObject(element.getAttribute("name"), bounds, spr);
+		}
+		else
+		{
+			object = new LivingObject(element.getAttribute("name"), spr);
+		}
+		
+		object.setPosition(XMLUtility.getVector2f(element));
+		
+		//object.setState(new CombatState("Alive"));
+		object.setState(XMLUtility.loadObjectState(XMLUtility.getElement(element, "state")));
+		
+		return object;
+	}
+	
+	public static ObjectState loadObjectState(Element element) throws Exception
+	{
+		switch(element.getAttribute("type"))
+		{
+			case "combat":
+			{
+				CombatState state = new CombatState(element.getAttribute("name"));
+				return state;
+			}
+		}
+		
+		return null;
 	}
 	
 	public static GameObject loadStationaryObject(Class<?> clazz, Element element) throws Exception
@@ -152,5 +194,12 @@ public class XMLUtility {
 		SpriteSheet spr = (SpriteSheet)ResourceLoader.loadSprite(clazz,XMLUtility.getElement(element, "sprite"));
 		
 		return new Pawn(element.getAttribute("name"), spr);
+	}
+	
+	
+	public static Avatar loadAvatar(Class<?> clazz, String name) throws Exception
+	{
+		Element xml = ResourceLoader.loadXML(clazz, name+".xml");
+		return new Avatar(name, (SpriteSheet)ResourceLoader.loadSprite(clazz,XMLUtility.getElement(xml, "sprite")));
 	}
 }

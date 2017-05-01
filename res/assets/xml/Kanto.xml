@@ -2,13 +2,6 @@
 
 <models>
 	<spawnpoint x="0" y="3"></spawnpoint>
-
-
-	<images>
-		<background name="background" file="Kanto/PalletTown.png" width="24" height="20"></background>
-		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="24" height="20"></foreground>
-	</images>
-	
 	<sounds>
 		<sound name="explosion" type="cue" file="EXPLOSION_large_01.wav"></sound>
 		<sound name="fire-clip" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
@@ -18,21 +11,35 @@
 		<sound name="loop-gameOver" type="loop" file="DRONE9RE.WAV"></sound>		
 		<sound name="pallet_town" type="ambience" file="Kanto/pallet_town.wav"></sound>
 	</sounds>
+	
+	<images>
+		<background name="background" file="Kanto/PalletTown.png" width="24" height="20"></background>
+		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="24" height="20"></foreground>
+	</images>
+	
 	<blockinggroup>
-		<object name="OakLab" x="3.5" y="-1.25" width="7" height="4.75"/>
-		<object name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
+		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
+		<box name="BlueHouse" x="-4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
 	</blockinggroup>
+	
 	<objects>
-		<barrier name="tree">
-			<position x="0" y="2"></position>
+		<object name="tree" type="living" health="10.f" x="0" y="6">
+			<sprite file="Kanto/trees.png" width="1" height="1">
+				<animation name="Alive" frames="0" frameTime="1000" x="0" y="0" width="42" height="52" />
+				<animation name="Dead" frames="0" frameTime="1000" x="0" y="52" width="42" height="52" />
+			</sprite>		
 			<bounds>
 				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
 				<box>
-					<min x="-0.5" y="-0.5"></min>
-					<max x="0.5" y="0.5"></max>
+					<min x="-0.25" y="-0.25"></min>
+					<max x="0.25" y="0.25"></max>
 				</box>
 			</bounds>
-		</barrier>
+			<state name="Alive" type="combat" next = "Dead"></state>
+		</object>
 		
 	</objects>
 

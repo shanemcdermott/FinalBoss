@@ -1,8 +1,10 @@
 package javagames.util;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
 
 import javagames.state.LoadingState;
 import javagames.state.StateController;
@@ -37,6 +39,13 @@ public class StateFramework extends WindowFramework
 		controller.setAttribute("keys", keyboard);
 		controller.setAttribute("viewport", getViewportTransform());
 		controller.setState(new TitleLoadingState());
+	}
+	
+	@Override
+	protected void onComponentResized(ComponentEvent e) 
+	{
+		super.onComponentResized(e);
+		controller.setAttribute("viewport", getViewportTransform());
 	}
 	
 	public void shutDownGame()

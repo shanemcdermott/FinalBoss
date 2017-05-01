@@ -50,6 +50,8 @@ public class GameObject
 		position = new Vector2f();
 	}
 	
+	public void reset(){}
+	
 	public String getName()
 	{
 		return name;

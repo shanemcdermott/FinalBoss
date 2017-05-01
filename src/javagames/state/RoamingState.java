@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import javagames.game.GameObject;
+import javagames.game.PhysicsObject;
 import javagames.sound.SoundCue;
 import javagames.sound.SoundLooper;
 import javagames.util.Matrix3x3f;
@@ -39,6 +40,12 @@ public abstract class RoamingState extends GameState
 		{
 			go.draw(g,view, avatar.getPosition());
 		}
+		
+		for(PhysicsObject po : physicsObjects)
+		{
+			po.draw(g,view, avatar.getPosition());
+		}
+			
 		
 		if(foreground != null)
 		{

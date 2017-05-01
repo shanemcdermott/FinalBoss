@@ -12,7 +12,6 @@ import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.game.Avatar;
 import javagames.game.GameObject;
-import javagames.game.GameObjectFactory;
 import javagames.state.LoadingState;
 import javagames.state.TitleMenuState;
 import javagames.util.GameConstants;

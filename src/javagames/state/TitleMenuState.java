@@ -7,7 +7,6 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
 import javagames.game.Avatar;
-import javagames.game.GameObjectFactory;
 import javagames.kanto.KantoLoadingState;
 import javagames.kanto.KantoRoamingState;
 import javagames.sound.LoopEvent;
@@ -17,6 +16,7 @@ import javagames.util.GameConstants;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
 import javagames.util.Utility;
+import javagames.util.XMLUtility;
 
 public class TitleMenuState extends AttractState 
 {
@@ -92,7 +92,7 @@ public class TitleMenuState extends AttractState
 		{
 			try
 			{
-				controller.setAttribute("avatar", ResourceLoader.loadAvatar(this.getClass(), avatars[avatarIndex]));
+				controller.setAttribute("avatar", XMLUtility.loadAvatar(this.getClass(), avatars[avatarIndex]));
 				
 			}
 			catch(Exception e)

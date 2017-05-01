@@ -27,11 +27,11 @@ import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
 import javagames.g2d.Sprite;
 import javagames.game.GameObject;
-import javagames.game.GameObjectFactory;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
 import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingCircle;
 import javagames.util.geom.BoundingGroup;
 
 
@@ -49,8 +49,6 @@ public abstract class LoadingState extends State
 	private float percent;
 	private float wait;
 
-
-
 	
 	protected abstract void enterNextState();
 	
@@ -63,7 +61,7 @@ public abstract class LoadingState extends State
 		loadTasks = new ArrayList<Callable<Boolean>>();
 		try
 		{
-			xml = ResourceLoader.loadXML(this.getClass(), displayString+".xml");
+			xml = ResourceLoader.loadXML(this.getClass(), displayString.replaceAll("\\s+","")+".xml");
 		}
 		catch(Exception e)
 		{
@@ -192,30 +190,36 @@ public abstract class LoadingState extends State
 		
 		Element objectXML = XMLUtility.getElement(xml, "objects");
 		if(objectXML == null) return;
-		//Load Sound FX
-		for (Element barrier : XMLUtility.getElements(objectXML, "barrier"))
-		{
-			
+		//Load Objects
+		for (Element object : XMLUtility.getElements(objectXML, "object"))
+		{	
 			loadTasks.add( new Callable<Boolean>() 
 			{
 				@Override
 				public Boolean call() throws Exception 
 				{
 					
-					GameObject gameObject = XMLUtility.loadGameObject(this.getClass(), barrier);
-					
-					loaded.add(barrier.getAttribute("name"));			
-					controller.setAttribute(barrier.getAttribute("name"), gameObject);
-						
+					GameObject gameObject = XMLUtility.loadGameObject(this.getClass(), object);
+					if(gameObject!= null)
+					{
+						System.out.println(gameObject.getName() + "Loaded.");
+						loaded.add(gameObject.getName());			
+						controller.setAttribute(gameObject.getName(), gameObject);
+					}
+					else
+					{
+						System.err.println(object.getAttribute("name") + " failed to load.");
+					}
 					return Boolean.TRUE;
 				}
 			});
 		}
 		
+
 		loadBarriers();
 	}
 	
-
+	
 	public void loadBarriers()
 	{
 		Element objectXML = XMLUtility.getElement(xml, "blockinggroup");
@@ -227,7 +231,7 @@ public abstract class LoadingState extends State
 		}
 	
 		BoundingGroup bounds = new BoundingGroup();
-		for (Element barrier : XMLUtility.getElements(objectXML, "object"))
+		for (Element barrier : XMLUtility.getElements(objectXML, "box"))
 		{
 
 			float halfWidth = 0.5f * Float.parseFloat(barrier.getAttribute("width"));
@@ -238,6 +242,14 @@ public abstract class LoadingState extends State
 			BoundingBox bound = new BoundingBox(min,max);
 			Vector2f position = XMLUtility.getVector2f(barrier);
 			bound.setPosition(position);
+			bounds.addShape(bound);
+		}
+		for (Element barrier : XMLUtility.getElements(objectXML, "circle"))
+		{
+
+			float radius = Float.parseFloat(barrier.getAttribute("radius"));
+			Vector2f position = XMLUtility.getVector2f(barrier);
+			BoundingCircle bound = new BoundingCircle(position, radius);
 			bounds.addShape(bound);
 		}
 		GameObject go = new GameObject("Bounds", bounds);

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import javagames.game.Avatar;
-import javagames.game.GameObjectFactory;
 import javagames.util.GameConstants;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;

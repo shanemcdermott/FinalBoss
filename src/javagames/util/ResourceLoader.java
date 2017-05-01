@@ -72,16 +72,16 @@ public class ResourceLoader {
 	
 	public static Sprite loadSprite(Class<?> clazz, Element node) throws Exception
 	{
-		BufferedImage image = ResourceLoader.loadImage(clazz, node.getAttribute("file"));
-		float halfWidth = 0.5f * Float.parseFloat(node.getAttribute("width"));
-		float halfHeight = 0.5f * Float.parseFloat(node.getAttribute("height"));
-		
-		Vector2f topLeft = new Vector2f(-halfWidth, halfHeight);
-		Vector2f bottomRight = new Vector2f(halfWidth, -halfHeight);
-		
 		List<Element> anims = XMLUtility.getElements(node, "animation");
 		if(anims.isEmpty())
 		{
+			BufferedImage image = ResourceLoader.loadImage(clazz, node.getAttribute("file"));
+			float halfWidth = 0.5f * Float.parseFloat(node.getAttribute("width"));
+			float halfHeight = 0.5f * Float.parseFloat(node.getAttribute("height"));
+			
+			Vector2f topLeft = new Vector2f(-halfWidth, halfHeight);
+			Vector2f bottomRight = new Vector2f(halfWidth, -halfHeight);
+			
 			if(node.hasAttribute("startX"))
 			{
 				int startX = Integer.parseInt(node.getAttribute("startX"));
@@ -94,16 +94,32 @@ public class ResourceLoader {
 			return new Sprite(image, topLeft, bottomRight);
 		}
 		
+		return loadSpriteSheet(clazz,node);
+		
+	}
+	
+	public static SpriteSheet loadSpriteSheet(Class<?> clazz, Element node) throws Exception
+	{
+		BufferedImage image = ResourceLoader.loadImage(clazz, node.getAttribute("file"));
+		float halfWidth = 0.5f * Float.parseFloat(node.getAttribute("width"));
+		float halfHeight = 0.5f * Float.parseFloat(node.getAttribute("height"));
+		
+		Vector2f topLeft = new Vector2f(-halfWidth, halfHeight);
+		Vector2f bottomRight = new Vector2f(halfWidth, -halfHeight);
+		
 		HashMap<String,Animation> animations = new HashMap<String, Animation>();
+		
+		List<Element> anims = XMLUtility.getElements(node, "animation");
 		for(Element anim : anims)
 		{
-			animations.put(anim.getAttribute("name"), loadAnimation(clazz,image,anim));
+			animations.put(anim.getAttribute("name"), loadAnimation(image,anim));
 		}
 		
 		return new SpriteSheet(image, topLeft, bottomRight, animations);
+		
 	}
 	
-	public static Animation loadAnimation(Class<?> clazz, BufferedImage image, Element node)
+	public static Animation loadAnimation( BufferedImage image, Element node)
 	{
 		int frames = Integer.parseInt(node.getAttribute("frames"));
 		float frameTime = Float.parseFloat(node.getAttribute("frameTime"));
@@ -113,12 +129,7 @@ public class ResourceLoader {
 		int height = Integer.parseInt(node.getAttribute("height"));
 		return new Animation(image,frames,frameTime,x,y,width,height);
 	}	
-	
-	public static Avatar loadAvatar(Class<?> clazz, String name) throws Exception
-	{
-		Element xml = ResourceLoader.loadXML(clazz, name+".xml");
-		return new Avatar(name, (SpriteSheet)ResourceLoader.loadSprite(clazz,XMLUtility.getElement(xml, "sprite")));
-	}
+
 	
 	public static byte[] loadSound(Class<?> clazz, String fileName)
 	{

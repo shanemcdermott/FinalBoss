@@ -1,6 +1,7 @@
 package javagames.util.geom;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collections;
 import java.util.HashMap;
@@ -167,6 +168,7 @@ public class BoundingBox extends BoundingShape
 	@Override
 	public void render(Graphics g, Matrix3x3f view) 
 	{
+		g.setColor(Color.BLUE);
 		Vector2f m1 = view.mul(minCpy);
 		Vector2f m2 = view.mul(maxCpy);
 		int x = (int)m1.x;
@@ -174,7 +176,7 @@ public class BoundingBox extends BoundingShape
 		int width = (int)(m2.x-m1.x);
 		int height = (int)(m2.y-m1.y);
 		g.drawRect(x, y, width, height);	
-		g.drawLine((int)m1.x, (int)m1.y, (int)m2.x, (int)m2.y);
+		g.drawLine(x, (int)m1.y, (int)m2.x, y);
 	}
 
 

@@ -39,9 +39,13 @@ public class BoundingCircle extends BoundingShape
 			BoundingBox aabb = (BoundingBox)otherShape;
 			return aabb.intersectsCircle(this);
 		}	
+		
 		if(otherShape instanceof BoundingCircle)
 			return intersectsCircle((BoundingCircle) otherShape);
-			
+		
+		if(otherShape instanceof BoundingGroup)
+			return otherShape.intersects(this);
+		
 		System.err.println("otherShape is not recognized!");
 		return false;
 	}

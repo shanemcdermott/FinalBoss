@@ -1,5 +1,6 @@
 <model name="Nihil">
 	<sprite file="Nihil.png" width="1" height="1">
+		<animation name="Idle" frames="0" frameTime="1000" x="0" y="36" width="23" height="36" />
 		<animation name="WalkLeft" frames="4" frameTime="0.4" x="0" y="0" width="23" height="36" />
 		<animation name="StandLeft" frames="0" frameTime="1000" x="0" y="0" width="23" height="36" />
 		<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="36" width="23" height="36" />
@@ -8,8 +9,8 @@
 		<animation name="StandRight" frames="0" frameTime="1000" x="0" y="72" width="23" height="36" />
 		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="108" width="23" height="36" />
 		<animation name="StandUp" frames="0" frameTime="1000" x="0" y="108" width="23" height="36" />
+		<animation name="Alive" frames="4" frameTime="0.4" x="0" y="144" width="23" height="36" />
 	</sprite>
-	<position x="0" y="0"></position>
 	<bounds>
 		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
 		<box>
@@ -18,3 +19,4 @@
 		</box>
 	</bounds>
 </model>
+
