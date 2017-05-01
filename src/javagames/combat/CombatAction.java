@@ -101,7 +101,7 @@ public class CombatAction extends CombatState
 	
 	public boolean isActionFinished()
 	{
-		return isFinishedCharging();
+		return !isCharging();
 	}
 	
 	protected CombatState getNextState()

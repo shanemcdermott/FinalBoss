@@ -91,7 +91,7 @@ public class Vector2f {
 	public Vector2f perp() {
 		return new Vector2f(-y, x);
 	}
-
+	
 	public float angle() {
 		return (float) Math.atan2(y, x);
 	}
@@ -101,6 +101,26 @@ public class Vector2f {
 				* (float) Math.sin(angle));
 	}
 
+	public static Vector2f clamp(Vector2f min, Vector2f max, Vector2f a)
+	{
+		return new Vector2f(Math.max(Math.min(a.x,max.x),min.x), Math.max(Math.min(a.y, max.y), min.y));
+	}
+	
+	public static Vector2f parse(String s)
+	{
+		String str = s.toUpperCase();
+		if(str.contains("UP"))
+			return Vector2f.up();
+		else if(str.contains("DOWN"))
+			return Vector2f.down();
+		else if(str.contains("LEFT"))
+			return Vector2f.left();
+		else if(str.contains("RIGHT"))
+			return Vector2f.right();
+		else
+			return new Vector2f();
+	}
+	
 	public static Vector2f up()
 	{
 		return new Vector2f(0.f,1.f);

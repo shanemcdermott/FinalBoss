@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.awt.Color;
+
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
 
@@ -14,14 +16,21 @@ public class SpriteSheet extends Sprite
 	
 	private Map<String, Animation> 	animations;
 	private String					currentAnimation;
-
+	private Color					color;
+	
 	public SpriteSheet(BufferedImage image, Vector2f topLeft, Vector2f bottomRight, Map<String, Animation> animations) 
 	{
 		super(image, topLeft, bottomRight);
 		this.animations = Collections.synchronizedMap(new HashMap<String, Animation>(animations));
 		currentAnimation = "None";
+		color = Color.WHITE;
 	}
 
+	public void setColor(Color color)
+	{
+		this.color = color;
+	}
+	
 	public void addAnimation(String name, Animation anim)
 	{
 		animations.put(name, anim);
@@ -41,8 +50,8 @@ public class SpriteSheet extends Sprite
 	public void update(float deltaTime)
 	{
 		animations.get(currentAnimation).update(deltaTime);
-		image = animations.get(currentAnimation).getCurrentImage();
-		scaled = animations.get(currentAnimation).getCurrentImage();
+		image = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
+		scaled = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
 	}
 
 }

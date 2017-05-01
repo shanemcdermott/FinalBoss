@@ -51,7 +51,8 @@ public abstract class RoamingState extends GameState
 		{
 			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
 		}
-		
+	
+		g.drawString(String.format("%s", avatar.getPhysics()), 10, 30);
 	}
 	
 }

@@ -84,13 +84,13 @@ public class Avatar extends Pawn
 			move("WalkLeft");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_1,KeyEvent.VK_NUMPAD1))
-			setState(new CombatState());
+			setState(new CombatAction("Alive"));
 		else if(keyboard.keysDownOnce(KeyEvent.VK_2,KeyEvent.VK_NUMPAD2))
-			setState(new CombatState());
+			setState(new CombatAction("Alive"));
 		else if(keyboard.keysDownOnce(KeyEvent.VK_3,KeyEvent.VK_NUMPAD3))
-			setState(new CombatState());
+			setState(new CombatAction("Alive"));
 		else if(keyboard.keysDownOnce(KeyEvent.VK_4, KeyEvent.VK_NUMPAD4))
-			setState(new CombatState());
+			setState(new CombatAction("Alive"));
 		else if(keyboard.keysReleased(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D))
 		{
 			if(keyboard.keysDown(KeyEvent.VK_W, KeyEvent.VK_UP))

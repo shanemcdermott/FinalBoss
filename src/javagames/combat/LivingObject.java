@@ -1,5 +1,7 @@
 package javagames.combat;
 
+import java.awt.Color;
+
 import javagames.g2d.SpriteSheet;
 import javagames.game.MultiStateObject;
 import javagames.util.geom.BoundingShape;
@@ -59,7 +61,7 @@ public class LivingObject extends MultiStateObject implements Damageable
 	public void takeDamage(Object source, float amount)
 	{
 		healthCurrent -= amount;
-		
+		sprite.setColor(Color.RED);
 		if(healthCurrent <= 0.f)
 			die(source);
 	}

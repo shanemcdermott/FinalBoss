@@ -1,11 +1,27 @@
 package javagames.g2d;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 public class ImageUtility 
 {
+	
+	public static BufferedImage colorImage(BufferedImage source, Color color)
+	{
+		if(color == Color.WHITE)
+		{
+			return source;
+		}
+		BufferedImage image = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+		Graphics2D g2d = image.createGraphics();
+		g2d.drawImage(source, 0, 0, image.getWidth(), image.getHeight(), null);
+		g2d.setColor(color);
+		g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
+		g2d.dispose();
+		return image;
+	}
 	
 	public static BufferedImage scaleImage(BufferedImage toScale,
 			int targetWidth, int targetHeight) {

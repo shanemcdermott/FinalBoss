@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javagames.combat.CombatAction;
 import javagames.combat.CombatState;
 import javagames.combat.LivingObject;
 import javagames.g2d.Sprite;
@@ -15,6 +16,7 @@ import javagames.util.geom.BoundingShape;
 public class Pawn extends LivingObject 
 {
 
+	
 	protected float speedScale;
 	
 	public Pawn(String name, SpriteSheet sprite)
@@ -23,6 +25,7 @@ public class Pawn extends LivingObject
 		speedScale = 1.f;
 		setState(new CombatState());
 		startAnimation("WalkDown");
+		
 	}
 	
 	public Pawn(String name, SpriteSheet sprite, BoundingShape bounds) 
@@ -32,9 +35,26 @@ public class Pawn extends LivingObject
 		speedScale = 1.f;		
 		setState(new CombatState());
 		startAnimation("WalkDown");
+		
 	}
 
 	
+	
+	public void startAction(String actionName)
+	{
+		if(actionName.contains("Walk"))
+		{
+			move(actionName.replaceAll("Walk", ""));
+		}
+		else if(states.containsKey(actionName))
+		{
+			setState(actionName);
+		}
+		else
+		{
+			System.out.printf("%s is not a recognized action!\n", actionName);
+		}
+	}
 	
 	protected void stopMoving()
 	{
@@ -44,7 +64,7 @@ public class Pawn extends LivingObject
 			((SpriteSheet)sprite).startAnimation(oldAnim.replaceAll("Walk", "Stand"));
 		}
 		
-		velocity = new Vector2f();
+		physics.stopMotion();
 	}
 	
 	protected void move(String direction)
@@ -54,23 +74,7 @@ public class Pawn extends LivingObject
 			((SpriteSheet)sprite).startAnimation(direction);
 		}
 		
-		Vector2f dir = new Vector2f();
-		switch(direction)
-		{
-		case "WalkUp":
-			dir = Vector2f.up();
-			break;
-		case "WalkDown":
-			dir = Vector2f.down();
-			break;
-		case "WalkLeft":
-			dir = Vector2f.left();
-			break;
-		case "WalkRight":
-			dir = Vector2f.right();
-			break;
-		}
-		velocity = dir.mul(speedScale);
+		physics.move(Vector2f.parse(direction).mul(speedScale));
 	}
 	
 	@Override
