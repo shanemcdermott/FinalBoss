@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javagames.combat.CombatState;
+import javagames.combat.LivingObject;
 import javagames.g2d.Sprite;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingShape;

@@ -6,12 +6,12 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+import javagames.combat.Avatar;
+import javagames.combat.CombatState;
+import javagames.combat.LivingObject;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
-import javagames.game.Avatar;
-import javagames.game.CombatState;
 import javagames.game.GameObject;
-import javagames.game.LivingObject;
 import javagames.game.MultiStateObject;
 import javagames.game.ObjectState;
 import javagames.game.Pawn;

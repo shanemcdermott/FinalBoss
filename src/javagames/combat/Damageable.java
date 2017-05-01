@@ -1,4 +1,4 @@
-package javagames.game;
+package javagames.combat;
 
 public interface Damageable 
 {

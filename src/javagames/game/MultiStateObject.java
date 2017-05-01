@@ -30,7 +30,17 @@ public class MultiStateObject extends PhysicsObject
 		this.sprite=sprite;
 	}
 
-	protected void startAnimation(String animation)
+	@Override
+	public void reset()
+	{
+		super.reset();
+		if(currentState != null)
+		{
+			currentState.reset();
+		}
+	}
+	
+	public void startAnimation(String animation)
 	{
 		sprite.startAnimation(animation);
 	}

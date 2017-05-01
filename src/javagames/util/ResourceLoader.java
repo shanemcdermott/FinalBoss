@@ -18,10 +18,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import javagames.combat.Avatar;
 import javagames.g2d.Animation;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
-import javagames.game.Avatar;
 import javagames.state.LoadingState;
 
 public class ResourceLoader {

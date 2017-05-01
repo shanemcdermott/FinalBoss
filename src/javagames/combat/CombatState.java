@@ -1,4 +1,7 @@
-package javagames.game;
+package javagames.combat;
+
+import javagames.game.MultiStateObject;
+import javagames.game.ObjectState;
 
 public class CombatState implements ObjectState 
 {
@@ -39,7 +42,13 @@ public class CombatState implements ObjectState
 		}
 	}
 	
+	@Override
+	public void reset()
+	{
+		
+	}
 	
+	@Override
 	public void enter()
 	{
 		owner.startAnimation(name);

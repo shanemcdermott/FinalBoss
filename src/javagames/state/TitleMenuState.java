@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
-import javagames.game.Avatar;
+import javagames.combat.Avatar;
 import javagames.kanto.KantoLoadingState;
 import javagames.kanto.KantoRoamingState;
 import javagames.sound.LoopEvent;

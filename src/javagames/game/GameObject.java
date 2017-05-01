@@ -157,6 +157,14 @@ public class GameObject
 		return bounds.contains(point);
 	}
 	
+	//Called when another object overlaps with this object
+	public void onBeginOverlap(GameObject other)
+	{}
+
+	//Called when another object stops overlapping with this object
+	public void onEndOverlap(GameObject other)
+	{}
+	
 	@Override
 	public String toString()
 	{

@@ -1,4 +1,4 @@
-package javagames.game;
+package javagames.combat;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,6 +10,7 @@ import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
+import javagames.game.Pawn;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;

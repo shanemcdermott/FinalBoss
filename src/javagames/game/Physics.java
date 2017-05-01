@@ -41,4 +41,5 @@ public class Physics
 	{
 		return !velocity.equals(new Vector2f());
 	}
+
 }
