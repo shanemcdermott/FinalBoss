@@ -14,6 +14,7 @@ public class CombatAction extends CombatState
 
 	protected boolean bIsCharging;
 	
+	protected BoundingShape effectBounds;
 	protected GameObject effect;
 	
 	public CombatAction()
@@ -29,6 +30,7 @@ public class CombatAction extends CombatState
 		chargeTime = 1.f;
 		cooldownTime = 0.f;
 		bIsCharging=false;
+		effectBounds = new BoundingBox(1,1);
 		effect = null;
 	}
 	
@@ -46,28 +48,40 @@ public class CombatAction extends CombatState
 		bIsCharging=true;
 	}
 	
+
 	@Override
 	public void update(float deltaTime)
 	{
 		currentTime += deltaTime;
 		if(isCharging() && isFinishedCharging())
 		{
-			// TODO Auto-generated constructor stub
+			onFinishedCharging();
 		}
-		else
+		if(effect != null)
 		{
-			
+			effect.update(deltaTime);
 		}
-		
 		if(shouldChangeState())
 		{
 			owner.setState(getNextState());
 		}
 	}
 	
-	public boolean canEnter()
+	public void onFinishedCharging()
 	{
-		return currentTime >= cooldownTime;
+		bIsCharging=false;
+		if(effect == null)
+		{
+			effect = new DamageObject(getName(), effectBounds, owner);
+		}
+		
+		effect.reset();
+		currentTime -=chargeTime;
+	}
+	
+	public boolean isFinishedCharging()
+	{
+		return currentTime >= chargeTime;
 	}
 	
 	public boolean isCharging()
@@ -75,14 +89,14 @@ public class CombatAction extends CombatState
 		return bIsCharging;
 	}
 	
+	public boolean canEnter()
+	{
+		return currentTime >= cooldownTime;
+	}
+		
 	public boolean shouldChangeState()
 	{
 		return super.shouldChangeState() && isActionFinished();
-	}
-	
-	public boolean isFinishedCharging()
-	{
-		return currentTime >= chargeTime;
 	}
 	
 	public boolean isActionFinished()
