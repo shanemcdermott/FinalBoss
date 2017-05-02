@@ -1,6 +1,11 @@
 package javagames.combat;
 
+import java.awt.Graphics2D;
+
 import javagames.game.GameObject;
+import javagames.game.MultiStateObject;
+import javagames.util.Matrix3x3f;
+import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
 
@@ -14,24 +19,22 @@ public class CombatAction extends CombatState
 
 	protected boolean bIsCharging;
 	
-	protected BoundingShape effectBounds;
 	protected GameObject effect;
 	
-	public CombatAction()
+	public CombatAction(String name, GameObject effect)
 	{
-		this("Punch");
+		this(name,effect, 1.f, 1.f, 0.f);
 	}
 	
-	public CombatAction(String name)
+	public CombatAction(String name, GameObject effect, float range, float chargeTime, float cooldownTime)
 	{
 		super(name);
-		range = 1.f;
+		this.range = range;
 		currentTime = 0.f;
-		chargeTime = 1.f;
-		cooldownTime = 0.f;
+		this.chargeTime = chargeTime;
+		this.cooldownTime = cooldownTime;
 		bIsCharging=false;
-		effectBounds = new BoundingBox(1,1);
-		effect = null;
+		this.effect = effect;
 	}
 	
 	@Override
@@ -67,16 +70,17 @@ public class CombatAction extends CombatState
 		}
 	}
 	
-	public void onFinishedCharging()
+	protected void onFinishedCharging()
 	{
 		bIsCharging=false;
-		if(effect == null)
-		{
-			effect = new DamageObject(getName(), effectBounds, owner);
-		}
-		
-		effect.reset();
+		spawnEffect();
 		currentTime -=chargeTime;
+	}
+	
+	protected void spawnEffect()
+	{	
+		if(effect!=null)
+			effect.reset();
 	}
 	
 	public boolean isFinishedCharging()
@@ -96,7 +100,7 @@ public class CombatAction extends CombatState
 		
 	public boolean shouldChangeState()
 	{
-		return super.shouldChangeState() && isActionFinished();
+		return super.shouldChangeState() || isActionFinished();
 	}
 	
 	public boolean isActionFinished()
@@ -104,14 +108,28 @@ public class CombatAction extends CombatState
 		return !isCharging();
 	}
 	
-	protected CombatState getNextState()
+	protected String getNextState()
 	{
 		if(owner.getCurrentHealth() <= 0.f)
 		{
-			return new CombatState("Dead");
+			return "Dead";
 		}
 		if(isActionFinished())
-			return new CombatState("Idle");
-		return this;
+			return "Idle";
+		
+		return name;
+	}
+	
+	@Override
+	public GameObject getEffect()
+	{
+		return effect;
+	}
+	
+	@Override
+	public void setOwner(MultiStateObject owner)
+	{
+		super.setOwner(owner);
+		
 	}
 }

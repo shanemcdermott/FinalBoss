@@ -36,6 +36,7 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public void reset()
 	{
+		super.reset();
 		resetHealth();
 	}
 	

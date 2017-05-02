@@ -28,7 +28,7 @@
 	<objects>
 		<object name="tree" type="living" health="10.f" x="0" y="6">
 			<sprite file="Kanto/trees.png" width="1" height="1">
-				<animation name="Alive" frames="0" frameTime="1000" x="0" y="0" width="42" height="52" />
+				<animation name="Idle" frames="0" frameTime="1000" x="0" y="0" width="42" height="52" />
 				<animation name="Dead" frames="0" frameTime="1000" x="0" y="52" width="42" height="52" />
 			</sprite>		
 			<bounds>
@@ -38,7 +38,7 @@
 					<max x="0.25" y="0.25"></max>
 				</box>
 			</bounds>
-			<state name="Alive" type="combat" next = "Dead"></state>
+			<state name="Idle" type="combat" next = "Dead"></state>
 		</object>
 		
 	</objects>

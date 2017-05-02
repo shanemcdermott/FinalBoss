@@ -39,7 +39,8 @@ public class SpriteSheet extends Sprite
 	public void startAnimation(String name)
 	{
 		currentAnimation = name;
-		animations.get(name).start();
+		if(animations.containsKey(name))
+			animations.get(name).start();
 	}
 	
 	public String getCurrentAnimation()
@@ -49,9 +50,12 @@ public class SpriteSheet extends Sprite
 	
 	public void update(float deltaTime)
 	{
-		animations.get(currentAnimation).update(deltaTime);
-		image = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
-		scaled = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
+		if(animations.containsKey(currentAnimation))
+		{
+			animations.get(currentAnimation).update(deltaTime);
+			image = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
+			scaled = ImageUtility.colorImage(animations.get(currentAnimation).getCurrentImage(), color);
+		}
 	}
 
 }

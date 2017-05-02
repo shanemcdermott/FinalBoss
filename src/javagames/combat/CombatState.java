@@ -1,7 +1,13 @@
 package javagames.combat;
 
+import java.awt.Graphics2D;
+
+import javagames.game.GameObject;
 import javagames.game.MultiStateObject;
 import javagames.game.ObjectState;
+import javagames.game.Ownable;
+import javagames.util.Matrix3x3f;
+import javagames.util.Vector2f;
 
 public class CombatState implements ObjectState 
 {
@@ -23,14 +29,14 @@ public class CombatState implements ObjectState
 		return owner.getCurrentHealth() <= 0.f;
 	}
 	
-	protected CombatState getNextState()
+	protected String getNextState()
 	{
 		if(owner.getCurrentHealth() <= 0.f)
 		{
-			return new CombatState("Dead");
+			return "Dead";
 		}
 		
-		return this;
+		return "Idle";
 	}
 	
 	@Override
@@ -58,6 +64,11 @@ public class CombatState implements ObjectState
 	public void setOwner(MultiStateObject owner)
 	{
 		this.owner=(LivingObject)owner;
+		GameObject effect = getEffect();
+		if(effect != null && effect instanceof Ownable)
+		{
+			((Ownable)effect).setOwner(owner);
+		}
 	}
 	
 	@Override
@@ -80,9 +91,27 @@ public class CombatState implements ObjectState
 	}
 
 	@Override
-	public void exit() {
+	public void exit() 
+	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public GameObject getEffect()
+	{
+		return null;
+	}
+
+	@Override
+	public GameObject getOwner() 
+	{
+		return owner;
+	}
+
+	@Override
+	public void setOwner(GameObject owner) {
+		setOwner((MultiStateObject)owner);
 	}
 	
 }

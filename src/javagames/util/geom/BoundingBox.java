@@ -62,7 +62,7 @@ public class BoundingBox extends BoundingShape
 		else if(otherShape instanceof BoundingCircle)
 			return intersectsCircle((BoundingCircle) otherShape);
 		else if(otherShape instanceof BoundingGroup)
-			return otherShape.intersects(this);
+			return ((BoundingGroup)otherShape).intersects(this);
 			
 		System.err.println("otherShape is not recognized!");
 		return false;

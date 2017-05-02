@@ -75,6 +75,11 @@ public class GameObject
 		return tags.contains(tag);
 	}
 	
+	public boolean isActive()
+	{
+		return true;
+	}
+	
 	public void update(float deltaTime)
 	{
 		updateTransform();

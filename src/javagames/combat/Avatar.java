@@ -10,7 +10,6 @@ import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
-import javagames.game.Pawn;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
@@ -67,49 +66,49 @@ public class Avatar extends Pawn
 	{
 		if(keyboard.keysDownOnce(KeyEvent.VK_W, KeyEvent.VK_UP))
 		{	
-			move("WalkUp");
+			startAction("WalkUp");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_S, KeyEvent.VK_DOWN))
 		{
-			move("WalkDown");
+			startAction("WalkDown");
 		}
 		
 		else if(keyboard.keysDownOnce(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
 		{
-			move("WalkRight");
+			startAction("WalkRight");
 		}
 		
 		else if(keyboard.keysDownOnce(KeyEvent.VK_A,KeyEvent.VK_LEFT))
 		{
-			move("WalkLeft");
+			startAction("WalkLeft");
 		}
 		else if(keyboard.keysDownOnce(KeyEvent.VK_1,KeyEvent.VK_NUMPAD1))
-			setState(new CombatAction("Alive"));
+			startAction("Primary");
 		else if(keyboard.keysDownOnce(KeyEvent.VK_2,KeyEvent.VK_NUMPAD2))
-			setState(new CombatAction("Alive"));
+			startAction("Secondary");
 		else if(keyboard.keysDownOnce(KeyEvent.VK_3,KeyEvent.VK_NUMPAD3))
-			setState(new CombatAction("Alive"));
+			startAction("Special");
 		else if(keyboard.keysDownOnce(KeyEvent.VK_4, KeyEvent.VK_NUMPAD4))
-			setState(new CombatAction("Alive"));
+			startAction("Ultimate");
 		else if(keyboard.keysReleased(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D))
 		{
 			if(keyboard.keysDown(KeyEvent.VK_W, KeyEvent.VK_UP))
 			{	
-				move("WalkUp");
+				startAction("WalkUp");
 			}
 			else if(keyboard.keysDown(KeyEvent.VK_S, KeyEvent.VK_DOWN))
 			{
-				move("WalkDown");
+				startAction("WalkDown");
 			}
 			
 			else if(keyboard.keysDown(KeyEvent.VK_D, KeyEvent.VK_RIGHT))
 			{
-				move("WalkRight");
+				startAction("WalkRight");
 			}
 			
 			else if(keyboard.keysDown(KeyEvent.VK_A,KeyEvent.VK_LEFT))
 			{
-				move("WalkLeft");
+				startAction("WalkLeft");
 			}
 			else
 			{

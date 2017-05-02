@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Vector;
 
 import javagames.game.GameObject;
-import javagames.game.Pawn;
 import javagames.game.PhysicsObject;
 import javagames.sound.LoopEvent;
 import javagames.util.KeyboardInput;
@@ -18,6 +17,7 @@ import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
 import javagames.combat.Avatar;
 import javagames.combat.Damageable;
+import javagames.combat.Pawn;
 import javagames.g2d.Sprite;
 
 public abstract class GameState extends State 

@@ -26,6 +26,8 @@ public class MultiStateObject extends PhysicsObject
 		super(name);
 		this.sprite = sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
+		setupStates();
+		currentState = "Idle";
 	}
 	
 	public MultiStateObject(String name, BoundingShape bounds, SpriteSheet sprite) 
@@ -33,15 +35,18 @@ public class MultiStateObject extends PhysicsObject
 		super(name, bounds);
 		this.sprite=sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
+		setupStates();
+		currentState = "Idle";
 	}
 
 	@Override
 	public void reset()
 	{
 		super.reset();
-		if(states.containsKey(currentState))
+		setState("Idle");
+		for(ObjectState os: states.values())
 		{
-			states.get(currentState).reset();
+			os.reset();
 		}
 	}
 	
@@ -76,7 +81,7 @@ public class MultiStateObject extends PhysicsObject
 	
 	public void setState(String newState) 
 	{
-		if(states.containsKey(currentState)) 
+		if(!currentState.equals("Idle")) 
 		{
 			states.get(currentState).exit();
 		}
@@ -89,13 +94,27 @@ public class MultiStateObject extends PhysicsObject
 		
 	}
 	
+	public ObjectState getCurrentState()
+	{
+		if(currentState.equals("Idle"))
+		{
+			return new CombatState("Idle");
+		}
+		return states.get(currentState);
+	}
 	
 	@Override
 	public void update(float deltaTime)
 	{
-		if(states.containsKey(currentState)) 
+		if(!currentState.equals("Idle")) 
 			states.get(currentState).update(deltaTime);
-		
+			
+		for(ObjectState os : states.values())
+		{
+			GameObject effect = os.getEffect();
+			if(effect != null)
+				effect.update(deltaTime);
+		}
 		super.update(deltaTime);
 		sprite.update(deltaTime);
 	}
@@ -105,6 +124,18 @@ public class MultiStateObject extends PhysicsObject
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
 		sprite.render(g, view, position.sub(posOffset), rotation);
+		drawEffect(g,view,posOffset);
+	}
+	
+	public void drawEffect(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{
+		for(ObjectState os : states.values())
+		{
+			GameObject effect = os.getEffect();
+			if(effect != null)
+				effect.draw(g,view,posOffset);
+		}
+
 	}
 	
 }
