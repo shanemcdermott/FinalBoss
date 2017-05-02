@@ -177,7 +177,7 @@ public abstract class GameFramework extends JFrame implements Runnable {
 		g.setFont(appFont);
 		g.setColor(appFPSColor);
 		frameRate.calculate();
-		textPos = Utility.drawString(g, 20, 0, frameRate.getFrameRate());
+		textPos = Utility.drawString(g, 20, 10, frameRate.getFrameRate());
 	}
 
 	private void disableCursor() {

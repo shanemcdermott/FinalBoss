@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javagames.combat.CombatAction;
 import javagames.combat.CombatState;
@@ -17,6 +19,7 @@ import javagames.util.geom.BoundingShape;
 public class MultiStateObject extends PhysicsObject 
 {
 	protected Map<String, ObjectState> states;
+	protected List<GameObject> effects;
 	protected String 		currentState;
 	protected SpriteSheet 	sprite;
 
@@ -26,6 +29,7 @@ public class MultiStateObject extends PhysicsObject
 		super(name);
 		this.sprite = sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
+		effects = new Vector<GameObject>();
 		setupStates();
 		currentState = "Idle";
 	}
@@ -35,6 +39,7 @@ public class MultiStateObject extends PhysicsObject
 		super(name, bounds);
 		this.sprite=sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
+		effects = new Vector<GameObject>();
 		setupStates();
 		currentState = "Idle";
 	}
@@ -66,6 +71,8 @@ public class MultiStateObject extends PhysicsObject
 		{
 			os.setOwner(this);
 			states.put(os.getName(), os);
+			if(os.getEffect()!=null)
+			effects.add(os.getEffect());
 		}
 	}
 	
@@ -109,16 +116,18 @@ public class MultiStateObject extends PhysicsObject
 		if(!currentState.equals("Idle")) 
 			states.get(currentState).update(deltaTime);
 			
-		for(ObjectState os : states.values())
-		{
-			GameObject effect = os.getEffect();
-			if(effect != null)
-				effect.update(deltaTime);
-		}
+		updateEffects(deltaTime);
 		super.update(deltaTime);
 		sprite.update(deltaTime);
 	}
 	
+	protected void updateEffects(float deltaTime)
+	{
+		for(GameObject e : effects)
+		{
+			e.update(deltaTime);
+		}
+	}
 	
 	@Override
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
@@ -129,13 +138,16 @@ public class MultiStateObject extends PhysicsObject
 	
 	public void drawEffect(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
-		for(ObjectState os : states.values())
+		for(GameObject e : effects)
 		{
-			GameObject effect = os.getEffect();
-			if(effect != null)
-				effect.draw(g,view,posOffset);
+			e.draw(g, view,posOffset);
 		}
 
+	}
+	
+	public List<GameObject> getEffects()
+	{
+		return effects;
 	}
 	
 }

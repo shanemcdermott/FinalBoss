@@ -61,6 +61,7 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public void takeDamage(Object source, float amount)
 	{
+		System.out.printf("%s took %f damage!\n", name, amount);
 		healthCurrent -= amount;
 		sprite.setColor(Color.RED);
 		if(healthCurrent <= 0.f)

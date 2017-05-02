@@ -8,10 +8,14 @@ import java.util.List;
 import java.util.Vector;
 
 import javagames.game.GameObject;
+import javagames.game.MultiStateObject;
 import javagames.game.PhysicsObject;
 import javagames.sound.LoopEvent;
+import javagames.util.FrameRate;
+import javagames.util.GameConstants;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
+import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
@@ -35,6 +39,7 @@ public abstract class GameState extends State
 	{
 		gameObjects = new Vector<GameObject>();
 		physicsObjects = new Vector<PhysicsObject>();
+		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
 	}
 	
 	@Override
@@ -51,6 +56,7 @@ public abstract class GameState extends State
 		
 		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");
 		avatar.setPosition(spawn);
+		activeRegion.setPosition(avatar.getPosition());
 	}
 
 	/*
@@ -71,12 +77,26 @@ public abstract class GameState extends State
 				gameObjects.add(g);
 			}
 		}
+		
+		for(PhysicsObject p : physicsObjects)
+		{
+			if(p instanceof MultiStateObject)
+			{
+				MultiStateObject mo = (MultiStateObject)p;
+				for(GameObject g: mo.getEffects())
+				{
+					if(g instanceof PhysicsObject)
+					{
+						physicsObjects.add((PhysicsObject)g);
+					}
+					else
+					{
+						gameObjects.add(g);
+					}
+				}
+			}
+		}
 	}
-
-	/*
-	 * Add any moving objects from the controller
-	 */
-	public abstract void addPhysicsObjects();
 		
 	public void processInput(float delta) 
 	{
@@ -112,18 +132,21 @@ public abstract class GameState extends State
 		
 		for(PhysicsObject p : physicsObjects)
 		{
-			if(p.isMoving())
+			if(activeRegion.contains(p.getPosition()))
 			{
-				movingObjects.add(p);
-				oldPositions.add(p.getPosition());
+				if(p.isMoving())
+				{
+					movingObjects.add(p);
+					oldPositions.add(p.getPosition());
+				}
+				p.update(delta);
 			}
-			p.update(delta);
 		}
 				
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
-			if(g.getCollisionResponseTo("DEFAULT").equals("BLOCK"))
+			if(activeRegion.contains(g.getPosition()) && g.getCollisionResponseTo("DEFAULT").equals("BLOCK"))
 			{
 				BoundingShape b = g.getBounds();
 				int i = 0;
@@ -146,17 +169,22 @@ public abstract class GameState extends State
 		for(PhysicsObject m : movingObjects)
 		{
 			BoundingShape b = m.getBounds();
+			String channel = m.getCollisionChannel();
 			for(PhysicsObject p : physicsObjects)
 			{
 				if(m.equals(p)) continue;
 				if(p.intersects(b))
 				{
-					m.stopMotion();
-					m.setPosition(oldPositions.get(i));
+					if(p.getCollisionResponseTo(channel).equals("BLOCK"))
+					{	
+						m.stopMotion();
+						m.setPosition(oldPositions.get(i));
+					}
 				}
 			}
 			i++;
 		}
+
 	}
 	
 	@Override
@@ -180,7 +208,7 @@ public abstract class GameState extends State
 		{
 			foreground.render(g, view);
 		}
-		
+				
 	}
 	
 	protected boolean shouldChangeState()

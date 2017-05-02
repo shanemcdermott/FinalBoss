@@ -91,6 +91,7 @@ public class DamageObject extends GameObject implements Ownable
 	@Override
 	public void update(float deltaTime)
 	{
+		setPosition(owner.getPosition().add(owner.getForwardVector()));
 		super.update(deltaTime);
 		if(isActive())
 		{

@@ -38,6 +38,7 @@ public class StateFramework extends WindowFramework
 		controller.setAttribute("app", this);
 		controller.setAttribute("keys", keyboard);
 		controller.setAttribute("viewport", getViewportTransform());
+		controller.setAttribute("framerate", frameRate);
 		controller.setState(new TitleLoadingState());
 	}
 	

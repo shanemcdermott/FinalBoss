@@ -60,10 +60,6 @@ public class CombatAction extends CombatState
 		{
 			onFinishedCharging();
 		}
-		if(effect != null)
-		{
-			effect.update(deltaTime);
-		}
 		if(shouldChangeState())
 		{
 			owner.setState(getNextState());

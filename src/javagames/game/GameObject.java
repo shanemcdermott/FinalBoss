@@ -114,6 +114,11 @@ public class GameObject
 		return wTransform;
 	}
 	
+	public Vector2f getForwardVector()
+	{
+		return Vector2f.down();
+	}
+	
 	private void updateTransform()
 	{
 		transform = getWorldTransform();

@@ -42,4 +42,9 @@ public class PhysicsObject extends GameObject
 		return physics.isMoving();
 	}
 	
+	@Override
+	public Vector2f getForwardVector()
+	{
+		return physics.velocity;
+	}
 }

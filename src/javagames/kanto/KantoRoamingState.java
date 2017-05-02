@@ -40,12 +40,6 @@ public class KantoRoamingState extends RoamingState
 		gameObjects.add(object);
 	}
 	
-	@Override
-	public void addPhysicsObjects() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

@@ -13,8 +13,8 @@
 	</sounds>
 	
 	<images>
-		<background name="background" file="Kanto/PalletTown.png" width="24" height="20"></background>
-		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="24" height="20"></foreground>
+		<background name="background" file="Kanto/RoamingMap.png" width="50" height="100"></background>
+		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="50" height="100"></foreground>
 	</images>
 	
 	<blockinggroup>
@@ -28,8 +28,8 @@
 	<objects>
 		<object name="tree" type="living" health="10.f" x="0" y="6">
 			<sprite file="Kanto/trees.png" width="1" height="1">
-				<animation name="Idle" frames="0" frameTime="1000" x="0" y="0" width="42" height="52" />
-				<animation name="Dead" frames="0" frameTime="1000" x="0" y="52" width="42" height="52" />
+				<animation name="Idle" frames="1" frameTime="1000" x="0" y="0" width="42" height="52" />
+				<animation name="Dead" frames="1" frameTime="1000" x="0" y="52" width="42" height="52" />
 			</sprite>		
 			<bounds>
 				<collisionResponse DEFAULT="BLOCK"></collisionResponse>

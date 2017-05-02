@@ -12,10 +12,5 @@ public class KantoDungeonState extends DungeonState {
 		return null;
 	}
 
-	@Override
-	public void addPhysicsObjects() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
