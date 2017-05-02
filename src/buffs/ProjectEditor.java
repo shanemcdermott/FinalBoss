@@ -1,4 +1,4 @@
-package editors;
+package buffs;
 
 public class ProjectEditor {
 

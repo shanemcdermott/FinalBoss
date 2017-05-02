@@ -1,4 +1,4 @@
-package editors;
+package buffs;
 
 public enum BuffType {
 	ADD_MAX_HEALTH,

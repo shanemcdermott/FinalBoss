@@ -1,4 +1,4 @@
-package editors;
+package buffs;
 import java.util.Scanner;
 
 public class BuffEditor implements Runnable {

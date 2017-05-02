@@ -2,8 +2,10 @@ package javagames.combat;
 
 public class CombatArchetype 
 {
+	protected float healthBaseBonus;
 	protected float healthScale;
 	protected float healthBonus;
+	
 	
 	public CombatArchetype()
 	{
@@ -13,6 +15,6 @@ public class CombatArchetype
 	
 	public float getMaxHealth(float healthBase)
 	{
-		return healthBase * healthScale + healthBonus;
+		return (healthBase +healthBaseBonus) * healthScale + healthBonus;
 	}
 }

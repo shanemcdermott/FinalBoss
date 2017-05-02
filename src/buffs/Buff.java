@@ -1,4 +1,4 @@
-package editors;
+package buffs;
 public class Buff
 {
     private BuffType buffType;
@@ -53,6 +53,11 @@ public class Buff
         }
     }
     
+    public void reset () {
+    	timeElapsed = 0;
+    	takeEffect = false;
+    }
+    
     @Override
     public String toString() {
     	if ( interval == 0 ) {
@@ -64,5 +69,18 @@ public class Buff
     	}
     	
     	return String.format("%s: %s by %d every %.3f second(s) for %.3f second(s)\n", name, buffType.name(), value, interval, duration);
+    }
+    
+    @Override
+    public boolean equals ( Object other ) {
+    	if ( !(other instanceof Buff) )
+    		return false;
+    	
+    	Buff o = (Buff) other;
+    	
+    	if ( name.equals( o.name ) )
+    		return true;
+    	
+    	return false;
     }
 }

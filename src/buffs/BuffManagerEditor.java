@@ -1,4 +1,5 @@
-package editors;
+package buffs;
+
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
