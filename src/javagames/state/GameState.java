@@ -3,6 +3,7 @@ package javagames.state;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -15,6 +16,7 @@ import javagames.util.FrameRate;
 import javagames.util.GameConstants;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
+import javagames.util.RelativeMouseInput;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
@@ -146,8 +148,8 @@ public abstract class GameState extends State
 		for (GameObject g : gameObjects) 
 		{
 			g.update(delta);
-			if(activeRegion.contains(g.getPosition()) && g.getCollisionResponseTo("DEFAULT").equals("BLOCK"))
-			{
+			//if(activeRegion.contains(g.getPosition()) && g.getCollisionResponseTo("DEFAULT").equals("BLOCK"))
+			//{
 				BoundingShape b = g.getBounds();
 				int i = 0;
 				for(PhysicsObject p : movingObjects)
@@ -162,7 +164,7 @@ public abstract class GameState extends State
 						i++;
 					}
 				}
-			}
+			//}
 		}
 		
 		int i = 0;

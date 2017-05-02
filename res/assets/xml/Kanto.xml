@@ -21,7 +21,7 @@
 		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
 		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
 		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
-		<box name="BlueHouse" x="-4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="BlueHouse" x="7.5398574" y="-63.502174" width="4.4" height="4.5"/>
 		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
 	</blockinggroup>
 	

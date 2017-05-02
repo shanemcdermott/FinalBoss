@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 
+import javagames.game.GameObject;
 import javagames.state.LoadingState;
 import javagames.state.StateController;
 import javagames.state.TitleLoadingState;
@@ -26,7 +28,7 @@ public class StateFramework extends WindowFramework
 		appWorldWidth = GameConstants.VIEW_WIDTH;
 		appWorldHeight = GameConstants.VIEW_HEIGHT;
 		appBorderScale = GameConstants.BORDER_SCALE;
-		appDisableCursor = GameConstants.DISABLE_CURSOR;
+		appDisableCursor = false;//GameConstants.DISABLE_CURSOR;
 		appMaintainRatio = GameConstants.MAINTAIN_RATIO;
 	}
 	
@@ -37,6 +39,7 @@ public class StateFramework extends WindowFramework
 		controller = new StateController();
 		controller.setAttribute("app", this);
 		controller.setAttribute("keys", keyboard);
+		controller.setAttribute("mouse", mouse);
 		controller.setAttribute("viewport", getViewportTransform());
 		controller.setAttribute("framerate", frameRate);
 		controller.setState(new TitleLoadingState());
@@ -59,6 +62,11 @@ public class StateFramework extends WindowFramework
 	{
 		super.processInput(deltaTime);
 		controller.processInput(deltaTime);
+		if(mouse.buttonDownOnce(MouseEvent.BUTTON1))
+		{
+			GameObject obj = (GameObject)controller.getAttribute("avatar");
+			System.out.println(getWorldMousePosition().add(obj.getPosition()));
+		}
 	}
 	
 	@Override
