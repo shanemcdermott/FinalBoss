@@ -52,22 +52,17 @@ public abstract class RoamingState extends GameState
 	
 		for(GameObject go : gameObjects)
 		{
-			if(activeRegion.contains(go.getPosition()))
-				go.draw(g,view, avatar.getPosition());
+			go.draw(g,view, avatar.getPosition());
 		}
 	
 		for(Enemy po : enemies)
 		{
-			if(activeRegion.contains(po.getPosition()))
 				po.draw(g,view, avatar.getPosition());
 		}
 		
 		for(DamageObject dam: actionEffects)
 		{
-			if(activeRegion.intersects(dam.getBounds()) && dam.isActive())
-			{
 				dam.draw(g, view,avatar.getPosition());
-			}
 		}
 		
 		if(foreground != null)

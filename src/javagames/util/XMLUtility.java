@@ -8,6 +8,7 @@ import org.xml.sax.*;
 
 import javagames.combat.Avatar;
 import javagames.combat.CombatAction;
+import javagames.combat.CombatArchetype;
 import javagames.combat.CombatState;
 import javagames.combat.DamageObject;
 import javagames.combat.Enemy;
@@ -216,7 +217,17 @@ public class XMLUtility {
 		{
 			object.addStates(XMLUtility.loadObjectState(clazz, ele));
 		}
-				
+		
+		object.setPosition(XMLUtility.getVector2f(element));
+		
+		Element job = XMLUtility.getElement(element, "job");
+		CombatArchetype com = XMLUtility.loadCombatClass(clazz, element.getAttribute("range"), element.getAttribute("speed"));
+		if(com == null)
+		{
+			System.err.println("Failed to load combat class for " +name + ": "+ job.toString());
+		}
+		else
+			object.setJob(com);
 		return object;
 	}
 	
@@ -246,7 +257,27 @@ public class XMLUtility {
 		return object;
 	}
 	
-
+	public static CombatArchetype loadCombatClass(Class<?> clazz, String range, String speed) throws Exception
+	{
+		Element jobXML = ResourceLoader.loadXML(clazz, "Jobs.xml");
+		CombatArchetype job = null;
+		List<Element> stats = XMLUtility.getElements(jobXML, "job");
+		for(Element e : stats)
+		{
+			if(e.getAttribute("range").equals(range) && e.getAttribute("speed").equals(speed))
+			{
+				job = new CombatArchetype();
+				Element hp = XMLUtility.getElement(e, "health");
+				job.setHealthValues(Float.parseFloat(hp.getAttribute("baseBonus")),Float.parseFloat(hp.getAttribute("scale")), Float.parseFloat(hp.getAttribute("bonus")));
+				Element statMods = XMLUtility.getElement(e, "stats");
+				job.setStrength(Float.parseFloat(statMods.getAttribute("strength")));
+				job.setSpeed(Float.parseFloat(statMods.getAttribute("speed")));
+				job.setMagic(Float.parseFloat(statMods.getAttribute("magic")));
+			}
+		}
+		
+		return job;
+	}
 	
 	public static ObjectState loadObjectState(Class<?> clazz, Element element) throws Exception
 	{

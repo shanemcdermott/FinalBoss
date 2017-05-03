@@ -23,7 +23,7 @@ public class TitleMenuState extends AttractState
 {
 	protected Color fontColor = Color.BLUE;
 	
-	protected String[] avatars = {"Draaknar","Queen Zeal","Goonthoro","Nihil"};
+	protected String[] avatars = {"Draaknar","Goonthoro","Nihil"};
 	
 	int avatarIndex = 0;
 	protected LoopEvent ambience;
@@ -78,7 +78,7 @@ public class TitleMenuState extends AttractState
 				System.err.println(e);
 				System.exit(1);
 			}
-			getController().setState(new DeathValleyLoadingState());
+			getController().setState(new KantoLoadingState());
 			return;
 		}
 	}

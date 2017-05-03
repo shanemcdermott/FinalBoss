@@ -157,11 +157,13 @@ public class GameObject
 	
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
+		/*
 		Vector2f pos = view.mul(position.sub(posOffset));
 		g.setColor(Color.GREEN);
 		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
 		bounds.setPosition(position.sub(posOffset));
 		bounds.render(g, view);
+		*/
 	}
 
 	public String getCollisionResponseTo(String channel)

@@ -14,19 +14,19 @@
 	
 	<images>
 		<background name="background" file="Kanto/KantoBG.png" width="50" height="150"></background>
-		<foreground name="foreground" file="Kanto/Foliage.png" width="50" height="150"></foreground>
+		<foreground name="foreground" file="Kanto/Foreground2.png" width="50" height="150"></foreground>
 	</images>
 	
 	<blockinggroup>
-		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
+		<box name="OakLab" x="6.424321" y="-67.86713" width="7" height="4.75"/>
 		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
-		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
-		<box name="BlueHouse" x="7.5398574" y="-63.502174" width="4.4" height="4.5"/>
+		<box name="RedMailbox" x="-4.2456536" y="-62.658417" width="1" height="1"/>
+		<box name="BlueHouse" x="7.615617" y="-62.568016" width="4.4" height="4.5"/>
 		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
 	</blockinggroup>
 	
 	<objects>
-		<object name="tree" type="living" health="10.f" x="0" y="6">
+		<object name="tree" type="living" health="10.f" x="0" y="-60">
 			<sprite file="Kanto/trees.png" width="1" height="1">
 				<animation name="Idle" frames="1" frameTime="1000" x="0" y="0" width="42" height="52" />
 				<animation name="Dead" frames="1" frameTime="1000" x="0" y="52" width="42" height="52" />
@@ -40,7 +40,65 @@
 			</bounds>
 			<state name="Idle" type="combat" next = "Dead"></state>
 		</object>
-		
+		<object name="Pikachu" type="enemy" health="10.f" x="0" y="-58" range="melee" speed="fast">
+			<sprite file="pikachu.png" width="1" height="1">
+				<animation name="Idle" frames="7" frameTime="0.5f" x="0" y="0" width="38" height="40" />
+				<animation name="Primary" frames="5" frameTime="0.2f" x="0" y="116" width="38" height="40" />
+				<animation name="WalkLeft" frames="7" frameTime="0.5f" x="0" y="0" width="38" height="40" />
+				<animation name="StandLeft" frames="5" frameTime="0.2f" x="0" y="116" width="38" height="40" />
+				<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="36" width="38" height="36" />
+				<animation name="StandDown" frames="1" frameTime="1000" x="0" y="36" width="38" height="36" />
+				<animation name="WalkRight" frames="4" frameTime="0.4" x="0" y="72" width="38" height="36" />
+				<animation name="StandRight" frames="1" frameTime="1000" x="0" y="72" width="38" height="36" />
+				<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="108" width="38" height="36" />
+				<animation name="StandUp" frames="1" frameTime="1000" x="0" y="108" width="38" height="36" />
+			</sprite>		
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
+			<state name="Idle" type="combat" next = "Dead"></state>
+			<state name="Primary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+				<effect name ="Eldritch Rune" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+					<sprite file="pikachu.png" width="1" height="1">
+						<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+						<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+					</sprite>
+					<bounds>
+						<collisionResponse DEFAULT="OVERLAP"></collisionResponse>
+						<box>
+							<min x="-0.5" y="-0.5"></min>
+							<max x="0.5" y="0.5"></max>
+						</box>
+					</bounds>
+				</effect>
+			</state>
+			<job range="melee" speed="fast"></job>
+		</object>
+		<object name="Chrono" type="enemy" health="10.f" x="0" y="-46" range="melee" speed="slow">
+	<sprite file="chrono.png" width="1" height="1">
+		<animation name="Idle" frames="1" frameTime="1000" x="0" y="0" width="48" height="72" />
+		<animation name="WalkLeft" frames="4" frameTime="0.4" x="0" y="72" width="48" height="72" />
+		<animation name="StandLeft" frames="1" frameTime="1000" x="0" y="72" width="48" height="72" />
+		<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="0" width="48" height="72" />
+		<animation name="StandDown" frames="1" frameTime="1000" x="0" y="0" width="48" height="72" />
+		<animation name="WalkRight" frames="4" frameTime="0.4" x="0" y="144" width="48" height="72" />
+		<animation name="StandRight" frames="1" frameTime="1000" x="0" y="144" width="48" height="72" />
+		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="216" width="48" height="72" />
+		<animation name="StandUp" frames="1" frameTime="1000" x="0" y="216" width="48" height="72" />
+	</sprite>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
+	<state name="Idle" type="combat" next = "Dead"></state>
+	</object>
 	</objects>
 
 </models>

@@ -128,7 +128,10 @@ public class DamageObject extends PhysicsObject implements Ownable
 			if(canDamageOwner() || other!=owner)
 			{
 				if(!overlappedObjects.contains(other))
+				{
+					System.out.println(other + " overlapped with " + getName());
 					overlappedObjects.add(((Damageable)other));
+				}
 			}
 		}
 		super.onBeginOverlap(other);

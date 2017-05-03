@@ -32,7 +32,7 @@ public class Gui {
 	private void init() {
 		if(avatar.name == "Draaknar"){
 			loadSpells(draaknar);
-		}else if(avatar.name == "Queen Zeal"){
+		}else if(avatar.name == "Chrono"){
 			loadSpells(queenZeal);
 		}else if(avatar.name == "Goonthro"){
 			loadSpells(goonthoro);
@@ -47,7 +47,7 @@ public class Gui {
 	{
 
 		try {
-			for(int i = 0; i < 4; i++){
+			for(int i = 0; i < spells.length; i++){
 				spells[i] = ResourceLoader.loadImage(GameObjectFactory.class, ava[i]);
 				cooldowns[i] = ImageUtility.colorImage(spells[i], new Color(128,128,128,200));
 			}

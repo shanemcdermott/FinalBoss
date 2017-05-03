@@ -17,6 +17,7 @@ public class Projectile extends DamageObject
 	public Projectile(String name, BoundingShape bounds, GameObject owner, SpriteSheet sprite, float launchSpeed) {
 		super(name, bounds, owner, sprite);
 		this.launchSpeed=launchSpeed;
+		this.bounds.setCollisionResponseTo("DEFAULT", "OVERLAP");
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -24,6 +25,7 @@ public class Projectile extends DamageObject
 	{
 		super(name,owner,sprite);
 		this.launchSpeed=launchSpeed;
+		this.bounds.setCollisionResponseTo("DEFAULT", "OVERLAP");
 	}
 
 	@Override

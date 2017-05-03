@@ -31,6 +31,11 @@ public class LivingObject extends MultiStateObject implements Damageable
 		
 	}
 
+	public void setJob(CombatArchetype job)
+	{
+		this.job = job;
+	}
+	
 	@Override
 	public void die(Object source)
 	{
@@ -116,10 +121,10 @@ public class LivingObject extends MultiStateObject implements Damageable
 	
 	protected void drawActiveEffects(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
-		for(String s : job.actions)
-		{
-			((CombatAction)states.get(s)).drawEffect(g, view, posOffset);
-		}
+//		for(String s : job.actions)
+//		{
+//			((CombatAction)states.get(s)).drawEffect(g, view, posOffset);
+//		}
 	}
 	
 	@Override

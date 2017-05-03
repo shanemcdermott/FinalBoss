@@ -50,10 +50,9 @@ public class Pawn extends LivingObject {
 		initialize();
 	}
 
-	private void initialize() {
+	protected void initialize() {
 		speedScale = 1.f;
 		startAnimation("WalkDown");
-
 		excessMaxHealth = 0;
 		excessMaxMana = 0;
 		excessStrength = 0;
@@ -73,12 +72,12 @@ public class Pawn extends LivingObject {
 	}
 	
 	protected void getJobStats() {
-
-		maxHealth = currentHealth = 100;
+		currentHealth = (int)job.getMaxHealth(level*10);
+		maxHealth = currentHealth;
 		maxMana = currentMana = 100;
-		strength = 10;
-		speed = 10;
-		magic = 10;
+		strength = (int)job.getStrength();
+		speed = (int)job.getSpeed();
+		magic = (int)job.getMagic();
 		level = 1;
 		
 	}

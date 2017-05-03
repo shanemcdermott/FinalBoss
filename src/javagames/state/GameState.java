@@ -44,7 +44,6 @@ public abstract class GameState extends State
 	protected Sprite background;
 	protected Sprite foreground;
 	protected Avatar avatar;
-	public BoundingBox activeRegion;
 	protected Gui gui;
 	
 	private float timeElapsed;
@@ -55,7 +54,6 @@ public abstract class GameState extends State
 	{
 		gameObjects = new ArrayList<GameObject>();
 		enemies = new ArrayList<Enemy>();
-		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
 	}
 	
 	@Override
@@ -73,7 +71,6 @@ public abstract class GameState extends State
 		
 		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");
 		avatar.setPosition(spawn);
-		activeRegion.setPosition(avatar.getPosition());
 		avatar.setGameState(this);
 		//avatar.addBuff( BuffManager.getBuff( 1, avatar ) );
 		//avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
@@ -98,7 +95,10 @@ public abstract class GameState extends State
 		
 		if(newObject instanceof Enemy)
 		{
+			Enemy e = (Enemy)newObject;
+			e.setAvatar(avatar);
 			enemies.add((Enemy)newObject);
+			
 		}
 		else
 		{
@@ -118,6 +118,7 @@ public abstract class GameState extends State
 			GameObject g = (GameObject)controller.getAttribute(s);
 			g.reset();
 			g.setGameState(this);
+			System.out.println(s + "added");
 		}
 	}
 		
@@ -132,6 +133,11 @@ public abstract class GameState extends State
 			avatar.takeDamage(avatar, 5000.f);
 		}
 		avatar.processInput(keys, delta);
+		
+		for(Enemy e : enemies)
+		{
+			e.processInput(delta);
+		}
 	}
 
 	
@@ -166,7 +172,6 @@ public abstract class GameState extends State
 		
 		updateOverlaps();
 		
-		activeRegion.setPosition(avatar.getPosition());
 		
 	}
 	
@@ -175,14 +180,12 @@ public abstract class GameState extends State
 		ArrayList<GameObject> copy = new ArrayList<GameObject>(gameObjects);
 		for(GameObject go : copy)
 		{
-			if(activeRegion.intersects(go.getBounds()))
-			{
 				go.update(deltaTime);
 				if(go.isActive() == false)
 				{
+					System.out.println(go.toString() + " removed.");
 					gameObjects.remove(go);
 				}
-			}
 		}		
 	}
 	
@@ -195,6 +198,7 @@ public abstract class GameState extends State
 			if(p.isDead())
 			{
 				avatar.addExperience(p.getExperienceReward());
+				System.out.println(p.toString() + " removed.");
 				enemies.remove(p);
 			}
 		}
@@ -208,6 +212,7 @@ public abstract class GameState extends State
 			d.update(deltaTime);
 			if(d.isActive() == false)
 			{
+				System.out.println(d.toString() + " removed.");
 				actionEffects.remove(d);
 			}
 		}
@@ -252,8 +257,7 @@ public abstract class GameState extends State
 	
 	public boolean getOverlappingObjects(List<GameObject> overlappingObjects, BoundingShape bounds)
 	{
-		if(activeRegion.intersects(bounds) == false) return false;
-		
+				
 		for(GameObject g : gameObjects)
 		{
 			if(g.intersects(bounds))
