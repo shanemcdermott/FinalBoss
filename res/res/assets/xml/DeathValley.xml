@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<models>
+	<images>
+		<background name="background" file="Death Valley/GraveyardMap.png" width="50" height="100"></background>
+	</images>
+	
+	<sounds>
+		<sound name="explosion" type="cue" file="EXPLOSION_large_01.wav"></sound>
+		<sound name="fire-clip" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
+		<sound name="cue-gui-confirm" type="cue" file="EXPLOSION_large_01.wav"></sound>
+		<sound name="cue-gui-cancel" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
+		<sound name="thruster" type="loop" file="DRONE9RE.WAV"></sound>
+		<sound name="loop-gameOver" type="loop" file="DRONE9RE.WAV"></sound>		
+		<sound name="alien_ambience" type="ambience" file="AMBIENCE_alien.wav"></sound>
+	</sounds>
+	<objects>
+	
+	</objects>
+</models>

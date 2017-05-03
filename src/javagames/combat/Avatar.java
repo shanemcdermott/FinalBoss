@@ -5,8 +5,7 @@ import java.awt.Graphics2D;
 
 import com.sun.glass.events.KeyEvent;
 
-import buffs.Buff;
-import buffs.BuffType;
+
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
