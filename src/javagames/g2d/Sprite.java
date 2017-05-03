@@ -36,7 +36,7 @@ public class Sprite {
 			}
 			g.setRenderingHint(
 				RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR
+				RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
 			);
 			Vector2f screen = view.mul(position);
 			AffineTransform transform = 

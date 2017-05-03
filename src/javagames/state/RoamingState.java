@@ -19,6 +19,7 @@ import javagames.util.FrameRate;
 import javagames.util.GameConstants;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
+import javagames.util.StopWatch;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 
@@ -33,6 +34,8 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void addObjects(List<String> objectNames)
 	{
+		StopWatch watch = new StopWatch();
+		watch.start();
 		for(String s : objectNames)
 		{
 			GameObject g = (GameObject)controller.getAttribute(s);
@@ -46,15 +49,19 @@ public abstract class RoamingState extends GameState
 				gameObjects.add(g);
 			}
 		}
+		watch.stop();
+		System.out.println("Added Objects: " + watch.totalMilliseconds());
 	}
 
 	
 	@Override
 	public void updateObjects(float delta) 
 	{
+		StopWatch watch = new StopWatch();
+		watch.start();
 		super.updateObjects(delta);
-		activeRegion.setPosition(avatar.getPosition());
-
+		watch.stop();
+		System.out.println("Updated Objects" + watch.totalMilliseconds());
 	}
 	
 	
@@ -71,27 +78,35 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
-	
+		StopWatch watch = new StopWatch();
+		watch.start();
 		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
-		
+		watch.stop();
+		System.out.println("Background Render: " + watch.totalMilliseconds());
 		avatar.draw(g, view, avatar.getPosition());
 		
-		
+		watch.start();
 		for(GameObject go : gameObjects)
 		{
 			if(activeRegion.contains(go.getPosition()))
 				go.draw(g,view, avatar.getPosition());
 		}
-		
+		watch.stop();
+		System.out.println("GameObject Render: " + watch.totalMilliseconds());
+		watch.start();
 		for(PhysicsObject po : physicsObjects)
 		{
 			if(activeRegion.contains(po.getPosition()))
 				po.draw(g,view, avatar.getPosition());
 		}
-			
+		watch.stop();
+		System.out.println("PhysicsObject Render: " + watch.totalMilliseconds());
 		if(foreground != null)
 		{
+			watch.start();
 			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
+			watch.stop();
+			System.out.println("Foreground Render: " + watch.totalMilliseconds());
 		}
 		
 		gui.draw(g);

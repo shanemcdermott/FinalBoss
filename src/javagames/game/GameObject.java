@@ -156,6 +156,18 @@ public class GameObject
 		return bounds;
 	}
 	
+	public BoundingBox getWrappingBox()
+	{
+		if(bounds instanceof BoundingBox)
+			return (BoundingBox)bounds;
+		else if(bounds instanceof BoundingCircle)
+		{
+			BoundingCircle c = (BoundingCircle)bounds;
+			return new BoundingBox(c.radius, c.radius);
+		}
+		return null;
+	}
+	
 	public boolean intersects(BoundingShape otherShape) 
 	{
 		return bounds.intersects(otherShape);
