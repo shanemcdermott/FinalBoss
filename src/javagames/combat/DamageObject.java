@@ -28,6 +28,7 @@ public class DamageObject extends GameObject implements Ownable
 	
 	public List<Damageable> overlappedObjects;
 	
+	
 	public DamageObject(String name, GameObject owner, SpriteSheet sprite)
 	{
 		super(name);
@@ -99,6 +100,10 @@ public class DamageObject extends GameObject implements Ownable
 			for(Damageable d : overlappedObjects)
 			{
 				d.takeDamage(this, damagePerSecond*deltaTime);
+				if(((GameObject)d).intersects(getBounds()) == false)
+				{
+					overlappedObjects.remove(d);
+				}
 			}
 			sprite.update(deltaTime);
 		}

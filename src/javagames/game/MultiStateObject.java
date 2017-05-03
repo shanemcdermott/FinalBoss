@@ -53,6 +53,20 @@ public class MultiStateObject extends PhysicsObject
 		{
 			os.reset();
 		}
+		for(GameObject go : effects)
+		{
+			go.reset();
+		}
+	}
+	
+	public void addEffect(GameObject effect)
+	{
+		effects.add(effect);
+	}
+	
+	public void removeEffect(GameObject effect)
+	{
+		effects.remove(effect);
 	}
 	
 	public void startAnimation(String animation)

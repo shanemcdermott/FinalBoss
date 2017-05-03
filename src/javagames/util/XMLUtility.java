@@ -11,7 +11,9 @@ import javagames.combat.CombatAction;
 import javagames.combat.CombatState;
 import javagames.combat.DamageObject;
 import javagames.combat.LivingObject;
+import javagames.combat.MeleeAction;
 import javagames.combat.Pawn;
+import javagames.combat.RangedAction;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
 import javagames.game.GameObject;
@@ -217,6 +219,11 @@ public class XMLUtility {
 	
 	public static ObjectState loadObjectState(Class<?> clazz, Element element) throws Exception
 	{
+		float range = 0.f;
+		float chargeTime = 0.f;
+		float cooldownTime = 0.f;
+		GameObject effect = null;
+		Element effectElement = null;
 		switch(element.getAttribute("type"))
 		{
 			
@@ -225,20 +232,44 @@ public class XMLUtility {
 				CombatState state = new CombatState(element.getAttribute("name"));
 				return state;
 			}
+			case "ranged":
+				
+				range = Float.parseFloat(element.getAttribute("range"));
+				chargeTime = Float.parseFloat(element.getAttribute("chargeTime"));
+				cooldownTime = Float.parseFloat(element.getAttribute("cooldownTime"));
+				
+				effectElement = XMLUtility.getElement(element, "effect");
+				
+				if(effectElement != null)
+				{
+					effect = XMLUtility.loadGameObject(clazz, effectElement);
+				}
+				return new RangedAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);
+				
+			case "melee":
+				range = Float.parseFloat(element.getAttribute("range"));
+				chargeTime = Float.parseFloat(element.getAttribute("chargeTime"));
+				cooldownTime = Float.parseFloat(element.getAttribute("cooldownTime"));
+				effectElement = XMLUtility.getElement(element, "effect");
+				
+				if(effectElement != null)
+				{
+					effect = XMLUtility.loadGameObject(clazz, effectElement);
+				}
+				return new MeleeAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);				
 			case "action":
 			{
-				float range = Float.parseFloat(element.getAttribute("range"));
-				float chargeTime = Float.parseFloat(element.getAttribute("chargeTime"));
-				float cooldownTime = Float.parseFloat(element.getAttribute("cooldownTime"));
-				GameObject effect = null;
-				Element effectElement = XMLUtility.getElement(element, "effect");
+				range = Float.parseFloat(element.getAttribute("range"));
+				chargeTime = Float.parseFloat(element.getAttribute("chargeTime"));
+				cooldownTime = Float.parseFloat(element.getAttribute("cooldownTime"));
+				effectElement = XMLUtility.getElement(element, "effect");
 				
 				if(effectElement != null)
 				{
 					effect = XMLUtility.loadGameObject(clazz, effectElement);
 				}
 				
-				return new CombatAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime);
+				return new CombatAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);
 			}
 		}
 		

@@ -25,14 +25,20 @@ public class GameObject
 	
 	protected String name;
 	protected ArrayList<String> tags;
-		
+	protected ArrayList<GameObject> overlappedObjects;
 	protected BoundingShape bounds;
 	
+	protected Physics physics;
 	
 	protected Matrix3x3f transform;
 	protected Vector2f scale;
 	protected float rotation;
 	protected Vector2f position;
+	
+	public GameObject()
+	{
+		this("DefaultObject");
+	}
 	
 	public GameObject(String name)
 	{
@@ -48,6 +54,7 @@ public class GameObject
 		scale = new Vector2f(1.f,1.f);
 		rotation = 0.f;
 		position = new Vector2f();
+		physics = new Physics(this);
 	}
 	
 	public void reset(){}
@@ -118,7 +125,7 @@ public class GameObject
 		return Vector2f.down();
 	}
 	
-	private void updateTransform()
+	protected void updateTransform()
 	{
 		transform = getWorldTransform();
 	}
@@ -188,10 +195,12 @@ public class GameObject
 	//Called when another object stops overlapping with this object
 	public void onEndOverlap(GameObject other)
 	{}
+
 	
 	@Override
 	public String toString()
 	{
 		return name;
 	}
+	
 }

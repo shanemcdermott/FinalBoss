@@ -6,23 +6,23 @@ import javagames.util.geom.BoundingShape;
 
 public class PhysicsObject extends GameObject
 {
-	protected Physics physics;
+	protected Vector2f lastPosition;
 
 	public PhysicsObject(String name) 
 	{
 		super(name);
-		physics = new Physics(this);
+		lastPosition = getPosition();
 	}
 	
 	public PhysicsObject(String name, BoundingShape bounds) 
 	{
 		super(name,bounds);
-		physics = new Physics(this);
 	}
 	
 	@Override
 	public void update(float deltaTime)
 	{
+		lastPosition=getPosition();
 		physics.update(deltaTime);
 		super.update(deltaTime);
 	}
@@ -47,4 +47,18 @@ public class PhysicsObject extends GameObject
 	{
 		return physics.velocity;
 	}
+	
+	@Override
+	public void onBeginOverlap(GameObject other)
+	{
+		if(other == null || this.equals(other)) return;
+		
+		if(other.getCollisionResponseTo(getCollisionChannel()).equals("BLOCK"))
+		{
+			stopMotion();
+			setPosition(lastPosition);
+			updateTransform();
+		}
+	}
+
 }

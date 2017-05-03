@@ -21,7 +21,7 @@
 			<max x="0.5" y="0.5"></max>
 		</box>
 	</bounds>
-	<state name="Primary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+	<state name="Primary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
 		<effect name ="Eldritch Rune" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
 			<sprite file="Nihil.png" width="1" height="1">
 				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
@@ -36,7 +36,7 @@
 			</bounds>
 		</effect>
 	</state>
-	<state name="Secondary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+	<state name="Secondary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
 		<effect name ="Pestilence" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
 			<sprite file="Nihil.png" width="1" height="1">
 				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
@@ -44,7 +44,7 @@
 			</sprite>
 		</effect>
 	</state>
-	<state name="Special" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+	<state name="Special" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
 		<effect name ="Eldritch Portal" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
 			<sprite file="Nihil.png" width="1" height="1">
 				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
@@ -52,7 +52,7 @@
 			</sprite>
 		</effect>
 	</state>
-	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="10">		
+	<state name="Ultimate" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="10">		
 		<effect name ="Nether Revelations" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
 			<sprite file="Nihil.png" width="1" height="1">
 				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
