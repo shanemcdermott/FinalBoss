@@ -5,13 +5,14 @@ import java.awt.Graphics2D;
 
 import com.sun.glass.events.KeyEvent;
 
+import buffs.Buff;
+import buffs.BuffType;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
-import javagames.combat.buffs.Buff;
-import javagames.combat.buffs.BuffType;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
+import javagames.game.ObjectState;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
@@ -61,7 +62,7 @@ public class Avatar extends Pawn
 	
 	public int getMaxMana()
 	{
-		return (int) (manaBase * manaScale + manaBonus);
+		return (int)(manaBase * manaScale + manaBonus);
 	}
 	
 	public void processInput(KeyboardInput keyboard, float deltaTime)
@@ -119,9 +120,18 @@ public class Avatar extends Pawn
 		}
 	}
 	
+	public void getActions(ObjectState[] actions)
+	{
+		actions[0] = states.get("Primary");
+		actions[1] = states.get("Secondary");
+		actions[2] = states.get("Special");
+		actions[3] = states.get("Ultimate");
+	}
+	
 	@Override
 	public void die(Object source) 
 	{
+		// TODO Auto-generated method stub
 
 	}
 	

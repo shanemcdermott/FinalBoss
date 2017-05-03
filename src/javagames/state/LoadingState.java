@@ -164,7 +164,6 @@ public abstract class LoadingState extends State
 			}
 		}
 		
-		//Load Buffs
 		BuffManager.initialize();
 	
 		loadGameObjects();

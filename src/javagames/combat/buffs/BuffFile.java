@@ -54,9 +54,9 @@ public class BuffFile implements Serializable {
 	public String toString () {
 		return String.format( "Name: %s\nType: %s\nBase Value: %d\nMax Health Modifier: %.3f\nHealth Modifier: %.3f\n"
 				+ "Max Mana Modifier: %.3f\nMana Modifier: %.3f\nStrength Modifier: %.3f\nSpeed Modifier: %.3f\n"
-				+ "Magic Modifier: %.3f\nLevel Modifier: %.3f\nDuration: %.3f\nInterval: %.3f\n", name, buffType, 
+				+ "Magic Modifier: %.3f\nLevel Modifier: %.3f\nDuration: %.3f\nInterval: %.3f\nIcon File Name: %s\n", name, buffType, 
 				baseValue, maxHealthMod, healthMod, maxManaMod, manaMod, strengthMod, speedMod, magicMod, levelMod, 
-				duration, interval);
+				duration, interval, iconFileName);
 	}
 
 	public BuffType getBuffType() {
