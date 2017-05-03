@@ -11,7 +11,8 @@ public class MeleeAction extends CombatAction {
 	}
 
 	@Override
-	protected void onFinishedCharging() {
+	protected void onFinishedCharging() 
+	{
 		// TODO Auto-generated method stub
 
 	}

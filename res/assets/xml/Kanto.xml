@@ -13,8 +13,8 @@
 	</sounds>
 	
 	<images>
-		<background name="background" file="Kanto/PalletTown.png" width="24" height="20"></background>
-		<foreground name="foreground" file="Kanto/PalletTownFore.png" width="24" height="20"></foreground>
+		<background name="background" file="Kanto/KantoBG.png" width="50" height="150"></background>
+		<foreground name="foreground" file="Kanto/Foliage.png" width="50" height="150"></foreground>
 	</images>
 	
 	<blockinggroup>

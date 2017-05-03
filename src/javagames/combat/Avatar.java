@@ -12,6 +12,7 @@ import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
+import javagames.game.ObjectState;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
@@ -117,6 +118,14 @@ public class Avatar extends Pawn
 				stopMoving();
 			}
 		}
+	}
+	
+	public void getActions(ObjectState[] actions)
+	{
+		actions[0] = states.get("Primary");
+		actions[1] = states.get("Secondary");
+		actions[2] = states.get("Special");
+		actions[3] = states.get("Ultimate");
 	}
 	
 	@Override

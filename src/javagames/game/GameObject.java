@@ -83,7 +83,6 @@ public class GameObject
 	public void update(float deltaTime)
 	{
 		updateTransform();
-		bounds.setPosition(position);
 	}
 	
 	public void setRotation(float rotation)
@@ -153,6 +152,7 @@ public class GameObject
 	
 	public BoundingShape getBounds()
 	{
+		bounds.setPosition(position);
 		return bounds;
 	}
 	
@@ -170,12 +170,14 @@ public class GameObject
 	
 	public boolean intersects(BoundingShape otherShape) 
 	{
+		bounds.setPosition(position);
 		return bounds.intersects(otherShape);
 	}
 
 	
 	public boolean contains(Vector2f point) 
 	{
+		bounds.setPosition(position);
 		return bounds.contains(point);
 	}
 	

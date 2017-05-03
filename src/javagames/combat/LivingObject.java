@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javagames.g2d.SpriteSheet;
 import javagames.game.MultiStateObject;
+import javagames.game.ObjectState;
 import javagames.util.geom.BoundingShape;
 
 public class LivingObject extends MultiStateObject implements Damageable
@@ -80,4 +81,26 @@ public class LivingObject extends MultiStateObject implements Damageable
 		return true;
 	}
 
+	@Override
+	public void addStates(ObjectState... inStates)
+	{
+		super.addStates(inStates);
+		for(ObjectState s : inStates)
+		{
+			if(s instanceof CombatAction)
+			{
+				job.actions.add(s.getName());
+			}
+		}
+	}
+	
+	@Override
+	public void update(float deltaTime)
+	{
+		super.update(deltaTime);
+		for(String s : job.actions)
+		{
+			states.get(s).update(deltaTime);
+		}
+	}
 }

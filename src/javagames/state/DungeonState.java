@@ -1,5 +1,8 @@
 package javagames.state;
 
+import javagames.game.GameObject;
+import javagames.game.PhysicsObject;
+
 public abstract class DungeonState extends GameState 
 {
 
@@ -17,6 +20,14 @@ public abstract class DungeonState extends GameState
 	{
 		if(isBossDead())
 		{
+			for(GameObject go : gameObjects)
+			{
+				controller.removeAttribute(go.getName());
+			}
+			for(PhysicsObject po : physicsObjects)
+			{
+				controller.removeAttribute(po.getName());
+			}
 			return getLoadingState();
 		}
 		else if(avatar.isDead())

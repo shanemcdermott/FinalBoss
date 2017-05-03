@@ -7,12 +7,14 @@ import java.awt.image.BufferedImage;
 import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 
 import javagames.combat.Avatar;
+import javagames.combat.CombatAction;
 import javagames.g2d.ImageUtility;
 import javagames.util.ResourceLoader;
 
 
 public class Gui {
 
+	private CombatAction[] actions = new CombatAction[4];
 	private BufferedImage[] cooldowns = new BufferedImage[4];
 	private BufferedImage[] spells = new BufferedImage[4];
 	private String draaknar[] = {"FlameSpit.png", "ThickSkin.png", "DragonBreath.png", "Transcendence.png"};
@@ -36,12 +38,13 @@ public class Gui {
 			loadSpells(goonthoro);
 		}else if(avatar.name == "Nihil"){
 			loadSpells(nihil);
-		}else{
-			//Nothing
-		}	
+		}
+		
+		avatar.getActions(actions);
 	}
 
-	public void loadSpells(String[] ava) {
+	public void loadSpells(String[] ava) 
+	{
 
 		try {
 			for(int i = 0; i < 4; i++){
@@ -55,15 +58,24 @@ public class Gui {
 	
 	public void update()
 	{
+		
 		//Check if spell is on cool down to shade the appropriate spell number
 		
 	}
 	
 	
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g) 
+	{
 			for(int i = 0; i < spells.length; i ++) 
 			{	
-				g.drawImage(spells[i], xOffset, 800, null);
+				if(actions[i].canEnter())
+				{
+					g.drawImage(spells[i], xOffset, 800, null);
+				}
+				else
+				{
+					g.drawImage(cooldowns[i], xOffset, 800, null);
+				}
 				g.setColor(Color.WHITE);
 				g.drawString(Integer.toString(i + 1), xOffset, 810);
 				xOffset += 70;

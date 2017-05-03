@@ -41,8 +41,8 @@ public abstract class GameState extends State
 	
 	public GameState()
 	{
-		gameObjects = new Vector<GameObject>();
-		physicsObjects = new Vector<PhysicsObject>();
+		gameObjects = new ArrayList<GameObject>();
+		physicsObjects = new ArrayList<PhysicsObject>();
 		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
 		
 	}
@@ -185,6 +185,11 @@ public abstract class GameState extends State
 					{	
 						m.stopMotion();
 						m.setPosition(oldPositions.get(i));
+					}
+					else if(p.getCollisionResponseTo(channel).equals("OVERLAP"))
+					{
+						p.onBeginOverlap(m);
+						m.onBeginOverlap(p);
 					}
 				}
 			}

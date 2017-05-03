@@ -52,7 +52,7 @@
 			</sprite>
 		</effect>
 	</state>
-	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">		
+	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="10">		
 		<effect name ="Nether Revelations" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
 			<sprite file="Nihil.png" width="1" height="1">
 				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />

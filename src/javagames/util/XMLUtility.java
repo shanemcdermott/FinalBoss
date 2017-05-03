@@ -211,7 +211,7 @@ public class XMLUtility {
 		{
 			object.addStates(XMLUtility.loadObjectState(clazz, ele));
 		}
-		
+				
 		return object;
 	}
 	

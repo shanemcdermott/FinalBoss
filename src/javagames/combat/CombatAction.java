@@ -59,10 +59,10 @@ public class CombatAction extends CombatState
 		if(isCharging() && isFinishedCharging())
 		{
 			onFinishedCharging();
-		}
-		if(shouldChangeState())
-		{
-			owner.setState(getNextState());
+			if(shouldChangeState())
+			{
+				owner.setState(getNextState());
+			}
 		}
 	}
 	
