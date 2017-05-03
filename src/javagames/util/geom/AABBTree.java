@@ -1,5 +1,6 @@
 package javagames.util.geom;
 
-public class AABBTree {
+public class AABBTree 
+{
 
 }

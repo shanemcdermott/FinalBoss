@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.sun.corba.se.impl.ior.GenericTaggedComponent;
+
 import javagames.combat.Avatar;
+import javagames.g2d.ImageUtility;
 import javagames.util.ResourceLoader;
 
 
 public class Gui {
 
+	private BufferedImage[] cooldowns = new BufferedImage[4];
 	private BufferedImage[] spells = new BufferedImage[4];
 	private String draaknar[] = {"FlameSpit.png", "ThickSkin.png", "DragonBreath.png", "Transcendence.png"};
 	private String queenZeal[] = {"Skygate.png", "PointFlare.png", "DarkGear.png", "Halation.png"};
@@ -42,20 +46,23 @@ public class Gui {
 		try {
 			for(int i = 0; i < 4; i++){
 				spells[i] = ResourceLoader.loadImage(GameObjectFactory.class, ava[i]);
+				cooldowns[i] = ImageUtility.colorImage(spells[i], new Color(128,128,128,200));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void update(){
+	public void update()
+	{
 		//Check if spell is on cool down to shade the appropriate spell number
 		
 	}
 	
 	
 	public void draw(Graphics2D g) {
-			for(int i = 0; i < spells.length; i ++) {
+			for(int i = 0; i < spells.length; i ++) 
+			{	
 				g.drawImage(spells[i], xOffset, 800, null);
 				g.setColor(Color.WHITE);
 				g.drawString(Integer.toString(i + 1), xOffset, 810);
