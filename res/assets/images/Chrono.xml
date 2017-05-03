@@ -1,0 +1,25 @@
+<model name="Chrono">
+	<sprite file="chrono.png" width="1" height="1">
+		<animation name="Idle" frames="1" frameTime="1000" x="0" y="0" width="48" height="72" />
+		<animation name="WalkLeft" frames="4" frameTime="0.4" x="0" y="72" width="48" height="72" />
+		<animation name="StandLeft" frames="1" frameTime="1000" x="0" y="72" width="48" height="72" />
+		<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="0" width="48" height="72" />
+		<animation name="StandDown" frames="1" frameTime="1000" x="0" y="0" width="48" height="72" />
+		<animation name="WalkRight" frames="4" frameTime="0.4" x="0" y="144" width="48" height="72" />
+		<animation name="StandRight" frames="1" frameTime="1000" x="0" y="144" width="48" height="72" />
+		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="216" width="48" height="72" />
+		<animation name="StandUp" frames="1" frameTime="1000" x="0" y="216" width="48" height="72" />
+	</sprite>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
+	<job>
+		<range type="Melee" />
+		<speed type="Slow" />
+	</job>
+</model>
+
