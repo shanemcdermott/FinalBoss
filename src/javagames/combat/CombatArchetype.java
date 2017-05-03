@@ -8,6 +8,14 @@ public class CombatArchetype
 	protected float healthScale;
 	protected float healthBonus;
 	
+	protected float manaBaseBonus;
+	protected float manaScale;
+	protected float manaBonus;
+	
+	protected float strength;
+	protected float speed;
+	protected float magic;
+	
 	public ArrayList<String> actions;
 	
 	public CombatArchetype()

@@ -60,9 +60,9 @@ public class Avatar extends Pawn
 		manaCurrent = getMaxMana();
 	}
 	
-	public float getMaxMana()
+	public int getMaxMana()
 	{
-		return manaBase * manaScale + manaBonus;
+		return (int)(manaBase * manaScale + manaBonus);
 	}
 	
 	public void processInput(KeyboardInput keyboard, float deltaTime)

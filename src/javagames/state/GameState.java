@@ -25,6 +25,7 @@ import javagames.util.geom.BoundingShape;
 import javagames.combat.Avatar;
 import javagames.combat.Damageable;
 import javagames.combat.Pawn;
+import javagames.combat.buffs.BuffManager;
 import javagames.g2d.Sprite;
 
 public abstract class GameState extends State 
@@ -39,6 +40,9 @@ public abstract class GameState extends State
 	protected Avatar avatar;
 	public BoundingBox activeRegion;
 	protected Gui gui;
+	
+	private float timeElapsed;
+	private boolean rejuv;
 	
 	public GameState()
 	{
@@ -65,6 +69,13 @@ public abstract class GameState extends State
 		avatar.setPosition(spawn);
 		activeRegion.setPosition(avatar.getPosition());
 		GameConstants.GAME_STATE = this;
+		
+		avatar.addBuff( BuffManager.getBuff( 1, avatar ) );
+		avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
+		avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
+		
+		timeElapsed = 0f;
+		rejuv = false;
 	}
 
 	public void addObject(GameObject newObject)
@@ -137,6 +148,13 @@ public abstract class GameState extends State
 		{
 			getController().setState(getNextState());
 			return;
+		}
+		
+		timeElapsed += delta;
+		
+		if ( timeElapsed >= 8 && !rejuv ) {
+			avatar.addBuff( BuffManager.getBuff( 4, avatar ) );
+			rejuv = true;
 		}
 		
 		Vector<PhysicsObject> movingObjects = new Vector<PhysicsObject>();

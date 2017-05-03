@@ -10,7 +10,7 @@ import javagames.util.geom.BoundingShape;
 public class LivingObject extends MultiStateObject implements Damageable
 {
 	protected float healthBase;
-	protected float healthCurrent;
+	protected int currentHealth;
 	protected CombatArchetype job;
 	
 	public LivingObject(String name, SpriteSheet sprite)
@@ -44,28 +44,28 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public void resetHealth()
 	{
-		healthCurrent = getMaxHealth();
+		currentHealth = getMaxHealth();
 	}
 	
 	@Override
-	public float getCurrentHealth()
+	public int getCurrentHealth()
 	{
-		return healthCurrent;
+		return (int) currentHealth;
 	}
 	
 	@Override
-	public float getMaxHealth()
+	public int getMaxHealth()
 	{
-		return job.getMaxHealth(healthBase);
+		return (int) job.getMaxHealth(healthBase);
 	}
 	
 	@Override
 	public void takeDamage(Object source, float amount)
 	{
-		System.out.printf("%s took %f damage!\n", name, amount);
-		healthCurrent -= amount;
+		System.out.printf("%s took %d damage!\n", name, amount);
+		currentHealth -= amount;
 		sprite.setColor(Color.RED);
-		if(healthCurrent <= 0.f)
+		if(currentHealth <= 0)
 			die(source);
 	}
 
@@ -103,4 +103,5 @@ public class LivingObject extends MultiStateObject implements Damageable
 			states.get(s).update(deltaTime);
 		}
 	}
+	
 }
