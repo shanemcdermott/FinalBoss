@@ -1,0 +1,64 @@
+<model name="Samus">
+	<sprite file="Samus.png" width="1" height="1">
+		<animation name="WalkLeft" frames="10" frameTime="0.4" x="0" y="0" width="32" height="32" />
+		<animation name="StandLeft" frames="0" frameTime="1000" x="0" y="64" width="32" height="32" />
+		<animation name="WalkRight" frames="10" frameTime="0.4" x="0" y="32" width="32" height="32" />
+		<animation name="StandRight" frames="0" frameTime="1000" x="96" y="64" width="32" height="32" />
+		
+	</sprite>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
+	<state name="Primary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="SBullet" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+			<sprite file="Samus.png" width=".1" height=".1">
+				<animation name="FireRight" frames="4" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="FireLeft" frames="5" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+			</sprite>
+		</effect>
+	</state>
+	<state name="Secondary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="MBullet" type = "damage" lifespan="1" dps="2" canDamageOwner="false">
+			<sprite file="Samus.png" width=".2" height=".2">
+				<animation name="FireRight" frames="4" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="FireLeft" frames="5" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+			</sprite>
+		</effect>
+	</state>
+	<state name="Special" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="LBullet" type = "damage" lifespan="1" dps="4" canDamageOwner="false">
+			<sprite file="Samus.png" width=".4" height=".4">
+				<animation name="FireRight" frames="4" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="FireLeft" frames="5" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+			</sprite>
+		</effect>
+	</state>
+	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">		
+		<effect name ="XBullet" type = "damage" lifespan="1" dps="5" canDamageOwner="false">
+			<sprite file="Samus.png" width=".5" height=".5">
+				<animation name="FireRight" frames="4" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="FireLeft" frames="5" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="192" y="64" width="32" height="32" />
+			</sprite>
+		</effect>
+	</state>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
+</model>
+

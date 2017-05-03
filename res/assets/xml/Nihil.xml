@@ -1,0 +1,64 @@
+<model name="Nihil">
+	<sprite file="Nihil.png" width="1" height="1">
+		<animation name="Idle" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+		<animation name="WalkLeft" frames="4" frameTime="0.4" x="0" y="0" width="23" height="36" />
+		<animation name="StandLeft" frames="1" frameTime="1000" x="0" y="0" width="23" height="36" />
+		<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="36" width="23" height="36" />
+		<animation name="StandDown" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+		<animation name="WalkRight" frames="4" frameTime="0.4" x="0" y="72" width="23" height="36" />
+		<animation name="StandRight" frames="1" frameTime="1000" x="0" y="72" width="23" height="36" />
+		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="108" width="23" height="36" />
+		<animation name="StandUp" frames="1" frameTime="1000" x="0" y="108" width="23" height="36" />
+		<animation name="Primary" frames="4" frameTime="0.4" x="0" y="144" width="23" height="36" />
+		<animation name="Secondary" frames="4" frameTime="0.4" x="0" y="144" width="23" height="36" />
+		<animation name="Special" frames="4" frameTime="0.4" x="0" y="144" width="23" height="36" />
+		<animation name="Ultimate" frames="4" frameTime="0.4" x="0" y="144" width="23" height="36" />
+	</sprite>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
+	<state name="Primary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="Eldritch Rune" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+			<sprite file="Nihil.png" width="1" height="1">
+				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="OVERLAP"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
+		</effect>
+	</state>
+	<state name="Secondary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="Pestilence" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+			<sprite file="Nihil.png" width="1" height="1">
+				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+			</sprite>
+		</effect>
+	</state>
+	<state name="Special" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="Eldritch Portal" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+			<sprite file="Nihil.png" width="1" height="1">
+				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+			</sprite>
+		</effect>
+	</state>
+	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">		
+		<effect name ="Nether Revelations" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+			<sprite file="Nihil.png" width="1" height="1">
+				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+			</sprite>
+		</effect>
+	</state>
+</model>
+

@@ -1,0 +1,31 @@
+<models>
+	<spawnpoint x="0" y="3"></spawnpoint>
+	
+	<images>
+		<background name="background" file="Death Valley/Graveyard Map.png" width="20" height="80"></background>
+		<foreground name="foreground" file="Death Valley/GraveyardMap.png" width="20" height="20"></foreground>
+	</images>
+	
+	<sounds>
+		<sound name="explosion" type="cue" file="EXPLOSION_large_01.wav"></sound>
+		<sound name="fire-clip" type="cue" file="Fireball.wav"></sound>
+		<sound name="cue-gui-confirm" type="cue" file="EXPLOSION_large_01.wav"></sound>
+		<sound name="cue-gui-cancel" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
+		<sound name="thruster" type="loop" file="DRONE9RE.WAV"></sound>
+		<sound name="loop-gameOver" type="loop" file="DRONE9RE.WAV"></sound>		
+		<sound name="alien_ambience" type="ambience" file="AMBIENCE_alien.wav"></sound>
+	</sounds>
+
+	<blockinggroup>
+		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
+		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
+		<box name="BlueHouse" x="-4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
+	</blockinggroup>
+	
+	<objects>
+				
+	</objects>
+	
+</models>
