@@ -101,5 +101,7 @@ public class GameOverState extends State
 	public void exit()
 	{
 		gameOverLoop.done();
+		confirmSoundCue.close();
+		cancelSoundCue.close();
 	}
 }
