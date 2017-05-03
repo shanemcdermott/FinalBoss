@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javagames.game.GameObject;
+import javagames.game.Gui;
 import javagames.game.MultiStateObject;
 import javagames.game.PhysicsObject;
 import javagames.sound.LoopEvent;
@@ -36,12 +37,14 @@ public abstract class GameState extends State
 	protected Sprite foreground;
 	protected Avatar avatar;
 	public BoundingBox activeRegion;
+	protected Gui gui;
 	
 	public GameState()
 	{
 		gameObjects = new Vector<GameObject>();
 		physicsObjects = new Vector<PhysicsObject>();
 		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
+		
 	}
 	
 	@Override
@@ -54,6 +57,7 @@ public abstract class GameState extends State
 		ambience.fire();
 		
 		avatar = (Avatar)controller.getAttribute("avatar");
+		gui = new Gui(avatar);
 		avatar.reset();
 		
 		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");

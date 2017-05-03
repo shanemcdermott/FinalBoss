@@ -76,6 +76,7 @@ public abstract class RoamingState extends GameState
 		
 		avatar.draw(g, view, avatar.getPosition());
 		
+		
 		for(GameObject go : gameObjects)
 		{
 			if(activeRegion.contains(go.getPosition()))
@@ -88,12 +89,13 @@ public abstract class RoamingState extends GameState
 				po.draw(g,view, avatar.getPosition());
 		}
 			
-		
 		if(foreground != null)
 		{
 			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
 		}
-	
+		
+		gui.draw(g);
+		
 		g.drawString(String.format("%s", avatar.getCurrentState().getName()), 10, 30);
 	}
 	

@@ -1,0 +1,21 @@
+<model name="Monotoro">
+	<sprite file="ifrit.png" width="1" height="1">
+		<animation name="WalkDown" frames="4" frameTime="0.2" x="0" y="0" width="64" height="64" />
+		<animation name="StandDown" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />
+		<animation name="WalkLeft" frames="4" frameTime="0.2" x="0" y="64" width="64" height="64" />
+		<animation name="StandLeft" frames="0" frameTime="1000" x="0" y="64" width="64" height="64" />
+		<animation name="WalkRight" frames="4" frameTime="0.2" x="0" y="128" width="64" height="64" />
+		<animation name="StandRight" frames="0" frameTime="1000" x="0" y="128" width="64" height="64" />
+		<animation name="WalkUp" frames="4" frameTime="0.2" x="0" y="192" width="64" height="64" />
+		<animation name="StandUp" frames="0" frameTime="1000" x="0" y="192" width="64" height="64" />
+				
+	</sprite>
+	<position x="0" y="0"></position>
+	<bounds>
+		<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+		<box>
+			<min x="-0.5" y="-0.5"></min>
+			<max x="0.5" y="0.5"></max>
+		</box>
+	</bounds>
+</model>
