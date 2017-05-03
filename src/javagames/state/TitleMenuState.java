@@ -26,18 +26,13 @@ public class TitleMenuState extends AttractState
 	
 	int avatarIndex = 0;
 	protected LoopEvent ambience;
-	protected SoundCue laser;
-	
-	protected SoundLooper thruster;
+
 	private boolean bShouldLoopPlay = false;
 	
 	@Override
 	public void enter()
 	{
 		super.enter();
-	
-		laser = (SoundCue) controller.getAttribute("fire-clip");
-		thruster = (SoundLooper) controller.getAttribute("thruster");
 		ambience = (LoopEvent) controller.getAttribute("ambience");
 		ambience.fire();
 	}
@@ -68,26 +63,6 @@ public class TitleMenuState extends AttractState
 			avatarIndex = Math.max(0,avatarIndex - 1);
 		}
 		
-		
-		//Sound Cue Example
-		if(keys.keyDownOnce(KeyEvent.VK_SPACE))
-		{
-			laser.fire();
-		}
-		//Looping Sound Example
-		if (keys.keyDown(KeyEvent.VK_W)) 
-		{
-			if (!bShouldLoopPlay) 
-			{
-				thruster.fire();
-				bShouldLoopPlay = true;
-			}
-		} 
-		else if (bShouldLoopPlay) 
-		{
-			thruster.done();
-			bShouldLoopPlay = false;
-		}
 		else if(keys.keyDownOnce(KeyEvent.VK_ENTER))
 		{
 			try

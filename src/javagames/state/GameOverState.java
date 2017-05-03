@@ -59,7 +59,7 @@ public class GameOverState extends State
 		else if (keys.keyDownOnce(KeyEvent.VK_N))
 		{
 			cancelSoundCue.fire();
-			nextState = new TitleMenuState();
+			nextState = new TitleLoadingState();
 		}
 	}
 	
