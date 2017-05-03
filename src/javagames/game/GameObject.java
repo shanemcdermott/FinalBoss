@@ -14,6 +14,7 @@ import org.xml.sax.*;
 import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
 import javagames.g2d.Sprite;
+import javagames.state.GameState;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
 import javagames.util.geom.BoundingBox;
@@ -22,7 +23,7 @@ import javagames.util.geom.BoundingShape;
 
 public class GameObject
 {
-	
+	private GameState gameState;
 	protected String name;
 	protected ArrayList<String> tags;
 	protected ArrayList<GameObject> overlappedObjects;
@@ -55,6 +56,17 @@ public class GameObject
 		rotation = 0.f;
 		position = new Vector2f();
 		physics = new Physics(this);
+	}
+	
+	public void setGameState(GameState gameState)
+	{
+		this.gameState = gameState;
+		gameState.addObject(this);
+	}
+	
+	public GameState getGameState()
+	{
+		return gameState;
 	}
 	
 	public void reset(){}

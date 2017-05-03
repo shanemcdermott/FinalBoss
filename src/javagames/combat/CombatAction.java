@@ -91,13 +91,14 @@ public class CombatAction extends CombatState
 				GameObject newEffect = XMLUtility.loadGameObject(this.getClass(), effectTemplate);
 				if(newEffect !=null)
 				{
+					newEffect.setGameState(getOwner().getGameState());
+					
 					if(newEffect instanceof Ownable)
 					{
 						((Ownable)newEffect).setOwner(getOwner());
 					}
 					((MultiStateObject)getOwner()).addEffect(newEffect);
-					newEffect.reset();
-					GameConstants.GAME_STATE.addObject(newEffect);					
+					newEffect.reset();			
 				}
 				else
 				{

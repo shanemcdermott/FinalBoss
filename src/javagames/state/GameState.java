@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -31,6 +33,7 @@ import javagames.g2d.Sprite;
 public abstract class GameState extends State 
 {
 	protected LoopEvent ambience;
+	protected List<GameObject> pendingSpawns;
 	protected List<GameObject> gameObjects;
 	protected List<PhysicsObject> physicsObjects;
 	
@@ -46,10 +49,11 @@ public abstract class GameState extends State
 	
 	public GameState()
 	{
-		gameObjects = new ArrayList<GameObject>();
-		physicsObjects = new ArrayList<PhysicsObject>();
+		gameObjects = Collections.synchronizedList(new ArrayList<GameObject>());
+		physicsObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
 		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
 		
+		pendingSpawns = new Vector<GameObject>();
 	}
 	
 	@Override
@@ -68,8 +72,7 @@ public abstract class GameState extends State
 		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");
 		avatar.setPosition(spawn);
 		activeRegion.setPosition(avatar.getPosition());
-		GameConstants.GAME_STATE = this;
-		
+		avatar.setGameState(this);
 		//avatar.addBuff( BuffManager.getBuff( 1, avatar ) );
 		//avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
 		//avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
@@ -80,17 +83,32 @@ public abstract class GameState extends State
 
 	public void addObject(GameObject newObject)
 	{
-		if(newObject instanceof PhysicsObject)
-		{
-			physicsObjects.add((PhysicsObject)newObject);
-		}
-		else
-		{
-			gameObjects.add(newObject);
-		}
+		pendingSpawns.add(newObject);
 		System.out.println(newObject.getName() + " added.");
 	}
 	
+	private void processPendingSpawns()
+	{
+		for(GameObject newObject : pendingSpawns)
+		{
+			if(newObject instanceof Pawn)
+			{
+				if(newObject instanceof Avatar)
+				{
+					avatar = (Avatar)newObject;
+				}
+			}
+			if(newObject instanceof PhysicsObject)
+			{
+				physicsObjects.add((PhysicsObject)newObject);
+			}
+			else
+			{
+				gameObjects.add(newObject);
+			}
+			pendingSpawns.clear();
+		}
+	}
 	/*
 	 * Add any game objects from the controller
 	 */
@@ -100,16 +118,11 @@ public abstract class GameState extends State
 		{
 			GameObject g = (GameObject)controller.getAttribute(s);
 			g.reset();
-			if(g instanceof PhysicsObject)
-			{
-				physicsObjects.add((PhysicsObject)g);
-			}
-			else
-			{
-				gameObjects.add(g);
-			}
+			g.setGameState(this);
+			processPendingSpawns();
 		}
 		
+		/*
 		for(PhysicsObject p : physicsObjects)
 		{
 			if(p instanceof MultiStateObject)
@@ -128,6 +141,7 @@ public abstract class GameState extends State
 				}
 			}
 		}
+		*/
 	}
 		
 	public void processInput(float delta) 
@@ -173,8 +187,10 @@ public abstract class GameState extends State
 		
 		avatar.update(delta);
 		
-		for(PhysicsObject p : physicsObjects)
+		Iterator<PhysicsObject> physr = physicsObjects.iterator();
+		while (physr.hasNext()) 
 		{
+			PhysicsObject p = physr.next();
 			if(activeRegion.contains(p.getPosition()))
 			{
 				if(p.isMoving())
@@ -184,9 +200,11 @@ public abstract class GameState extends State
 				p.update(delta);
 			}
 		}
-				
-		for (GameObject g : gameObjects) 
+		
+		Iterator<GameObject> iter = gameObjects.iterator();
+		while (iter.hasNext()) 
 		{
+			GameObject g = iter.next();
 			g.update(delta);
 		}
 		
@@ -215,7 +233,7 @@ public abstract class GameState extends State
 			}
 			
 		}
-
+		processPendingSpawns();
 	}
 	
 	

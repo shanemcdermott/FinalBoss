@@ -1,9 +1,9 @@
 <model name="Goonthoro">
 	<sprite file="Goonthoro.png" width="1" height="1">
 		<animation name="WalkLeft" frames="4" frameTime="0.4" x="0" y="0" width="96" height="128" />
-		<animation name="StandLeft" frames="1" frameTime="1000" x="0" y="0" width="96" height="128" />
+		<animation name="StandLeft" frames="0" frameTime="1000" x="0" y="0" width="96" height="128" />
 		<animation name="WalkDown" frames="4" frameTime="0.4" x="0" y="128" width="96" height="128" />
-		<animation name="StandDown" frames="1" frameTime="1000" x="0" y="128" width="96" height="128" />
+		<animation name="StandDown" frames="0" frameTime="1000" x="0" y="128" width="96" height="128" />
 		<animation name="WalkRight" frames="4" frameTime="0.4" x="0" y="256" width="96" height="128" />
 		<animation name="StandRight" frames="0" frameTime="1000" x="0" y="256" width="96" height="128" />
 		<animation name="WalkUp" frames="4" frameTime="0.4" x="0" y="384" width="96" height="128" />
@@ -26,6 +26,13 @@
 				<animation name="FireRight" frames="5" frameTime="1000" x="64" y="0" width="64" height="64" />
 				<animation name="Inactive" frames="0" frameTime="1000" x="64" y="0" width="64" height="64" />
 			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.25" y="-0.25"></min>
+					<max x="0.25" y="0.25"></max>
+				</box>
+			</bounds>
 		</effect>
 	</state>
 	<state name="Secondary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
@@ -34,14 +41,28 @@
 				<animation name="Active" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />
 				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />
 			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.25" y="-0.25"></min>
+					<max x="0.25" y="0.25"></max>
+				</box>
+			</bounds>
 		</effect>
 	</state>
 	<state name="Special" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Skeleton Army" type = "damage" lifespan="10" dps="5" canDamageOwner="false">
-			<sprite file="skeletonrising.png" width="1" height="1">
-				<animation name="Active" frames="11" frameTime="0.4" x="0" y="36" width="64" height="64" />
-				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="36" width="64" height="64" />
+		<effect name ="Skeleton Army" type = "damage" lifespan="15" dps="5" canDamageOwner="false">
+			<sprite file="skeletonWarriors.png" width="1" height="1">
+				<animation name="Active" frames="4" frameTime="0.4" x="0" y="0" width="64" height="96" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="0" width="64" height="96" />
 			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
 		</effect>
 	</state>
 	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">		

@@ -32,6 +32,11 @@ public class PhysicsObject extends GameObject
 		return physics;
 	}
 	
+	public void setVelocity(Vector2f velocity)
+	{
+		physics.velocity = velocity;
+	}
+	
 	public void stopMotion()
 	{
 		physics.stopMotion();

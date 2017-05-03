@@ -2,7 +2,7 @@
 
 <models>
 	<images>
-		<background name="background" file="InsideCrypt.png" width="309" height="163"></background>
+		<background name="background" file="Death Valley/InsideCrypt.png" width="20" height="20"></background>
 	</images>
 	
 	<sounds>

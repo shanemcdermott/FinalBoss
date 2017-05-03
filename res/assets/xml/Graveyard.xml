@@ -17,11 +17,31 @@
 	</sounds>
 
 	<blockinggroup>
-		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
-		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
-		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
-		<box name="BlueHouse" x="-4.4" y="4.25" width="4.4" height="4.5"/>
-		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
+		<box name = "Left Boundry" x = "-10" y = "40" width = ".2" height = "160" />
+		<box name = "Right Boundry" x = "10" y = "40" width = ".2" height = "160" />
+		<box name = "Top Boundry" x = "-10" y = "40" width = "40" height = ".2" />
+		<box name = "Bottom Boundry" x = "-10" y = "-40" width = "40" height = ".2" />
+		<box name="Crypt" x="-2.0" y="26.5" width="2.54" height="2.44"/>
+		<box name = "Tombstone 1" x = "-8.8" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 2" x = "-8.8" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 3" x = "-8.8" y = "5.7" width = ".81" height = ".99" />
+		<box name = "Tombstone 4" x = "-6.4" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 5" x = "-6.4" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 6" x = "-6.4" y = "5.7" width = ".81" height = ".99" />
+		<box name = "Tombstone 7" x = "-6.4" y = "4" width = ".81" height = ".99" />
+		<box name = "Tombstone 8" x = "-4.0" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 9" x = "-4.0" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 10" x = "-4.0" y = "5.7" width = ".81" height = ".99" />
+		<box name = "Tombstone 11" x = "8.8" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 12" x = "8.8" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 13" x = "8.8" y = "5.7" width = ".81" height = ".99" />
+		<box name = "Tombstone 14" x = "6.4" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 15" x = "6.4" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 16" x = "6.4" y = "5.7" width = ".81" height = ".99" />
+		<box name = "Tombstone 17" x = "4.0" y = "9" width = ".81" height = ".99" />
+		<box name = "Tombstone 18" x = "4.0" y = "7.4" width = ".81" height = ".99" />
+		<box name = "Tombstone 19" x = "4.0" y = "5.7" width = ".81" height = ".99" />
+		
 	</blockinggroup>
 	
 	<objects>

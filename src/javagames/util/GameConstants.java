@@ -16,5 +16,4 @@ public class GameConstants
 	public static final float BORDER_SCALE = 0.95f;
 	public static final boolean DISABLE_CURSOR = true;
 	public static final boolean MAINTAIN_RATIO = true;
-	public static GameState GAME_STATE = null;
 }

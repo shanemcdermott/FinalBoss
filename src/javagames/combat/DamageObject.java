@@ -1,21 +1,24 @@
 package javagames.combat;
 
 import java.awt.Graphics2D;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
 import org.w3c.dom.Element;
 
+import javagames.combat.buffs.Buff;
 import javagames.g2d.SpriteSheet;
 import javagames.game.GameObject;
 import javagames.game.Ownable;
+import javagames.game.PhysicsObject;
 import javagames.util.Matrix3x3f;
 import javagames.util.ResourceLoader;
 import javagames.util.Vector2f;
 import javagames.util.XMLUtility;
 import javagames.util.geom.BoundingShape;
 
-public class DamageObject extends GameObject implements Ownable
+public class DamageObject extends PhysicsObject implements Ownable
 {
 	protected GameObject owner;
 	protected SpriteSheet sprite;
@@ -97,12 +100,17 @@ public class DamageObject extends GameObject implements Ownable
 		if(isActive())
 		{
 			currentTime+=deltaTime;
-			for(Damageable d : overlappedObjects)
+			
+			// Use an iterator to iterate over overlapped Objects. Required since we will be
+			// removing while iterating.
+			Iterator<Damageable> iter = overlappedObjects.iterator();
+			while (iter.hasNext()) 
 			{
+				Damageable d = iter.next();
 				d.takeDamage(this, damagePerSecond*deltaTime);
 				if(((GameObject)d).intersects(getBounds()) == false)
 				{
-					overlappedObjects.remove(d);
+					iter.remove();
 				}
 			}
 			sprite.update(deltaTime);
@@ -117,7 +125,8 @@ public class DamageObject extends GameObject implements Ownable
 		{
 			if(canDamageOwner() || other!=owner)
 				overlappedObjects.add(((Damageable)other));
-		}	
+		}
+		super.onBeginOverlap(other);
 	}
 	
 	//Called when another object stops overlapping with this object
@@ -128,6 +137,7 @@ public class DamageObject extends GameObject implements Ownable
 		{
 			overlappedObjects.remove(other);
 		}
+		super.onEndOverlap(other);
 	}
 	
 	@Override

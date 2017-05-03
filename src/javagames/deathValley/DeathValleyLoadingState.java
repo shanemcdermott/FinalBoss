@@ -28,7 +28,7 @@ public class DeathValleyLoadingState extends LoadingState
 	public DeathValleyLoadingState()
 	{
 		super();
-		displayString = "Death Valley";
+		displayString = "Graveyard";
 		loaded = new ArrayList<String>();
 	}
 	
