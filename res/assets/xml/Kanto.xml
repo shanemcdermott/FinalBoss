@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <models>
-	<spawnpoint x="0" y="4"></spawnpoint>
+	<spawnpoint x="0" y="-50"></spawnpoint>
 	<sounds>
 		<sound name="explosion" type="cue" file="EXPLOSION_large_01.wav"></sound>
 		<sound name="fire-clip" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
@@ -14,7 +14,7 @@
 	
 	<images>
 		<background name="background" file="Kanto/KantoBG.png" width="50" height="150"></background>
-		<foreground name="foreground" file="Kanto/Foliage.png" width="50" height="150"></foreground>
+		<foreground name="foreground" file="Kanto/Foreground.png" width="50" height="150"></foreground>
 	</images>
 	
 	<blockinggroup>

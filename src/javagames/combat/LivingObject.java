@@ -4,13 +4,12 @@ import java.awt.Color;
 
 import javagames.g2d.SpriteSheet;
 import javagames.game.MultiStateObject;
-import javagames.game.ObjectState;
 import javagames.util.geom.BoundingShape;
 
 public class LivingObject extends MultiStateObject implements Damageable
 {
 	protected float healthBase;
-	protected float healthCurrent;
+	protected int currentHealth;
 	protected CombatArchetype job;
 	
 	public LivingObject(String name, SpriteSheet sprite)
@@ -44,28 +43,28 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public void resetHealth()
 	{
-		healthCurrent = getMaxHealth();
+		currentHealth = getMaxHealth();
 	}
 	
 	@Override
-	public float getCurrentHealth()
+	public int getCurrentHealth()
 	{
-		return healthCurrent;
+		return (int) currentHealth;
 	}
 	
 	@Override
-	public float getMaxHealth()
+	public int getMaxHealth()
 	{
-		return job.getMaxHealth(healthBase);
+		return (int) job.getMaxHealth(healthBase);
 	}
 	
 	@Override
-	public void takeDamage(Object source, float amount)
+	public void takeDamage(Object source, int amount)
 	{
-		System.out.printf("%s took %f damage!\n", name, amount);
-		healthCurrent -= amount;
+		System.out.printf("%s took %d damage!\n", name, amount);
+		currentHealth -= amount;
 		sprite.setColor(Color.RED);
-		if(healthCurrent <= 0.f)
+		if(currentHealth <= 0)
 			die(source);
 	}
 
@@ -81,26 +80,4 @@ public class LivingObject extends MultiStateObject implements Damageable
 		return true;
 	}
 
-	@Override
-	public void addStates(ObjectState... inStates)
-	{
-		super.addStates(inStates);
-		for(ObjectState s : inStates)
-		{
-			if(s instanceof CombatAction)
-			{
-				job.actions.add(s.getName());
-			}
-		}
-	}
-	
-	@Override
-	public void update(float deltaTime)
-	{
-		super.update(deltaTime);
-		for(String s : job.actions)
-		{
-			states.get(s).update(deltaTime);
-		}
-	}
 }

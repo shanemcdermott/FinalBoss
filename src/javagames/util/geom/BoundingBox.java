@@ -179,15 +179,5 @@ public class BoundingBox extends BoundingShape
 		g.drawLine(x, (int)m1.y, (int)m2.x, y);
 	}
 
-	public float getPerimeter()
-	{
-		float width = max.x - min.x;
-		float height = max.y - min.y;
-		return (width + height) * 2.f;
-	}
-	
-	public BoundingBox combine(BoundingBox other)
-	{
-		return new BoundingBox(new Vector2f(Math.min(min.x, other.min.x), Math.min(min.y, other.min.y)), new Vector2f(Math.max(max.x, other.max.x), Math.max(max.y, other.max.y)));
-	}
+
 }

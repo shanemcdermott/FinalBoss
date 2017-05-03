@@ -53,20 +53,6 @@ public class MultiStateObject extends PhysicsObject
 		{
 			os.reset();
 		}
-		for(GameObject go : effects)
-		{
-			go.reset();
-		}
-	}
-	
-	public void addEffect(GameObject effect)
-	{
-		effects.add(effect);
-	}
-	
-	public void removeEffect(GameObject effect)
-	{
-		effects.remove(effect);
 	}
 	
 	public void startAnimation(String animation)
@@ -79,9 +65,9 @@ public class MultiStateObject extends PhysicsObject
 		addStates(new CombatState("Idle"));
 	}
 	
-	public void addStates(ObjectState... inStates)
+	public void addStates(ObjectState... InStates)
 	{
-		for(ObjectState os : inStates)
+		for(ObjectState os : InStates)
 		{
 			os.setOwner(this);
 			states.put(os.getName(), os);
@@ -154,8 +140,7 @@ public class MultiStateObject extends PhysicsObject
 	{
 		for(GameObject e : effects)
 		{
-			if(e.isActive())
-				e.draw(g, view,posOffset);
+			e.draw(g, view,posOffset);
 		}
 
 	}

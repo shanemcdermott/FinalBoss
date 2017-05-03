@@ -19,7 +19,7 @@ public class Sprite {
 		this.topLeft = topLeft;
 		this.bottomRight = bottomRight;
 	}
-
+	
 	public void render(Graphics2D g, Matrix3x3f view) {
 		render(g, view, new Vector2f(), 0.0f);
 	}
@@ -36,7 +36,7 @@ public class Sprite {
 			}
 			g.setRenderingHint(
 				RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR
 			);
 			Vector2f screen = view.mul(position);
 			AffineTransform transform = 
@@ -53,5 +53,13 @@ public class Sprite {
 		int scaledWidth = (int) Math.abs(screenBottomRight.x - screenTopLeft.x);
 		int scaledHeight = (int) Math.abs(screenBottomRight.y - screenTopLeft.y);
 		scaled = ImageUtility.scaleImage(image, scaledWidth, scaledHeight);
+	}
+	
+	public float getWidth () {
+		return bottomRight.x - topLeft.x;
+	}
+	
+	public float getHeight () {
+		return topLeft.y - bottomRight.y;
 	}
 }

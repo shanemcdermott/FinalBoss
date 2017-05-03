@@ -19,7 +19,6 @@ import javagames.util.FrameRate;
 import javagames.util.GameConstants;
 import javagames.util.KeyboardInput;
 import javagames.util.Matrix3x3f;
-import javagames.util.StopWatch;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 
@@ -34,7 +33,6 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void addObjects(List<String> objectNames)
 	{
-
 		for(String s : objectNames)
 		{
 			GameObject g = (GameObject)controller.getAttribute(s);
@@ -48,7 +46,6 @@ public abstract class RoamingState extends GameState
 				gameObjects.add(g);
 			}
 		}
-	
 	}
 
 	
@@ -56,6 +53,8 @@ public abstract class RoamingState extends GameState
 	public void updateObjects(float delta) 
 	{
 		super.updateObjects(delta);
+		activeRegion.setPosition(avatar.getPosition());
+
 	}
 	
 	
@@ -72,33 +71,29 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
-
+	
 		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
-
+		
 		avatar.draw(g, view, avatar.getPosition());
 		
-	
 		for(GameObject go : gameObjects)
 		{
 			if(activeRegion.contains(go.getPosition()))
 				go.draw(g,view, avatar.getPosition());
 		}
-	
+		
 		for(PhysicsObject po : physicsObjects)
 		{
 			if(activeRegion.contains(po.getPosition()))
 				po.draw(g,view, avatar.getPosition());
 		}
+			
 		
 		if(foreground != null)
 		{
-			
 			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
-			
 		}
-		
-		gui.draw(g);
-		
+	
 		g.drawString(String.format("%s", avatar.getCurrentState().getName()), 10, 30);
 	}
 	
