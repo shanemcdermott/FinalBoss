@@ -161,6 +161,16 @@ public class Vector2f {
 		return new Vector2f(1.f, -1.f);
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(o instanceof Vector2f)
+		{
+			Vector2f v = (Vector2f)o;
+			return v.x == x && v.y == y;
+		}
+		return false;
+	}
 	
 	@Override
 	public String toString() {

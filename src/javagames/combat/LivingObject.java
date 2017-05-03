@@ -1,10 +1,13 @@
 package javagames.combat;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import javagames.g2d.SpriteSheet;
 import javagames.game.MultiStateObject;
 import javagames.game.ObjectState;
+import javagames.util.Matrix3x3f;
+import javagames.util.Vector2f;
 import javagames.util.geom.BoundingShape;
 
 public class LivingObject extends MultiStateObject implements Damageable
@@ -97,10 +100,31 @@ public class LivingObject extends MultiStateObject implements Damageable
 	public void update(float deltaTime)
 	{
 		super.update(deltaTime);
+		updateJobActions(deltaTime);
+	}
+	
+	protected void updateJobActions(float deltaTime)
+	{
 		for(String s : job.actions)
 		{
-			states.get(s).update(deltaTime);
+			if(s.equals(currentState)) continue;
+				states.get(s).update(deltaTime);
 		}
 	}
 	
+	
+	protected void drawActiveEffects(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{
+		for(String s : job.actions)
+		{
+			((CombatAction)states.get(s)).drawEffect(g, view, posOffset);
+		}
+	}
+	
+	@Override
+	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{
+		super.draw(g, view, posOffset);
+		drawActiveEffects(g,view,posOffset);
+	}
 }

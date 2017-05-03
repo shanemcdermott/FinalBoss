@@ -11,6 +11,7 @@ import java.util.Vector;
 import javagames.combat.CombatAction;
 import javagames.combat.CombatState;
 import javagames.g2d.SpriteSheet;
+import javagames.state.GameState;
 import javagames.util.Matrix3x3f;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
@@ -19,7 +20,6 @@ import javagames.util.geom.BoundingShape;
 public class MultiStateObject extends PhysicsObject 
 {
 	protected Map<String, ObjectState> states;
-	protected List<GameObject> effects;
 	protected String 		currentState;
 	protected SpriteSheet 	sprite;
 
@@ -29,7 +29,6 @@ public class MultiStateObject extends PhysicsObject
 		super(name);
 		this.sprite = sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
-		effects = new Vector<GameObject>();
 		setupStates();
 		currentState = "Idle";
 	}
@@ -39,11 +38,21 @@ public class MultiStateObject extends PhysicsObject
 		super(name, bounds);
 		this.sprite=sprite;
 		states = Collections.synchronizedMap(new HashMap<String, ObjectState>());
-		effects = new Vector<GameObject>();
 		setupStates();
 		currentState = "Idle";
 	}
 
+	@Override
+	public void setGameState(GameState gameState)
+	{
+		super.setGameState(gameState);
+		for(ObjectState os : states.values())
+		{
+			if(os.getEffect() !=null)
+			os.getEffect().setGameState(getGameState());
+		}
+	}
+	
 	@Override
 	public void reset()
 	{
@@ -53,20 +62,6 @@ public class MultiStateObject extends PhysicsObject
 		{
 			os.reset();
 		}
-		for(GameObject go : effects)
-		{
-			go.reset();
-		}
-	}
-	
-	public void addEffect(GameObject effect)
-	{
-		effects.add(effect);
-	}
-	
-	public void removeEffect(GameObject effect)
-	{
-		effects.remove(effect);
 	}
 	
 	public void startAnimation(String animation)
@@ -85,8 +80,6 @@ public class MultiStateObject extends PhysicsObject
 		{
 			os.setOwner(this);
 			states.put(os.getName(), os);
-			if(os.getEffect()!=null)
-			effects.add(os.getEffect());
 		}
 	}
 	
@@ -130,39 +123,16 @@ public class MultiStateObject extends PhysicsObject
 		if(!currentState.equals("Idle")) 
 			states.get(currentState).update(deltaTime);
 			
-		updateEffects(deltaTime);
 		super.update(deltaTime);
 		sprite.update(deltaTime);
 	}
 	
-	protected void updateEffects(float deltaTime)
-	{
-		for(GameObject e : effects)
-		{
-			e.update(deltaTime);
-		}
-	}
 	
 	@Override
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
 		sprite.render(g, view, position.sub(posOffset), rotation);
-		drawEffect(g,view,posOffset);
 	}
-	
-	public void drawEffect(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
-	{
-		for(GameObject e : effects)
-		{
-			if(e.isActive())
-				e.draw(g, view,posOffset);
-		}
 
-	}
-	
-	public List<GameObject> getEffects()
-	{
-		return effects;
-	}
 	
 }

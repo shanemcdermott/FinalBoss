@@ -6,17 +6,20 @@ import javagames.util.geom.BoundingShape;
 
 public class PhysicsObject extends GameObject
 {
+	protected Vector2f forward;
 	protected Vector2f lastPosition;
 
 	public PhysicsObject(String name) 
 	{
 		super(name);
 		lastPosition = getPosition();
+		forward = Vector2f.down();
 	}
 	
 	public PhysicsObject(String name, BoundingShape bounds) 
 	{
 		super(name,bounds);
+		forward = Vector2f.down();
 	}
 	
 	@Override
@@ -24,6 +27,9 @@ public class PhysicsObject extends GameObject
 	{
 		lastPosition=getPosition();
 		physics.update(deltaTime);
+		if(!physics.velocity.equals(new Vector2f()))
+				forward = new Vector2f(physics.velocity);
+		
 		super.update(deltaTime);
 	}
 
@@ -50,7 +56,7 @@ public class PhysicsObject extends GameObject
 	@Override
 	public Vector2f getForwardVector()
 	{
-		return physics.velocity;
+		return forward;
 	}
 	
 	@Override

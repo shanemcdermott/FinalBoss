@@ -14,5 +14,16 @@ public class MeleeAction extends CombatAction {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	@Override
+	public void spawnEffect()
+	{
+		GameObject e = getEffect();
+		if(e != null)
+		{
+			if(e instanceof Projectile)
+			{
+				((Projectile)e).launch(getOwner().getForwardVector());
+			}
+		}
+	}
 }

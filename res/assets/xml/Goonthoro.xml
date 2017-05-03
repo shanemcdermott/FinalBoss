@@ -20,10 +20,10 @@
 			<max x="0.5" y="0.5"></max>
 		</box>
 	</bounds>
-	<state name="Primary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Eldrith Rune" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
+	<state name="Primary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="Lightning" type = "projectile" speed = "3" lifespan="2" dps="1" canDamageOwner="false">
 			<sprite file="projectile.png" width=".5" height=".5">
-				<animation name="FireRight" frames="5" frameTime="1000" x="64" y="0" width="64" height="64" />
+				<animation name="Active" frames="0" frameTime="1000" x="64" y="0" width="64" height="64" />
 				<animation name="Inactive" frames="0" frameTime="1000" x="64" y="0" width="64" height="64" />
 			</sprite>
 			<bounds>
@@ -35,8 +35,8 @@
 			</bounds>
 		</effect>
 	</state>
-	<state name="Secondary" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Fireball" type = "damage" lifespan="1" dps="2" canDamageOwner="false">
+	<state name="Secondary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
+		<effect name ="Fireball" type = "projectile" speed = "3" lifespan="2" dps="2" canDamageOwner="false">
 			<sprite file="projectile.png" width=".5" height=".5">
 				<animation name="Active" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />
 				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />

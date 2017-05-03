@@ -78,11 +78,13 @@ public class DamageObject extends PhysicsObject implements Ownable
 	@Override
 	public void reset()
 	{
+		super.reset();
 		activate();
 	}
 	
 	public void activate()
 	{
+		bIsActive=true;
 		currentTime = 0.f;
 		sprite.startAnimation("Active");
 	}
@@ -124,7 +126,10 @@ public class DamageObject extends PhysicsObject implements Ownable
 		if(other instanceof Damageable)
 		{
 			if(canDamageOwner() || other!=owner)
-				overlappedObjects.add(((Damageable)other));
+			{
+				if(!overlappedObjects.contains(other))
+					overlappedObjects.add(((Damageable)other));
+			}
 		}
 		super.onBeginOverlap(other);
 	}
@@ -143,12 +148,17 @@ public class DamageObject extends PhysicsObject implements Ownable
 	@Override
 	public boolean isActive()
 	{
-		return lifespan > currentTime;
+		return super.isActive() && lifespan > currentTime;
 	}
 	
 	public float getRemainingLifespan()
 	{
 		return lifespan - currentTime;
+	}
+	
+	public int getNumOverlapping()
+	{
+		return overlappedObjects.size();
 	}
 	
 	public boolean canDamageOwner()

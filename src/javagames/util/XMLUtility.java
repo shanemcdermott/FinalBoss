@@ -13,6 +13,7 @@ import javagames.combat.DamageObject;
 import javagames.combat.LivingObject;
 import javagames.combat.MeleeAction;
 import javagames.combat.Pawn;
+import javagames.combat.Projectile;
 import javagames.combat.RangedAction;
 import javagames.g2d.Sprite;
 import javagames.g2d.SpriteSheet;
@@ -123,6 +124,8 @@ public class XMLUtility {
 					return loadLivingObject(clazz, element);
 				case "damage":
 					return loadDamageObject(clazz, element);
+				case "projectile":
+					return loadProjectile(clazz, element);
 				default:
 					return loadStationaryObject(clazz, element);
 			}
@@ -217,6 +220,8 @@ public class XMLUtility {
 		return object;
 	}
 	
+
+	
 	public static ObjectState loadObjectState(Class<?> clazz, Element element) throws Exception
 	{
 		float range = 0.f;
@@ -303,6 +308,40 @@ public class XMLUtility {
 		{
 			object.setCanDamageOwner(Boolean.parseBoolean(element.getAttribute("canDamageOwner")));
 		}
+		
+		return object;
+	}
+	
+	public static DamageObject loadProjectile(Class<?> clazz, Element element) throws Exception
+	{
+		DamageObject object = null;
+		SpriteSheet spr = ResourceLoader.loadSpriteSheet(clazz,XMLUtility.getElement(element, "sprite"));	
+		float speed = Float.parseFloat(element.getAttribute("speed"));
+		
+		Element boundsXML = XMLUtility.getElement(element, "bounds");
+		if(boundsXML != null)
+		{
+			BoundingShape bounds = XMLUtility.getBoundingShape(boundsXML);
+			object = new Projectile(element.getAttribute("name"), bounds, null, spr, speed);
+		}
+		else
+		{
+			object = new Projectile(element.getAttribute("name"), null, spr, speed);
+		}
+		
+		if(element.hasAttribute("lifespan"))
+		{
+			object.setLifespan(Float.parseFloat(element.getAttribute("lifespan")));
+		}
+		if(element.hasAttribute("dps"))
+		{
+			object.setDPS(Float.parseFloat(element.getAttribute("dps")));
+		}
+		if(element.hasAttribute("canDamageOwner"))
+		{
+			object.setCanDamageOwner(Boolean.parseBoolean(element.getAttribute("canDamageOwner")));
+		}
+		
 		
 		return object;
 	}

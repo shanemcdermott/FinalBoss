@@ -46,6 +46,16 @@ public class BoundingBox extends BoundingShape
 		this.maxCpy = new Vector2f(max);
 	}
 	
+	public float getWidth()
+	{
+		return max.x - min.x;
+	}
+	
+	public float getHeight()
+	{
+		return max.y - min.y;
+	}
+	
 	@Override
 	public void setPosition(Vector2f position)
 	{

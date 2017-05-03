@@ -72,6 +72,14 @@ public class CombatAction extends CombatState
 				owner.setState(getNextState());
 			}
 		}
+		
+		updateEffect(deltaTime);
+	}
+	
+	protected void updateEffect(float deltaTime)
+	{
+		if(effect != null && effect.isActive())
+			effect.update(deltaTime);
 	}
 	
 	protected void onFinishedCharging()
@@ -84,36 +92,7 @@ public class CombatAction extends CombatState
 	
 	protected void spawnEffect()
 	{	
-		if(effect!=null)
-		{	
-			if(effectTemplate !=null)
-			{
-				GameObject newEffect = XMLUtility.loadGameObject(this.getClass(), effectTemplate);
-				if(newEffect !=null)
-				{
-					newEffect.setGameState(getOwner().getGameState());
-					
-					if(newEffect instanceof Ownable)
-					{
-						((Ownable)newEffect).setOwner(getOwner());
-					}
-					((MultiStateObject)getOwner()).addEffect(newEffect);
-					newEffect.reset();			
-				}
-				else
-				{
-					System.out.println("Null new effect!");
-				}
-			}
-			else
-			{
-				System.out.println("Null template!");
-			}
-		}
-		else
-		{
-			System.out.println("Null effect!");
-		}
+		//Implemented in Children
 	}
 	
 	public boolean isFinishedCharging()
@@ -163,6 +142,13 @@ public class CombatAction extends CombatState
 	public void setOwner(MultiStateObject owner)
 	{
 		super.setOwner(owner);
-		
+	}
+	
+	public void drawEffect(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{
+		if(effect !=null && effect.isActive())
+		{
+			effect.draw(g, view, posOffset);
+		}
 	}
 }

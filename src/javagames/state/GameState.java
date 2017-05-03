@@ -23,6 +23,7 @@ import javagames.util.RelativeMouseInput;
 import javagames.util.Utility;
 import javagames.util.Vector2f;
 import javagames.util.geom.BoundingBox;
+import javagames.util.geom.BoundingGroup;
 import javagames.util.geom.BoundingShape;
 import javagames.combat.Avatar;
 import javagames.combat.Damageable;
@@ -33,7 +34,6 @@ import javagames.g2d.Sprite;
 public abstract class GameState extends State 
 {
 	protected LoopEvent ambience;
-	protected List<GameObject> pendingSpawns;
 	protected List<GameObject> gameObjects;
 	protected List<PhysicsObject> physicsObjects;
 	
@@ -47,13 +47,13 @@ public abstract class GameState extends State
 	private float timeElapsed;
 	private boolean rejuv;
 	
+	
 	public GameState()
 	{
-		gameObjects = Collections.synchronizedList(new ArrayList<GameObject>());
-		physicsObjects = Collections.synchronizedList(new ArrayList<PhysicsObject>());
+		gameObjects = new ArrayList<GameObject>();
+		physicsObjects = new ArrayList<PhysicsObject>();
 		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
-		
-		pendingSpawns = new Vector<GameObject>();
+				
 	}
 	
 	@Override
@@ -83,32 +83,26 @@ public abstract class GameState extends State
 
 	public void addObject(GameObject newObject)
 	{
-		pendingSpawns.add(newObject);
+
+		if(newObject instanceof Pawn)
+		{
+			if(newObject instanceof Avatar)
+			{
+				avatar = (Avatar)newObject;
+			}
+		}
+		if(newObject instanceof PhysicsObject)
+		{
+			physicsObjects.add((PhysicsObject)newObject);
+		}
+		else
+		{
+			gameObjects.add(newObject);
+		}
+			
 		System.out.println(newObject.getName() + " added.");
 	}
 	
-	private void processPendingSpawns()
-	{
-		for(GameObject newObject : pendingSpawns)
-		{
-			if(newObject instanceof Pawn)
-			{
-				if(newObject instanceof Avatar)
-				{
-					avatar = (Avatar)newObject;
-				}
-			}
-			if(newObject instanceof PhysicsObject)
-			{
-				physicsObjects.add((PhysicsObject)newObject);
-			}
-			else
-			{
-				gameObjects.add(newObject);
-			}
-			pendingSpawns.clear();
-		}
-	}
 	/*
 	 * Add any game objects from the controller
 	 */
@@ -119,7 +113,6 @@ public abstract class GameState extends State
 			GameObject g = (GameObject)controller.getAttribute(s);
 			g.reset();
 			g.setGameState(this);
-			processPendingSpawns();
 		}
 		
 		/*
@@ -211,31 +204,47 @@ public abstract class GameState extends State
 		
 		for(PhysicsObject m : movingObjects)
 		{
+			ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
 			BoundingShape b = m.getBounds();
-			for(GameObject g : gameObjects)
+			if(getOverlappingObjects(overlaps, b))
 			{
-				if(m.equals(g)) continue;
-				if(g.intersects(b))
+				for(GameObject g: overlaps)
 				{
 					g.onBeginOverlap(m);
 					m.onBeginOverlap(g);
 				}
 			}
 			
-			for(PhysicsObject p : physicsObjects)
-			{
-				if(m.equals(p)) continue;
-				if(p.intersects(b))
-				{
-					p.onBeginOverlap(m);
-					m.onBeginOverlap(p);
-				}
-			}
-			
 		}
-		processPendingSpawns();
 	}
 	
+	public boolean getOverlappingObjects(List<GameObject> overlappingObjects, BoundingShape bounds)
+	{
+		if(activeRegion.intersects(bounds) == false) return false;
+		
+		for(GameObject g : gameObjects)
+		{
+			if(g.intersects(bounds))
+			{
+				overlappingObjects.add(g);
+			}
+		}
+		
+		for(PhysicsObject p : physicsObjects)
+		{
+			if(p.intersects(bounds))
+			{
+				overlappingObjects.add(p);
+			}
+		}
+		
+		if(avatar.intersects(bounds))
+		{
+			overlappingObjects.add(avatar);
+		}
+		
+		return overlappingObjects.isEmpty();
+	}
 	
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)

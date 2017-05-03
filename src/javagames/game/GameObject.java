@@ -29,6 +29,7 @@ public class GameObject
 	protected ArrayList<GameObject> overlappedObjects;
 	protected BoundingShape bounds;
 	
+	protected boolean bIsActive;
 	protected Physics physics;
 	
 	protected Matrix3x3f transform;
@@ -56,6 +57,7 @@ public class GameObject
 		rotation = 0.f;
 		position = new Vector2f();
 		physics = new Physics(this);
+		bIsActive = true;
 	}
 	
 	public void setGameState(GameState gameState)
@@ -69,7 +71,10 @@ public class GameObject
 		return gameState;
 	}
 	
-	public void reset(){}
+	public void reset()
+	{
+		bIsActive=true;
+	}
 	
 	public String getName()
 	{
@@ -96,7 +101,7 @@ public class GameObject
 	
 	public boolean isActive()
 	{
-		return true;
+		return bIsActive;
 	}
 	
 	public void update(float deltaTime)

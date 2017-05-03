@@ -19,10 +19,23 @@ public class BoundingGroup extends BoundingShape
 		this(new Vector<BoundingShape>());
 	}
 	
+	public BoundingGroup(BoundingShape root)
+	{
+		this.shapes = new Vector<BoundingShape>();
+		this.shapeOffsets = new Vector<Vector2f>();
+		collisionResponse =  Collections.synchronizedMap(new HashMap<String, String>());
+		collisionResponse.put("DEFAULT", "BLOCK");
+		addShape(root);
+	}
+	
 	public BoundingGroup(List<BoundingShape> shapes)
 	{
 		this.shapes = new Vector<BoundingShape>(shapes);
-		this.shapeOffsets = new Vector<Vector2f>();
+		this.shapeOffsets = new Vector<Vector2f>(shapes.size());
+		for(int i = 0; i < shapes.size(); i++)
+		{
+			shapeOffsets.set(i,shapes.get(i).getPosition());
+		}
 		collisionResponse =  Collections.synchronizedMap(new HashMap<String, String>());
 		collisionResponse.put("DEFAULT", "BLOCK");
 	}
@@ -37,18 +50,15 @@ public class BoundingGroup extends BoundingShape
 	public void setPosition(Vector2f position)
 	{
 		this.position = new Vector2f(position);
-		int i = 0;
-		for(BoundingShape s : shapes)
-		{
-			s.setPosition(shapeOffsets.get(i++).add(position));
-		}
 	}
 	
 	@Override
 	public boolean intersects(BoundingShape otherShape) 
 	{
+		int i = 0;
 		for( BoundingShape s : shapes)
 		{
+			s.setPosition(shapeOffsets.get(i++).add(getPosition()));
 			if(s.intersects(otherShape))
 				return true;
 		}
@@ -57,8 +67,10 @@ public class BoundingGroup extends BoundingShape
 
 	@Override
 	public boolean contains(Vector2f point) {
+		int i = 0;
 		for( BoundingShape s : shapes)
 		{
+			s.setPosition(shapeOffsets.get(i++).add(getPosition()));
 			if(s.contains(point))
 				return true;
 		}
