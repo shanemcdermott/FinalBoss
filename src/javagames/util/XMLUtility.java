@@ -227,7 +227,7 @@ public class XMLUtility {
 		float range = 0.f;
 		float chargeTime = 0.f;
 		float cooldownTime = 0.f;
-		GameObject effect = null;
+		DamageObject effect = null;
 		Element effectElement = null;
 		switch(element.getAttribute("type"))
 		{
@@ -247,7 +247,7 @@ public class XMLUtility {
 				
 				if(effectElement != null)
 				{
-					effect = XMLUtility.loadGameObject(clazz, effectElement);
+					effect = (DamageObject)XMLUtility.loadGameObject(clazz, effectElement);
 				}
 				return new RangedAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);
 				
@@ -259,7 +259,7 @@ public class XMLUtility {
 				
 				if(effectElement != null)
 				{
-					effect = XMLUtility.loadGameObject(clazz, effectElement);
+					effect = (DamageObject)XMLUtility.loadGameObject(clazz, effectElement);
 				}
 				return new MeleeAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);				
 			case "action":
@@ -271,7 +271,7 @@ public class XMLUtility {
 				
 				if(effectElement != null)
 				{
-					effect = XMLUtility.loadGameObject(clazz, effectElement);
+					effect = (DamageObject)XMLUtility.loadGameObject(clazz, effectElement);
 				}
 				
 				return new CombatAction(element.getAttribute("name"), effect, range,chargeTime,cooldownTime, effectElement);

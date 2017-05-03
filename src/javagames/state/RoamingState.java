@@ -9,6 +9,8 @@ import java.util.Vector;
 import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingShape;
 import javagames.combat.Avatar;
+import javagames.combat.DamageObject;
+import javagames.combat.Enemy;
 import javagames.g2d.Sprite;
 import javagames.game.GameObject;
 import javagames.game.PhysicsObject;
@@ -28,36 +30,6 @@ import javagames.util.Vector2f;
 public abstract class RoamingState extends GameState 
 {
 
-	/*
-	 * Add any stationary game objects from the controller
-	 */
-	@Override
-	public void addObjects(List<String> objectNames)
-	{
-
-		for(String s : objectNames)
-		{
-			GameObject g = (GameObject)controller.getAttribute(s);
-			g.reset();
-			if(g instanceof PhysicsObject)
-			{
-				physicsObjects.add((PhysicsObject)g);
-			}
-			else
-			{
-				gameObjects.add(g);
-			}
-		}
-	
-	}
-
-	
-	@Override
-	public void updateObjects(float delta) 
-	{
-		super.updateObjects(delta);
-	}
-	
 	
 	/*Return the next State to switch to*/
 	@Override
@@ -84,10 +56,18 @@ public abstract class RoamingState extends GameState
 				go.draw(g,view, avatar.getPosition());
 		}
 	
-		for(PhysicsObject po : physicsObjects)
+		for(Enemy po : enemies)
 		{
 			if(activeRegion.contains(po.getPosition()))
 				po.draw(g,view, avatar.getPosition());
+		}
+		
+		for(DamageObject dam: actionEffects)
+		{
+			if(activeRegion.intersects(dam.getBounds()) && dam.isActive())
+			{
+				dam.draw(g, view,avatar.getPosition());
+			}
 		}
 		
 		if(foreground != null)

@@ -12,55 +12,35 @@ import javagames.util.geom.BoundingShape;
 public class Projectile extends DamageObject 
 {
 	protected float launchSpeed;
-	protected ArrayList<Vector2f> positions;
-	protected ArrayList<Vector2f> speeds;
-	protected ArrayList<Float> timers;
+
 	
 	public Projectile(String name, BoundingShape bounds, GameObject owner, SpriteSheet sprite, float launchSpeed) {
 		super(name, bounds, owner, sprite);
-		positions = new ArrayList<Vector2f>();
-		speeds = new ArrayList<Vector2f>();
-		timers = new ArrayList<Float>();
+		this.launchSpeed=launchSpeed;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Projectile(String name,  GameObject owner, SpriteSheet sprite, float launchSpeed)
 	{
 		super(name,owner,sprite);
-		positions = new ArrayList<Vector2f>();
-		speeds = new ArrayList<Vector2f>();
-		timers = new ArrayList<Float>();
+		this.launchSpeed=launchSpeed;
 	}
 
 	@Override
-	public void update(float deltaTime)
+	public void reset()
 	{
-		super.update(deltaTime);
-		for(int i = 0; i < timers.size(); i++)
-		{
-			if(timers.get(i) >= lifespan) continue;
-			
-			timers.set(i, timers.get(i) + deltaTime);
-			positions.set(i, positions.get(i).add(speeds.get(i).mul(deltaTime)));
-		}
+		super.reset();
+		physics.move(getOwner().getForwardVector().mul(launchSpeed));
 	}
 	
 	public void launch(Vector2f direction)
 	{
-		positions.add(getPosition());
-		speeds.add(direction.mul(launchSpeed));
-		timers.add(0.f);
+		Projectile p = new Projectile(name, bounds, owner, sprite, launchSpeed);
+				p.setLifespan(lifespan);
+				p.setDPS(damagePerSecond);
+				p.setCanDamageOwner(bCanDamageOwner);
+				getGameState().addActionEffect(p);
 	}
-	
-	@Override
-	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
-	{
-		for(int i = 0; i < timers.size(); i++)
-		{
-			if(timers.get(i) >= lifespan) continue;
-			
-			sprite.render(g,view, positions.get(i).sub(posOffset), 0.f);
-		}
-	}
+
 	
 }

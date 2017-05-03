@@ -65,6 +65,13 @@ public class Pawn extends LivingObject {
 		getJobStats();
 	}
 
+	@Override
+	public void reset()
+	{
+		super.reset();
+		initialize();
+	}
+	
 	protected void getJobStats() {
 
 		maxHealth = currentHealth = 100;

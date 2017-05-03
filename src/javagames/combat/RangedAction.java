@@ -15,7 +15,7 @@ import org.xml.sax.*;
 public class RangedAction extends CombatAction
 {
 		
-	public RangedAction(String name, GameObject effect, float range, float chargeTime, float cooldownTime, Element effectTemplate) 
+	public RangedAction(String name, DamageObject effect, float range, float chargeTime, float cooldownTime, Element effectTemplate) 
 	{
 		super(name, effect, range, chargeTime, cooldownTime, effectTemplate);
 		

@@ -1,5 +1,6 @@
 package javagames.state;
 
+import javagames.combat.Enemy;
 import javagames.game.GameObject;
 import javagames.game.PhysicsObject;
 
@@ -24,9 +25,9 @@ public abstract class DungeonState extends GameState
 			{
 				controller.removeAttribute(go.getName());
 			}
-			for(PhysicsObject po : physicsObjects)
+			for(Enemy en : enemies)
 			{
-				controller.removeAttribute(po.getName());
+				controller.removeAttribute(en.getName());
 			}
 			return getLoadingState();
 		}

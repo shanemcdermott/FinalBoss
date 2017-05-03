@@ -19,7 +19,6 @@ import javagames.util.geom.BoundingShape;
 public class Avatar extends Pawn 
 {
 	protected int	experienceTotal;
-	protected int	currentLevel;
 	
 	protected float manaBase;
 	protected float manaScale;
@@ -29,6 +28,12 @@ public class Avatar extends Pawn
 	public Avatar(String name, SpriteSheet sprite)
 	{
 		super(name,sprite);
+		healthBase = 100.f;
+		manaBase = 100.f;
+		manaScale = 1.f;
+		manaBonus = 0.f;
+		level = 1;
+		experienceTotal = 0;
 	}
 	
 	public Avatar(String name, SpriteSheet sprite, BoundingShape bounds)
@@ -38,12 +43,23 @@ public class Avatar extends Pawn
 		manaBase = 100.f;
 		manaScale = 1.f;
 		manaBonus = 0.f;
+		level = 1;
+		experienceTotal=0;
+	}
+	
+	public void addExperience(int exp)
+	{
+		experienceTotal += exp;
+		if(experienceTotal/10 > level)
+		{
+			setLevel(level + 1);
+		}
 	}
 	
 	/*Apply appropriate level modifiers here */
 	protected void setLevel(int newLevel)
 	{
-		
+		level = newLevel;
 	}
 	
 	@Override

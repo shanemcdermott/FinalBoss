@@ -26,7 +26,9 @@ import javagames.util.geom.BoundingBox;
 import javagames.util.geom.BoundingGroup;
 import javagames.util.geom.BoundingShape;
 import javagames.combat.Avatar;
+import javagames.combat.DamageObject;
 import javagames.combat.Damageable;
+import javagames.combat.Enemy;
 import javagames.combat.Pawn;
 import javagames.combat.buffs.BuffManager;
 import javagames.g2d.Sprite;
@@ -35,7 +37,8 @@ public abstract class GameState extends State
 {
 	protected LoopEvent ambience;
 	protected List<GameObject> gameObjects;
-	protected List<PhysicsObject> physicsObjects;
+	protected List<Enemy> enemies;
+	protected ArrayList<DamageObject> actionEffects;
 	
 	protected KeyboardInput keys;
 	protected Sprite background;
@@ -51,9 +54,8 @@ public abstract class GameState extends State
 	public GameState()
 	{
 		gameObjects = new ArrayList<GameObject>();
-		physicsObjects = new ArrayList<PhysicsObject>();
+		enemies = new ArrayList<Enemy>();
 		activeRegion = new BoundingBox(2*GameConstants.VIEW_WIDTH, 2*GameConstants.VIEW_HEIGHT);
-				
 	}
 	
 	@Override
@@ -77,23 +79,26 @@ public abstract class GameState extends State
 		//avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
 		//avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
 		
+		actionEffects = new ArrayList<DamageObject>();
+		
 		timeElapsed = 0f;
 		rejuv = false;
 	}
 
+	public void addActionEffect(DamageObject effect)
+	{
+		effect.reset();
+		effect.setGameState(this);
+		actionEffects.add(effect);
+	}
+	
 	public void addObject(GameObject newObject)
 	{
-
-		if(newObject instanceof Pawn)
+		if(newObject instanceof Avatar || newObject instanceof DamageObject) return;
+		
+		if(newObject instanceof Enemy)
 		{
-			if(newObject instanceof Avatar)
-			{
-				avatar = (Avatar)newObject;
-			}
-		}
-		if(newObject instanceof PhysicsObject)
-		{
-			physicsObjects.add((PhysicsObject)newObject);
+			enemies.add((Enemy)newObject);
 		}
 		else
 		{
@@ -114,27 +119,6 @@ public abstract class GameState extends State
 			g.reset();
 			g.setGameState(this);
 		}
-		
-		/*
-		for(PhysicsObject p : physicsObjects)
-		{
-			if(p instanceof MultiStateObject)
-			{
-				MultiStateObject mo = (MultiStateObject)p;
-				for(GameObject g: mo.getEffects())
-				{
-					if(g instanceof PhysicsObject)
-					{
-						physicsObjects.add((PhysicsObject)g);
-					}
-					else
-					{
-						gameObjects.add(g);
-					}
-				}
-			}
-		}
-		*/
 	}
 		
 	public void processInput(float delta) 
@@ -170,52 +154,100 @@ public abstract class GameState extends State
 		}
 		*/
 		
-		Vector<PhysicsObject> movingObjects = new Vector<PhysicsObject>();
 		
-		
-		if(avatar.isMoving())
-		{
-			movingObjects.add(avatar);
-		}
 		
 		avatar.update(delta);
+	
+		updateGameObjects(delta);
 		
-		Iterator<PhysicsObject> physr = physicsObjects.iterator();
-		while (physr.hasNext()) 
+		updateEnemies(delta);
+		
+		updateEffects(delta);
+		
+		updateOverlaps();
+		
+		activeRegion.setPosition(avatar.getPosition());
+		
+	}
+	
+	private void updateGameObjects(float deltaTime)
+	{
+		ArrayList<GameObject> copy = new ArrayList<GameObject>(gameObjects);
+		for(GameObject go : copy)
 		{
-			PhysicsObject p = physr.next();
-			if(activeRegion.contains(p.getPosition()))
+			if(activeRegion.intersects(go.getBounds()))
 			{
-				if(p.isMoving())
+				go.update(deltaTime);
+				if(go.isActive() == false)
 				{
-					movingObjects.add(p);
+					gameObjects.remove(go);
 				}
-				p.update(delta);
+			}
+		}		
+	}
+	
+	private void updateEnemies(float deltaTime)
+	{
+		ArrayList<Enemy> copy = new ArrayList<Enemy>(enemies);
+		for(Enemy p: copy)
+		{
+			p.update(deltaTime);
+			if(p.isDead())
+			{
+				avatar.addExperience(p.getExperienceReward());
+				enemies.remove(p);
 			}
 		}
-		
-		Iterator<GameObject> iter = gameObjects.iterator();
-		while (iter.hasNext()) 
+	}
+	
+	private void updateEffects(float deltaTime)
+	{
+		ArrayList<DamageObject> copy = new ArrayList<DamageObject>(actionEffects);
+		for(DamageObject d: copy)
 		{
-			GameObject g = iter.next();
-			g.update(delta);
+			d.update(deltaTime);
+			if(d.isActive() == false)
+			{
+				actionEffects.remove(d);
+			}
 		}
-		
-		
-		for(PhysicsObject m : movingObjects)
+	}
+	
+	private void updateOverlaps()
+	{
+		ArrayList<Enemy> enCopy = new ArrayList<Enemy>(enemies);
+		ArrayList<GameObject> objCopy = new ArrayList<GameObject>(gameObjects);
+
+		for(Enemy p: enCopy)
 		{
 			ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
-			BoundingShape b = m.getBounds();
+			BoundingShape b = p.getBounds();
+				
 			if(getOverlappingObjects(overlaps, b))
 			{
 				for(GameObject g: overlaps)
 				{
-					g.onBeginOverlap(m);
-					m.onBeginOverlap(g);
+					g.onBeginOverlap(p);
+					p.onBeginOverlap(g);
 				}
 			}
-			
 		}
+		
+		for(GameObject p: objCopy)
+		{
+			ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
+			BoundingShape b = p.getBounds();
+				
+			if(getOverlappingObjects(overlaps, b))
+			{
+				for(GameObject g: overlaps)
+				{
+					g.onBeginOverlap(p);
+					p.onBeginOverlap(g);
+				}
+			}
+		}
+	
 	}
 	
 	public boolean getOverlappingObjects(List<GameObject> overlappingObjects, BoundingShape bounds)
@@ -230,7 +262,7 @@ public abstract class GameState extends State
 			}
 		}
 		
-		for(PhysicsObject p : physicsObjects)
+		for(Enemy p : enemies)
 		{
 			if(p.intersects(bounds))
 			{
@@ -241,6 +273,14 @@ public abstract class GameState extends State
 		if(avatar.intersects(bounds))
 		{
 			overlappingObjects.add(avatar);
+		}
+		
+		for(DamageObject d : actionEffects)
+		{
+			if(d.intersects(bounds))
+			{
+				overlappingObjects.add(d);
+			}
 		}
 		
 		return overlappingObjects.isEmpty();
@@ -258,9 +298,14 @@ public abstract class GameState extends State
 			go.draw(g,view);
 		}
 		
-		for(PhysicsObject po : physicsObjects)
+		for(Enemy po : enemies)
 		{
 			po.draw(g,view);
+		}
+		
+		for(DamageObject de: actionEffects)
+		{
+			de.draw(g, view);
 		}
 		
 		if(foreground != null)
@@ -285,9 +330,9 @@ public abstract class GameState extends State
 		{
 			controller.removeAttribute(go.getName());
 		}
-		for(PhysicsObject po: physicsObjects)
+		for(Enemy en : enemies)
 		{
-			controller.removeAttribute(po.getName());
+			controller.removeAttribute(en.getName());
 		}
 	}
 }

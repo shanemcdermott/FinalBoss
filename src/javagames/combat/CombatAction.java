@@ -24,15 +24,15 @@ public class CombatAction extends CombatState
 
 	protected boolean bIsCharging;
 	
-	protected GameObject effect;
+	protected DamageObject effect;
 	protected Element	effectTemplate;
 	
-	public CombatAction(String name, GameObject effect, Element effectTemplate)
+	public CombatAction(String name, DamageObject effect, Element effectTemplate)
 	{
 		this(name,effect, 1.f, 1.f, 0.f, effectTemplate);
 	}
 	
-	public CombatAction(String name, GameObject effect, float range, float chargeTime, float cooldownTime, Element effectTemplate)
+	public CombatAction(String name, DamageObject effect, float range, float chargeTime, float cooldownTime, Element effectTemplate)
 	{
 		super(name);
 		this.range = range;

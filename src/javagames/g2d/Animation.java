@@ -39,11 +39,14 @@ public class Animation
 	
 	public void update(float deltaTime)
 	{
-		time += deltaTime;
-		if(time >= frameLength)
+		if(numFrames>0)
 		{
-			frame = (frame + 1) % numFrames;
-			time -= frameLength;
+			time += deltaTime;
+			if(time >= frameLength)
+			{
+				frame = (frame + 1) % numFrames;
+				time -= frameLength;
+			}
 		}
 	}
 	

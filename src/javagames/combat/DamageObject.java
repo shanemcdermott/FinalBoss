@@ -87,6 +87,7 @@ public class DamageObject extends PhysicsObject implements Ownable
 		bIsActive=true;
 		currentTime = 0.f;
 		sprite.startAnimation("Active");
+		setPosition(owner.getPosition().add(owner.getForwardVector()));
 	}
 	
 	public void deactivate()
@@ -97,7 +98,6 @@ public class DamageObject extends PhysicsObject implements Ownable
 	@Override
 	public void update(float deltaTime)
 	{
-		setPosition(owner.getPosition().add(owner.getForwardVector()));
 		super.update(deltaTime);
 		if(isActive())
 		{
