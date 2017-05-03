@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 
 import javagames.combat.Avatar;
+import javagames.deathValley.DeathValleyLoadingState;
 import javagames.kanto.KantoLoadingState;
 import javagames.kanto.KantoRoamingState;
 import javagames.sound.LoopEvent;
@@ -77,7 +78,7 @@ public class TitleMenuState extends AttractState
 				System.err.println(e);
 				System.exit(1);
 			}
-			getController().setState(new KantoLoadingState());
+			getController().setState(new DeathValleyLoadingState());
 			return;
 		}
 	}

@@ -31,6 +31,7 @@ public class Projectile extends DamageObject
 	{
 		super.reset();
 		physics.move(getOwner().getForwardVector().mul(launchSpeed));
+		
 	}
 	
 	public void launch(Vector2f direction)

@@ -27,6 +27,11 @@ public class Physics
 		owner.setRotation(owner.rotation + rotationRate * deltaTime);
 	}
 	
+	public Vector2f getVelocity()
+	{
+		return velocity;
+	}
+	
 	public void setMaxVelocity(Vector2f newMax)
 	{
 		maxVelocity = new Vector2f(newMax);

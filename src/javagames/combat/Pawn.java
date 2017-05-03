@@ -232,7 +232,8 @@ public class Pawn extends LivingObject {
 	public void startAction(String actionName) {
 		if (actionName.contains("Walk")) {
 			move(actionName);
-		} else if (states.containsKey(actionName)) {
+		} else if (states.containsKey(actionName) && ((CombatAction)states.get(actionName)).canEnter()) 
+		{
 			setState(actionName);
 		} else {
 			System.out.printf("%s is not a recognized action!\n", actionName);

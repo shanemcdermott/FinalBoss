@@ -10,6 +10,7 @@ import javagames.combat.Avatar;
 import javagames.combat.CombatAction;
 import javagames.combat.CombatState;
 import javagames.combat.DamageObject;
+import javagames.combat.Enemy;
 import javagames.combat.LivingObject;
 import javagames.combat.MeleeAction;
 import javagames.combat.Pawn;
@@ -118,6 +119,8 @@ public class XMLUtility {
 		{
 			switch(element.getAttribute("type"))
 			{
+			case "enemy":
+					return loadEnemy(clazz,element);
 				case "pawn":
 					return loadPawn(clazz,element);
 				case "living":
@@ -193,6 +196,29 @@ public class XMLUtility {
 		return new Pawn(element.getAttribute("name"), spr);
 	}
 	
+	public static Enemy loadEnemy(Class<?> clazz, Element element) throws Exception
+	{
+		String name = element.getAttribute("name");
+		Enemy object = null;	
+		SpriteSheet spr = ResourceLoader.loadSpriteSheet(clazz,XMLUtility.getElement(element, "sprite"));
+		Element boundsXML = XMLUtility.getElement(element, "bounds");
+		if(boundsXML != null)
+		{
+			BoundingShape bounds = XMLUtility.getBoundingShape(boundsXML);
+			object = new Enemy(name, spr, bounds);
+		}
+		else
+		{
+			object = new Enemy(name, spr);
+		}
+		
+		for(Element ele : XMLUtility.getElements(element, "state"))
+		{
+			object.addStates(XMLUtility.loadObjectState(clazz, ele));
+		}
+				
+		return object;
+	}
 	
 	public static Avatar loadAvatar(Class<?> clazz, String name) throws Exception
 	{

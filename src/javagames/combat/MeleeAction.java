@@ -17,13 +17,9 @@ public class MeleeAction extends CombatAction {
 	@Override
 	public void spawnEffect()
 	{
-		GameObject e = getEffect();
-		if(e != null)
+		if(effect != null)
 		{
-			if(e instanceof Projectile)
-			{
-				((Projectile)e).launch(getOwner().getForwardVector());
-			}
+			effect.getGameState().addActionEffect(effect);
 		}
 	}
 }

@@ -50,11 +50,14 @@
 			</bounds>
 		</effect>
 	</state>
-	<state name="Special" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Skeleton Army" type = "damage" lifespan="15" dps="5" canDamageOwner="false">
+	<state name="Special" type="ranged" range="1.f" chargeTime="1.5" cooldownTime="5">
+		<effect name="Skeleton Army" type="projectile" lifespan="15"
+			dps="5" canDamageOwner="false" speed="2">
 			<sprite file="skeletonWarriors.png" width="1" height="1">
-				<animation name="Active" frames="4" frameTime="0.4" x="0" y="0" width="64" height="96" />
-				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="0" width="64" height="96" />
+				<animation name="Active" frames="4" frameTime="0.4"
+					x="0" y="0" width="64" height="96" />
+				<animation name="Inactive" frames="0" frameTime="1000"
+					x="0" y="0" width="64" height="96" />
 			</sprite>
 			<bounds>
 				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
@@ -65,7 +68,7 @@
 			</bounds>
 		</effect>
 	</state>
-	<state name="Ultimate" type="action" range="1.f" chargeTime="1.f" cooldownTime="0.f">		
+	<state name="Ultimate" type="action" range="1.f" chargeTime="2" cooldownTime="30">		
 		<effect name ="Ifrit Rising" type = "damage" lifespan="20" dps="10" canDamageOwner="false">
 			<sprite file="ifrit.png" width="1" height="1">
 				<animation name = "Active" frames = "4" frameTime ="0.4" x = "0" y = "0" width = "64" height = "64" />
