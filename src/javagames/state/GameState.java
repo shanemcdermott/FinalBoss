@@ -70,9 +70,9 @@ public abstract class GameState extends State
 		activeRegion.setPosition(avatar.getPosition());
 		GameConstants.GAME_STATE = this;
 		
-		avatar.addBuff( BuffManager.getBuff( 1, avatar ) );
-		avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
-		avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
+		//avatar.addBuff( BuffManager.getBuff( 1, avatar ) );
+		//avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
+		//avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
 		
 		timeElapsed = 0f;
 		rejuv = false;
@@ -136,6 +136,10 @@ public abstract class GameState extends State
 		{
 			System.exit(0);
 		}
+		if(keys.keyDownOnce(KeyEvent.VK_ENTER))
+		{
+			avatar.takeDamage(avatar, 5000.f);
+		}
 		avatar.processInput(keys, delta);
 	}
 
@@ -152,10 +156,12 @@ public abstract class GameState extends State
 		
 		timeElapsed += delta;
 		
+		/*
 		if ( timeElapsed >= 8 && !rejuv ) {
 			avatar.addBuff( BuffManager.getBuff( 4, avatar ) );
 			rejuv = true;
 		}
+		*/
 		
 		Vector<PhysicsObject> movingObjects = new Vector<PhysicsObject>();
 		
@@ -243,4 +249,18 @@ public abstract class GameState extends State
 	}
 	
 	protected abstract State getNextState();
+	
+	@Override
+	public void exit()
+	{
+		ambience.done();
+		for(GameObject go : gameObjects)
+		{
+			controller.removeAttribute(go.getName());
+		}
+		for(PhysicsObject po: physicsObjects)
+		{
+			controller.removeAttribute(po.getName());
+		}
+	}
 }

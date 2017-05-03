@@ -80,10 +80,7 @@ public class Gui {
 				g.drawString(Integer.toString(i + 1), xOffset, 810);
 				xOffset += 70;
 			}
-			g.setColor(Color.BLUE);
-			g.fillRect(650, 780, 265, 10);
-			g.setColor(Color.GREEN);
-			g.fillRect(650, 760, 265, 10);
+
 			xOffset = 650;
 	}
 }

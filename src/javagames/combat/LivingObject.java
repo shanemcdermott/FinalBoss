@@ -62,9 +62,8 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public void takeDamage(Object source, float amount)
 	{
-		System.out.printf("%s took %d damage!\n", name, amount);
+		System.out.printf("%s took %f damage!\n", name, amount);
 		currentHealth -= amount;
-		sprite.setColor(Color.RED);
 		if(currentHealth <= 0)
 			die(source);
 	}
@@ -72,7 +71,7 @@ public class LivingObject extends MultiStateObject implements Damageable
 	@Override
 	public boolean isDead()
 	{
-		return currentState.equals("Dead");
+		return currentHealth <= 0 || currentState.equals("Dead");
 	}
 
 	@Override

@@ -2,202 +2,30 @@
 	<spawnpoint x="0" y="3"></spawnpoint>
 	
 	<images>
-		<background name="background" file="Death Valley/Graveyard Map.png" width="24" height="80"></background>
+		<background name="background" file="Death Valley/Graveyard Map.png" width="20" height="80"></background>
+		<foreground name="foreground" file="Death Valley/GraveyardMap.png" width="20" height="20"></foreground>
 	</images>
 	
 	<sounds>
 		<sound name="explosion" type="cue" file="EXPLOSION_large_01.wav"></sound>
-		<sound name="fire-clip" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
+		<sound name="fire-clip" type="cue" file="Fireball.wav"></sound>
 		<sound name="cue-gui-confirm" type="cue" file="EXPLOSION_large_01.wav"></sound>
 		<sound name="cue-gui-cancel" type="cue" file="WEAPON_scifi_fire_02.wav"></sound>
 		<sound name="thruster" type="loop" file="DRONE9RE.WAV"></sound>
 		<sound name="loop-gameOver" type="loop" file="DRONE9RE.WAV"></sound>		
 		<sound name="alien_ambience" type="ambience" file="AMBIENCE_alien.wav"></sound>
 	</sounds>
+
+	<blockinggroup>
+		<box name="OakLab" x="3.5" y="-1.55" width="7" height="4.75"/>
+		<box name="RedHouse" x="4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="RedMailbox" x="1.6" y="2.5" width="1" height="1"/>
+		<box name="BlueHouse" x="-4.4" y="4.25" width="4.4" height="4.5"/>
+		<box name="BlueMailbox" x="-7.4" y="2.5" width="1" height="1"/>
+	</blockinggroup>
+	
 	<objects>
-		<barrier name="Crypt" type="Building" width="64" height="48">
-			<sprite file="Death Valley/Crypt.png" width="4" height="4" startX="0" startY="0" imgW="64" imgH="48"></sprite>
-			<position x="4" y="4"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-2" y="-2"></min>
-					<max x="2" y="2"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Biege 1" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="0" imgW="32" imgH="32"></sprite>
-			<position x="0" y="2"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Biege 2" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="32" imgW="32" imgH="32"></sprite>
-			<position x="0" y="4"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-	<barrier name="Tombstone Biege 3" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="64" imgW="32" imgH="32"></sprite>
-			<position x="0" y="6"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Biege 4" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="96" imgW="32" imgH="32"></sprite>
-			<position x="0" y="8"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier><barrier name="Tombstone Biege 5" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="128" imgW="32" imgH="32"></sprite>
-			<position x="0" y="10"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Biege 6" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="160" imgW="32" imgH="32"></sprite>
-			<position x="0" y="12"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier><barrier name="Tombstone Biege 7" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="192" imgW="32" imgH="32"></sprite>
-			<position x="0" y="14"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Biege 8" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="0" startY="224" imgW="32" imgH="32"></sprite>
-			<position x="0" y="16"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		
-		<barrier name="Tombstone Black 1" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="0" imgW="32" imgH="32"></sprite>
-			<position x="2" y="2"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Black 2" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="32" imgW="32" imgH="32"></sprite>
-			<position x="2" y="4"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-	<barrier name="Tombstone Black 3" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="64" imgW="32" imgH="32"></sprite>
-			<position x="2" y="6"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Black 4" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="96" imgW="32" imgH="32"></sprite>
-			<position x="2" y="8"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier><barrier name="Tombstone Black 5" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="128" imgW="32" imgH="32"></sprite>
-			<position x="2" y="10"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Black 6" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="160" imgW="32" imgH="32"></sprite>
-			<position x="2" y="12"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier><barrier name="Tombstone Black 7" type="Tombstone" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="192" imgW="32" imgH="32"></sprite>
-			<position x="2" y="14"></position>
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
-		<barrier name="Tombstone Black 8" type="Building" width=".5" height=".5">
-			<sprite file="Death Valley/Tombstones.png" width="4" height="4" startX="32" startY="224" imgW="32" imgH="32"></sprite>
-			
-			<bounds>
-				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
-				<box>
-					<min x="-0.25" y="-0.25"><position x="2" y="16"></position></min>
-					<max x="0.25" y="0.25"></max>
-				</box>
-			</bounds>
-		</barrier>
+				
 	</objects>
+	
 </models>
