@@ -9,7 +9,7 @@ import javagames.util.Vector2f;
 
 public abstract class BoundingShape
 {
-	protected Vector2f 	position;
+	protected Vector2f 	position = new Vector2f();
 	protected String	collisionChannel = "DEFAULT";
 	protected Map<String,String> collisionResponse;
 	

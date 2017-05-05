@@ -228,13 +228,18 @@ public class Pawn extends LivingObject {
 		excessMagic = value;
 	}
 
-	public void startAction(String actionName) {
-		if (actionName.contains("Walk")) {
+	public void startAction(String actionName) 
+	{
+		if (actionName.contains("Walk")) 
+		{
 			move(actionName);
-		} else if (states.containsKey(actionName) && ((CombatAction)states.get(actionName)).canEnter()) 
+		} 
+		else if (states.containsKey(actionName)) 
 		{
 			setState(actionName);
-		} else {
+		} 
+		else 
+		{
 			System.out.printf("%s is not a recognized action!\n", actionName);
 		}
 	}

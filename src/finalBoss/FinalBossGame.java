@@ -8,7 +8,7 @@ public class FinalBossGame extends StateFramework
 	public FinalBossGame()
 	{
 		super();
-		bDrawDebug = true;
+		bDrawDebug = false;
 	}
 	
 	public static void main(String[] args)

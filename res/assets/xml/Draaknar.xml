@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <model name="Draaknar">
 	<sprite file="DarkDragon.png" width="1" height="1">
 		<animation name="WalkLeft" frames="3" frameTime="0.4" x="0" y="63" width="80" height="63" />

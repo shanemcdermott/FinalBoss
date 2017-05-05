@@ -72,6 +72,7 @@ public class LivingObject extends MultiStateObject implements Damageable
 	{
 		System.out.printf("%s took %f damage!\n", name, amount);
 		currentHealth -= amount;
+		System.out.printf("%s has %.2f health remaining.\n", name, amount);
 		if(currentHealth <= 0)
 			die(source);
 	}

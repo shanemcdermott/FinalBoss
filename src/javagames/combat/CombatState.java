@@ -48,6 +48,11 @@ public class CombatState implements ObjectState
 		}
 	}
 	
+	public boolean canEnter()
+	{
+		return true;
+	}
+	
 	@Override
 	public void reset()
 	{

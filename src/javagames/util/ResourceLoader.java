@@ -31,7 +31,7 @@ public class ResourceLoader {
 		InputStream in = null;
 		if(!(filePath == null || filePath.isEmpty()))
 		{
-			in = clazz.getResourceAsStream(filePath);
+			in = clazz.getResourceAsStream("/res/assets" + filePath);
 		}
 			
 		if(in == null)
@@ -50,7 +50,7 @@ public class ResourceLoader {
 	
 	public static Element loadXML(Class<?> clazz, String fileName) throws IOException, SAXException, ParserConfigurationException
 	{
-		InputStream model = load(clazz, "/xml/" + fileName);
+		InputStream model = ResourceLoader.load(clazz, "/xml/" + fileName);
 		Document document = XMLUtility.parseDocument(model);
 		return document.getDocumentElement();
 	}

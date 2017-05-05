@@ -63,7 +63,7 @@ public class GameObject
 	public void setGameState(GameState gameState)
 	{
 		this.gameState = gameState;
-		gameState.addObject(this);
+		this.gameState.addObject(this);
 	}
 	
 	public GameState getGameState()
@@ -117,6 +117,7 @@ public class GameObject
 	public void setPosition(Vector2f position)
 	{
 		this.position = new Vector2f(position);
+		bounds.setPosition(this.position);
 	}
 	
 	public Vector2f getWorldPosition()
@@ -157,15 +158,15 @@ public class GameObject
 	
 	public void draw(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
 	{
-		/*
-		Vector2f pos = view.mul(position.sub(posOffset));
-		g.setColor(Color.GREEN);
-		Utility.drawString(g, (int)pos.x,(int)pos.y, tags);
-		bounds.setPosition(position.sub(posOffset));
-		bounds.render(g, view);
-		*/
+		drawBounds(g,view,posOffset);
+		
 	}
 
+	public void drawBounds(Graphics2D g, Matrix3x3f view, Vector2f posOffset)
+	{		
+		//bounds.render(g, view, posOffset);
+	}
+	
 	public String getCollisionResponseTo(String channel)
 	{
 		return bounds.getCollisionResponseTo(channel);
@@ -178,7 +179,7 @@ public class GameObject
 	
 	public BoundingShape getBounds()
 	{
-		bounds.setPosition(position);
+		//bounds.setPosition(position);
 		return bounds;
 	}
 	
@@ -220,6 +221,20 @@ public class GameObject
 	public String toString()
 	{
 		return name;
+	}
+
+	public boolean intersects(GameObject object) 
+	{
+		if(object==this)
+		{
+			return false;
+		}
+		else if(bounds.intersects(object.getBounds()))
+		{
+			//System.out.printf("%s intersected with %s!\n", getName(), object.getName());
+			return true;
+		}
+		return false;
 	}
 	
 }

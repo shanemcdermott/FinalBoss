@@ -130,6 +130,8 @@ public class DamageObject extends PhysicsObject implements Ownable
 				if(!overlappedObjects.contains(other))
 				{
 					System.out.println(other + " overlapped with " + getName());
+					Damageable d = (Damageable)other;
+					d.takeDamage(this, damagePerSecond);
 					overlappedObjects.add(((Damageable)other));
 				}
 			}

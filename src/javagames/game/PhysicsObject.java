@@ -62,13 +62,22 @@ public class PhysicsObject extends GameObject
 	@Override
 	public void onBeginOverlap(GameObject other)
 	{
-		if(other == null || this.equals(other)) return;
+		if(other == null || this.equals(other))
+		{
+			System.out.println("Ignored!");
+			return;
+		}
 		
 		if(other.getCollisionResponseTo(getCollisionChannel()).equals("BLOCK"))
 		{
 			stopMotion();
 			setPosition(lastPosition);
 			updateTransform();
+			System.out.println("Blocked!");
+		}
+		else
+		{
+			System.out.println("Not sure how to react to overlap with " + other.getName());
 		}
 	}
 

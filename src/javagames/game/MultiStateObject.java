@@ -100,9 +100,10 @@ public class MultiStateObject extends PhysicsObject
 			states.get(currentState).exit();
 		}
 		
-		currentState = newState;
-		if (states.containsKey(currentState)) 
+		
+		if (states.containsKey(newState) && states.get(newState).canEnter()) 
 		{
+			currentState=newState;
 			states.get(currentState).enter();
 		}
 		

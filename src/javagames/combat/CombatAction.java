@@ -105,6 +105,7 @@ public class CombatAction extends CombatState
 		return bIsCharging;
 	}
 	
+	@Override
 	public boolean canEnter()
 	{
 		return currentTime >= cooldownTime;

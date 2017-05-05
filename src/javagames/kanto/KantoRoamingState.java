@@ -35,10 +35,7 @@ public class KantoRoamingState extends RoamingState
 		return avatar.isDead();
 	}
 
-	public void addObject(GameObject object)
-	{
-		gameObjects.add(object);
-	}
+
 	
 
 

@@ -44,37 +44,50 @@ public abstract class RoamingState extends GameState
 	@Override
 	public void render(Graphics2D g, Matrix3x3f view)
 	{
-
-		background.render(g,view,avatar.getPosition().mul(-1.f), 0.f);
-
-		avatar.draw(g, view, avatar.getPosition());
+		int y = 10;
 		
-	
+		Vector2f pos = avatar.getPosition();
+		background.render(g,view,pos.mul(-1.f), 0.f);
+		
+		avatar.draw(g, view, pos);
+		//avatar.drawBounds(g, view, pos);
+		//g.drawString(avatar.getBounds().toString(), 10, y);
+		y+=10;
+		
 		for(GameObject go : gameObjects)
 		{
-			go.draw(g,view, avatar.getPosition());
+			go.draw(g,view, pos);
+			//go.drawBounds(g, view, pos);
+			//g.drawString(go.getBounds().toString(), 10, y);
+			y+=10;
 		}
 	
 		for(Enemy po : enemies)
 		{
-				po.draw(g,view, avatar.getPosition());
+				po.draw(g,view,pos);
+				//po.drawBounds(g, view, pos);
+				//g.drawString(po.getBounds().toString(), 10, y);
+				y+=10;
 		}
 		
 		for(DamageObject dam: actionEffects)
 		{
-				dam.draw(g, view,avatar.getPosition());
+				dam.draw(g, view,pos);
+				//dam.drawBounds(g,view,pos);
+				//g.drawString(dam.getBounds().toString(), 10, y);
+				y+=10;
 		}
 		
 		if(foreground != null)
 		{
 			
-			foreground.render(g, view, avatar.getPosition().mul(-1.f),0.f);
+			foreground.render(g, view, pos.mul(-1.f),0.f);
 			
 		}
 		
 		gui.draw(g);
 		
-		g.drawString(String.format("%s", avatar.getCurrentState().getName()), 10, 30);
+		//g.drawString(String.format("%s", avatar.getCurrentState().getName()), 10, 30);
 	}
 	
 }

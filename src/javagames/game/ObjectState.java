@@ -9,6 +9,7 @@ public interface ObjectState extends Ownable
 {
 	public void update(float deltaTime);
 	public void reset();
+	public boolean canEnter();
 	public void enter();
 	public void exit();
 	public void setOwner(MultiStateObject owner);

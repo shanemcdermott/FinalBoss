@@ -39,7 +39,7 @@ public abstract class GameState extends State
 	protected List<GameObject> gameObjects;
 	protected List<Enemy> enemies;
 	protected ArrayList<DamageObject> actionEffects;
-	
+	protected BoundingShape bounds;
 	protected KeyboardInput keys;
 	protected Sprite background;
 	protected Sprite foreground;
@@ -54,6 +54,7 @@ public abstract class GameState extends State
 	{
 		gameObjects = new ArrayList<GameObject>();
 		enemies = new ArrayList<Enemy>();
+		actionEffects = new ArrayList<DamageObject>();
 	}
 	
 	@Override
@@ -64,7 +65,7 @@ public abstract class GameState extends State
 		foreground = (Sprite) controller.getAttribute("foreground");
 		ambience = (LoopEvent) controller.getAttribute("ambience");
 		ambience.fire();
-		
+		//bounds = (BoundingShape)controller.getAttribute("bounds");
 		avatar = (Avatar)controller.getAttribute("avatar");
 		gui = new Gui(avatar);
 		avatar.reset();
@@ -76,7 +77,7 @@ public abstract class GameState extends State
 		//avatar.addBuff( BuffManager.getBuff( 2, avatar ) );
 		//avatar.addBuff( BuffManager.getBuff( 3, avatar ) );
 		
-		actionEffects = new ArrayList<DamageObject>();
+		
 		
 		timeElapsed = 0f;
 		rejuv = false;
@@ -91,7 +92,11 @@ public abstract class GameState extends State
 	
 	public void addObject(GameObject newObject)
 	{
-		if(newObject instanceof Avatar || newObject instanceof DamageObject) return;
+		if(newObject instanceof Avatar || newObject instanceof DamageObject)
+		{
+			System.out.println(newObject + "not added to arrays.");
+			return;
+		}
 		
 		if(newObject instanceof Enemy)
 		{
@@ -118,7 +123,7 @@ public abstract class GameState extends State
 			GameObject g = (GameObject)controller.getAttribute(s);
 			g.reset();
 			g.setGameState(this);
-			System.out.println(s + "added");
+			System.out.println(s + " set game state.");
 		}
 	}
 		
@@ -128,10 +133,7 @@ public abstract class GameState extends State
 		{
 			System.exit(0);
 		}
-		if(keys.keyDownOnce(KeyEvent.VK_ENTER))
-		{
-			avatar.takeDamage(avatar, 5000.f);
-		}
+
 		avatar.processInput(keys, delta);
 		
 		for(Enemy e : enemies)
@@ -171,7 +173,6 @@ public abstract class GameState extends State
 		updateEffects(delta);
 		
 		updateOverlaps();
-		
 		
 	}
 	
@@ -220,16 +221,17 @@ public abstract class GameState extends State
 	
 	private void updateOverlaps()
 	{
+		
 		ArrayList<Enemy> enCopy = new ArrayList<Enemy>(enemies);
 		ArrayList<GameObject> objCopy = new ArrayList<GameObject>(gameObjects);
 
 		for(Enemy p: enCopy)
 		{
 			ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
-			BoundingShape b = p.getBounds();
-				
-			if(getOverlappingObjects(overlaps, b))
+							
+			if(getOverlappingObjects(overlaps, p))
 			{
+				
 				for(GameObject g: overlaps)
 				{
 					g.onBeginOverlap(p);
@@ -241,9 +243,9 @@ public abstract class GameState extends State
 		for(GameObject p: objCopy)
 		{
 			ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
-			BoundingShape b = p.getBounds();
+			
 				
-			if(getOverlappingObjects(overlaps, b))
+			if(getOverlappingObjects(overlaps, p))
 			{
 				for(GameObject g: overlaps)
 				{
@@ -252,15 +254,25 @@ public abstract class GameState extends State
 				}
 			}
 		}
-	
+
+		ArrayList<GameObject> overlaps = new ArrayList<GameObject>();
+		if(getOverlappingObjects(overlaps, avatar))
+		{
+			for(GameObject g: overlaps)
+			{
+				avatar.onBeginOverlap(g);
+				g.onBeginOverlap(avatar);
+				System.out.printf("%s overlapped with %s!\n", g.getName(), avatar.getName());
+			}
+		}
 	}
 	
-	public boolean getOverlappingObjects(List<GameObject> overlappingObjects, BoundingShape bounds)
+	public boolean getOverlappingObjects(List<GameObject> overlappingObjects, GameObject object)
 	{
 				
 		for(GameObject g : gameObjects)
 		{
-			if(g.intersects(bounds))
+			if(g.intersects(object))
 			{
 				overlappingObjects.add(g);
 			}
@@ -268,26 +280,26 @@ public abstract class GameState extends State
 		
 		for(Enemy p : enemies)
 		{
-			if(p.intersects(bounds))
+			if(p.intersects(object))
 			{
 				overlappingObjects.add(p);
 			}
 		}
 		
-		if(avatar.intersects(bounds))
+		if(avatar.intersects(object))
 		{
 			overlappingObjects.add(avatar);
 		}
 		
 		for(DamageObject d : actionEffects)
 		{
-			if(d.intersects(bounds))
+			if(d.intersects(object))
 			{
 				overlappingObjects.add(d);
 			}
 		}
 		
-		return overlappingObjects.isEmpty();
+		return !overlappingObjects.isEmpty();
 	}
 	
 	@Override

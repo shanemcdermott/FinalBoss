@@ -57,12 +57,21 @@ public class Enemy extends Pawn {
 	{
 		if(time >= 3.f)
 		{
-			String dir = "MoveUp";
-			if(Math.random()> 0.7)
-				dir = "MoveUp";
+			double r = Math.random();
+			String dir = "WalkUp";
+			if(r < 0.2)
+				dir = "WalkUp";
+			else if(r < 0.4)
+				dir = "WalkDown";
+			else if( r < 0.6)
+				dir= "WalkLeft";
+			else if(r < 0.8)
+				dir= "WalkRight";
 			else
-				dir = "MoveDown";
-			
+			{
+				dir="Idle";
+				stopMotion();
+			}
 			System.out.println("Moving " + dir);
 			startAction(dir);
 			time = 0.f;
@@ -76,18 +85,6 @@ public class Enemy extends Pawn {
 	@Override
 	public void update(float deltaTime)
 	{
-		if(time >= 3.f)
-		{
-			String dir = "MoveUp";
-			if(Math.random()> 0.7)
-				dir = "MoveUp";
-			else
-				dir = "MoveDown";
-			
-			System.out.println("Moving " + dir);
-			startAction(dir);
-			time = 0.f;
-		}
 		super.update(deltaTime);
 	}
 	
