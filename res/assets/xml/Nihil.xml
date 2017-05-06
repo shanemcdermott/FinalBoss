@@ -23,34 +23,51 @@
 		</box>
 	</bounds>
 	<state name="Primary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Eldritch Rune" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
-			<sprite file="Nihil.png" width="1" height="1">
-				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
-				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+		<effect name ="Lightning" type = "projectile" speed = "3" lifespan="2" dps="1" canDamageOwner="false">
+			<sprite file="projectile.png" width=".5" height=".5">
+				<animation name="Active" frames="0" frameTime="1000" x="64" y="0" width="64" height="64" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="64" y="0" width="64" height="64" />
 			</sprite>
 			<bounds>
-				<collisionResponse DEFAULT="OVERLAP"></collisionResponse>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
 				<box>
-					<min x="-0.5" y="-0.5"></min>
-					<max x="0.5" y="0.5"></max>
+					<min x="-0.25" y="-0.25"></min>
+					<max x="0.25" y="0.25"></max>
 				</box>
 			</bounds>
 		</effect>
 	</state>
 	<state name="Secondary" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Pestilence" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
-			<sprite file="Nihil.png" width="1" height="1">
-				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
-				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+		<effect name ="Fireball" type = "projectile" speed = "3" lifespan="2" dps="2" canDamageOwner="false">
+			<sprite file="projectile.png" width=".5" height=".5">
+				<animation name="Active" frames="7" frameTime=".15" x="0" y="0" width="64" height="64" />
+				<animation name="Inactive" frames="0" frameTime="1000" x="0" y="0" width="64" height="64" />
 			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.25" y="-0.25"></min>
+					<max x="0.25" y="0.25"></max>
+				</box>
+			</bounds>
 		</effect>
 	</state>
 	<state name="Special" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="0.f">
-		<effect name ="Eldritch Portal" type = "damage" lifespan="1" dps="1" canDamageOwner="false">
-			<sprite file="Nihil.png" width="1" height="1">
-				<animation name="Active" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
-				<animation name="Inactive" frames="1" frameTime="1000" x="0" y="36" width="23" height="36" />
+		<effect name="Skeleton Army" type="projectile" lifespan="15"
+			dps="5" canDamageOwner="false" speed="2">
+			<sprite file="skeletonWarriors.png" width="1" height="1">
+				<animation name="Active" frames="4" frameTime="0.4"
+					x="0" y="0" width="64" height="96" />
+				<animation name="Inactive" frames="0" frameTime="1000"
+					x="0" y="0" width="64" height="96" />
 			</sprite>
+			<bounds>
+				<collisionResponse DEFAULT="BLOCK"></collisionResponse>
+				<box>
+					<min x="-0.5" y="-0.5"></min>
+					<max x="0.5" y="0.5"></max>
+				</box>
+			</bounds>
 		</effect>
 	</state>
 	<state name="Ultimate" type="ranged" range="1.f" chargeTime="1.f" cooldownTime="10">		
@@ -61,5 +78,6 @@
 			</sprite>
 		</effect>
 	</state>
+
 </model>
 

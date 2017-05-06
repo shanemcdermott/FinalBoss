@@ -31,16 +31,18 @@ public class ResourceLoader {
 		InputStream in = null;
 		if(!(filePath == null || filePath.isEmpty()))
 		{
-			in = clazz.getResourceAsStream("/res/assets" + filePath);
+			in = clazz.getResourceAsStream("res/assets" + filePath);
 		}
 			
 		if(in == null)
 		{
+			in = clazz.getClassLoader().getResourceAsStream("res/assets"+filePath);
+			if(in == null)
 			try 
 			{
 				in = new FileInputStream("res/assets" + filePath);
 			} 
-			catch (FileNotFoundException e) 
+			catch (Exception e) 
 			{
 				e.printStackTrace();
 			}

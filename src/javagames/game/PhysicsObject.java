@@ -59,6 +59,13 @@ public class PhysicsObject extends GameObject
 		return forward;
 	}
 	
+	public void revertMotion()
+	{
+		stopMotion();
+		setPosition(lastPosition);
+		updateTransform();
+	}
+	
 	@Override
 	public void onBeginOverlap(GameObject other)
 	{
@@ -70,9 +77,7 @@ public class PhysicsObject extends GameObject
 		
 		if(other.getCollisionResponseTo(getCollisionChannel()).equals("BLOCK"))
 		{
-			stopMotion();
-			setPosition(lastPosition);
-			updateTransform();
+			revertMotion();
 			System.out.println("Blocked!");
 		}
 		else

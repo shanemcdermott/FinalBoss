@@ -43,19 +43,21 @@ public abstract class LoadingState extends State
 	protected Element xml;
 	protected ArrayList<String> loaded;
 	
+	protected Map<String, Color> taskLog;
+	
 	private ExecutorService threadPool;
 	protected List<Callable<Boolean>> loadTasks;
 	private List<Future<Boolean>> loadResults;
 	private int numberOfTasks;
 	private float percent;
 	private float wait;
-
 	
 	protected abstract void enterNextState();
 	
 	@Override
 	public void enter()
 	{
+		taskLog = Collections.synchronizedMap(new HashMap<String,Color>());
 		controller.setAttribute("loading-state", this);
 		threadPool = Executors.newCachedThreadPool();
 		loaded = new ArrayList<String>();
@@ -80,7 +82,12 @@ public abstract class LoadingState extends State
 			@Override
 			public Boolean call() throws Exception 
 			{
-				Sprite sprite = ResourceLoader.loadSprite(this.getClass(), XMLUtility.getElement(imageXML, "background"));
+				Element bg = XMLUtility.getElement(imageXML, "background");
+				float width = Float.parseFloat(bg.getAttribute("width"));
+				float height = Float.parseFloat(bg.getAttribute("height"));
+				BoundingBox bb = new BoundingBox(width,height);
+				controller.setAttribute("bounds", bb);
+				Sprite sprite = ResourceLoader.loadSprite(this.getClass(),bg);
 				Matrix3x3f viewport =(Matrix3x3f)controller.getAttribute( "viewport" );
 				sprite.scaleImage( viewport );
 				controller.setAttribute( "background", sprite );
@@ -181,6 +188,7 @@ public abstract class LoadingState extends State
 		}
 	}
 
+	
 	public void loadGameObjects()
 	{
 		Element spawnElement = XMLUtility.getElement(xml, "spawnpoint");
@@ -188,6 +196,9 @@ public abstract class LoadingState extends State
 		{	
 			Vector2f spawn = XMLUtility.getVector2f(spawnElement);
 			controller.setAttribute("spawnPoint", spawn);
+			String s = String.format("SpawnPoint set at %s ", spawn.toString());
+			System.out.println(s);
+			log(s);
 		}
 		
 		Element objectXML = XMLUtility.getElement(xml, "objects");
@@ -204,13 +215,16 @@ public abstract class LoadingState extends State
 					GameObject gameObject = XMLUtility.loadGameObject(this.getClass(), object);
 					if(gameObject!= null)
 					{
-						System.out.println(gameObject.getName() + "Loaded.");
+						String s = gameObject.getName() + " loaded.";
+						System.out.println(s);
+						log(s, Color.GREEN);
 						loaded.add(gameObject.getName());			
 						controller.setAttribute(gameObject.getName(), gameObject);
 					}
 					else
 					{
-						System.err.println(object.getAttribute("name") + " failed to load.");
+						log(object.getAttributeNode("name") + " failed to load.", Color.RED);
+						//System.err.println(object.getAttribute("name") + " failed to load.");
 					}
 					return Boolean.TRUE;
 				}
@@ -228,7 +242,7 @@ public abstract class LoadingState extends State
 		
 		if(objectXML == null)
 		{
-			System.out.println("No blocking group found. Skipping");
+			log("No BlockingGroup found.", Color.YELLOW);
 			return;
 		}
 	
@@ -254,9 +268,10 @@ public abstract class LoadingState extends State
 			BoundingCircle bound = new BoundingCircle(position, radius);
 			bounds.addShape(bound);
 		}
-		GameObject go = new GameObject("Bounds", bounds);
-		loaded.add("Bounds");			
-		controller.setAttribute("Bounds", go);
+		GameObject go = new GameObject("BlockingGroup", bounds);
+		loaded.add("BlockingGroup");			
+		controller.setAttribute("BlockingGroup", go);
+		log("BlockingGroup loaded", Color.GREEN);
 	}
 
 	@Override
@@ -278,6 +293,7 @@ public abstract class LoadingState extends State
 				} 
 				catch (Exception ex) 
 				{
+					log(ex.getMessage(), Color.RED);
 					ex.printStackTrace();
 				}
 			}
@@ -293,6 +309,7 @@ public abstract class LoadingState extends State
 		//Finished Loading
 		if(wait > 1.0f && threadPool.isShutdown())
 		{
+			log("Finished loading.");
 			enterNextState();
 		}
 	}
@@ -318,5 +335,20 @@ public abstract class LoadingState extends State
 		// draw border
 		g.setColor(Color.GREEN);
 		g.drawRect(vx, vy, vw, vh);
+		drawLog(g);
+		
+	}
+	
+	public void drawLog(Graphics2D g)
+	{
+		g.setFont(new Font("Arial", Font.PLAIN, 10));
+		int y = 20;
+		for (Map.Entry<String, Color> entry : taskLog.entrySet())
+		{
+			g.setColor(entry.getValue());
+			g.drawString(entry.getKey(),10,y);
+			y+=10;
+		}
+
 	}
 }

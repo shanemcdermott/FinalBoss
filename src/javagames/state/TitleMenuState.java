@@ -42,6 +42,7 @@ public class TitleMenuState extends AttractState
 	public void exit()
 	{
 		ambience.done();
+		controller.removeAttribute("ambience");
 	}
 	
 	@Override
@@ -78,7 +79,10 @@ public class TitleMenuState extends AttractState
 				System.err.println(e);
 				System.exit(1);
 			}
-			getController().setState(new KantoLoadingState());
+			if(avatarIndex ==1)
+				getController().setState(new DeathValleyLoadingState());
+			else
+				getController().setState(new KantoLoadingState());
 			return;
 		}
 	}

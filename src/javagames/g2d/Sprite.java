@@ -7,8 +7,9 @@ import java.awt.image.BufferedImage;
 import javagames.util.Matrix3x3f;
 import javagames.util.Vector2f;
 
-public class Sprite {
-	
+public class Sprite 
+{
+	public float drawOrder;
 	protected BufferedImage image;
 	protected BufferedImage scaled;
 	private Vector2f topLeft;
@@ -18,6 +19,7 @@ public class Sprite {
 		this.image = image;
 		this.topLeft = topLeft;
 		this.bottomRight = bottomRight;
+		drawOrder = 0.f;
 	}
 	
 	public void render(Graphics2D g, Matrix3x3f view) {

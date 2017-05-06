@@ -59,19 +59,22 @@ public class Enemy extends Pawn {
 		{
 			double r = Math.random();
 			String dir = "WalkUp";
-			if(r < 0.2)
+			if(r < 0.1)
 				dir = "WalkUp";
-			else if(r < 0.4)
+			else if(r < 0.2)
 				dir = "WalkDown";
-			else if( r < 0.6)
+			else if( r < 0.3)
 				dir= "WalkLeft";
-			else if(r < 0.8)
+			else if(r < 0.4)
 				dir= "WalkRight";
-			else
+			else 
 			{
 				dir="Idle";
 				stopMotion();
+				if(Math.random()>0.5f)
+					startAction("Primary");
 			}
+			
 			System.out.println("Moving " + dir);
 			startAction(dir);
 			time = 0.f;

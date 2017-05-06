@@ -1,6 +1,7 @@
 package javagames.util;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javagames.state.GameState;
 

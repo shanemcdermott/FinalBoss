@@ -62,11 +62,7 @@ public class StateFramework extends WindowFramework
 	{
 		super.processInput(deltaTime);
 		controller.processInput(deltaTime);
-		if(mouse.buttonDownOnce(MouseEvent.BUTTON1))
-		{
-			GameObject obj = (GameObject)controller.getAttribute("avatar");
-			System.out.println(getWorldMousePosition().add(obj.getPosition()));
-		}
+
 	}
 	
 	@Override

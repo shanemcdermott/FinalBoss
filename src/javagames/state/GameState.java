@@ -45,7 +45,7 @@ public abstract class GameState extends State
 	protected Sprite foreground;
 	protected Avatar avatar;
 	protected Gui gui;
-	
+
 	private float timeElapsed;
 	private boolean rejuv;
 	
@@ -69,7 +69,7 @@ public abstract class GameState extends State
 		avatar = (Avatar)controller.getAttribute("avatar");
 		gui = new Gui(avatar);
 		avatar.reset();
-		
+		bounds = (BoundingShape)controller.getAttribute("bounds");
 		Vector2f spawn = (Vector2f)controller.getAttribute("spawnPoint");
 		avatar.setPosition(spawn);
 		avatar.setGameState(this);
@@ -163,9 +163,12 @@ public abstract class GameState extends State
 		*/
 		
 		
-		
 		avatar.update(delta);
-	
+		if(!bounds.contains(avatar.getPosition()))
+		{
+			avatar.revertMotion();
+		}
+		
 		updateGameObjects(delta);
 		
 		updateEnemies(delta);

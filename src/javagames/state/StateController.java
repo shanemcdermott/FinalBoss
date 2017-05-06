@@ -1,5 +1,7 @@
 package javagames.state;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.Collections;
@@ -11,11 +13,13 @@ import javagames.util.Matrix3x3f;
 
 public class StateController 
 {
+	private Map<String, Color> taskLog;
 	private Map<String, Object> attributes;
 	private State currentState;
 
 	public StateController() {
 		attributes = Collections.synchronizedMap(new HashMap<String, Object>());
+		taskLog = Collections.synchronizedMap(new HashMap<String, Color>());
 	}
 
 	public void setState(State newState) {
@@ -60,4 +64,27 @@ public class StateController
 		return attributes.keySet();
 	}
 
+	public void log(String str)
+	{
+		taskLog.put(str, Color.WHITE);
+	}
+	
+	public void log(String str, Color clr)
+	{
+		taskLog.put(str,clr);
+	}
+	
+	public void drawLog(Graphics2D g)
+	{
+		g.setFont(new Font("Arial", Font.PLAIN, 10));
+		int y = 20;
+		for (Map.Entry<String, Color> entry : taskLog.entrySet())
+		{
+			g.setColor(entry.getValue());
+			g.drawString(entry.getKey(),10,y);
+			y+=10;
+		}
+
+	}
+	
 }

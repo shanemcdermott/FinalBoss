@@ -26,7 +26,7 @@ public class GameObject
 	private GameState gameState;
 	protected String name;
 	protected ArrayList<String> tags;
-	protected ArrayList<GameObject> overlappedObjects;
+
 	protected BoundingShape bounds;
 	
 	protected boolean bIsActive;
